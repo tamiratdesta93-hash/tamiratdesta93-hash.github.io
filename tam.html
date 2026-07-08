@@ -182,7 +182,7 @@
             font-weight: 600;
         }
 
-        /* Floating Interactive Sticker */
+        /* Floating Interactive Banner */
         .floating-sticker {
             position: fixed;
             top: 80px;
@@ -286,7 +286,6 @@
             position: relative;
         }
 
-        /* Moving Vector Graphic Sticker inside Card */
         .vector-shapes {
             position: absolute;
             bottom: 10px; right: 10px; left: 10px; top: 10px;
@@ -366,7 +365,6 @@
             text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
         }
 
-        /* Sticker Sticker Pop Effect */
         .sticker-burst-element {
             position: fixed;
             pointer-events: none;
@@ -535,6 +533,38 @@
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
+        /* Auth Modal Tabs Layout */
+        .modal-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 10px;
+        }
+        .modal-tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 4px 12px;
+            position: relative;
+        }
+        .modal-tab-btn.active-tab {
+            color: var(--text-pure);
+        }
+        .modal-tab-btn.active-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
         /* Keyframe Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -576,7 +606,6 @@
             position: relative;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
-        .modal-window h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
         .form-group input, .form-group select {
@@ -619,7 +648,7 @@
                     </div>
                 </li>
 
-                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openRegistrationModal()">Register / Login</button></li>
+                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openAuthModal('signup')">Register / Login</button></li>
                 <li>
                     <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
@@ -712,14 +741,20 @@
         </div>
     </div>
 
+    <!-- Enhanced Register / Login Auth Modal Layout -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
-            <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
-            <h3 id="modal-heading">Create Free Account</h3>
-            <form id="register-form" onsubmit="executeUserRegistration(event)">
-                <div class="form-group">
+            <span class="close-modal-x" onclick="closeAuthModal()">✕</span>
+            
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active-tab" id="tab-signup" onclick="switchAuthMode('signup')">Sign Up</button>
+                <button class="modal-tab-btn" id="tab-login" onclick="switchAuthMode('login')">Log In</button>
+            </div>
+
+            <form id="auth-form" onsubmit="executeAuthSubmit(event)">
+                <div class="form-group" id="form-group-name">
                     <label id="lbl-name">Full Name</label>
-                    <input type="text" required placeholder="Abebe Bikila">
+                    <input type="text" id="input-name" placeholder="Abebe Bikila">
                 </div>
                 <div class="form-group">
                     <label id="lbl-email">Email Address</label>
@@ -729,7 +764,7 @@
                     <label id="lbl-pass">Password</label>
                     <input type="password" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-reg">Submit Registration</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-auth">Submit Registration</button>
             </form>
         </div>
     </div>
@@ -765,6 +800,8 @@
 
     <script>
         let currentlySelectedCourseId = null;
+        let currentAuthMode = 'signup'; // Keeps track of whether modal is on 'signup' or 'login'
+        let currentLanguage = 'en';
 
         function updateSystemClock() {
             const now = new Date();
@@ -871,11 +908,13 @@
                 aboutCourse: "About this Course",
                 courseDesc: "Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.",
                 syllabusTitle: "Course Syllabus",
-                modalHeading: "Create Free Account",
+                tabSignup: "Sign Up",
+                tabLogin: "Log In",
                 lblName: "Full Name",
                 lblEmail: "Email Address",
                 lblPass: "Password",
-                btnSubmitReg: "Submit Registration",
+                btnSubmitSignup: "Submit Registration",
+                btnSubmitLogin: "Log In to Account",
                 aiTitle: "🤖 EduNet AI Assistant",
                 aiWelcome: "System: Hello! How can I assist you today?",
                 aiPlaceholder: "Ask AI anything...",
@@ -908,11 +947,13 @@
                 aboutCourse: "ስለዚህ ኮርስ",
                 courseDesc: "በዚህ የተሟላ ሞጁል መዋቅር ውስጥ ለእውነተኛ ዓለም ኢንተርፕራይዝ መተግበሪያዎች የተነደፉ ዓለም አቀፍ ሀብቶችን ወዲያውኑ ያግኙ።",
                 syllabusTitle: "የኮርስ ይዘት",
-                modalHeading: "ነፃ አካውንት ይፍጠሩ",
+                tabSignup: "ይመዝገቡ",
+                tabLogin: "ይግቡ",
                 lblName: "ሙሉ ስም",
                 lblEmail: "ኢሜይል አድራሻ",
                 lblPass: "የይለፍ ቃል",
-                btnSubmitReg: "ምዝገባውን ያስገቡ",
+                btnSubmitSignup: "ምዝገባውን ያስገቡ",
+                btnSubmitLogin: "ወደ መለያ ይግቡ",
                 aiTitle: "🤖 የኢዱኔት AI ረዳት",
                 aiWelcome: "ስርዓት፡ ሰላም! ዛሬ እንዴት ልረዳዎት እችላለሁ?",
                 aiPlaceholder: "AI ን ማንኛውንም ነገር ይጠይቁ...",
@@ -1090,8 +1131,45 @@
             inputField.value = "";
         }
 
-        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
-        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
+        /* Authentication Modal Management (Sign Up / Log In) */
+        function openAuthModal(mode = 'signup') {
+            document.getElementById('auth-modal-overlay').style.display = 'flex';
+            switchAuthMode(mode);
+        }
+        
+        function closeAuthModal() { 
+            document.getElementById('auth-modal-overlay').style.display = 'none'; 
+        }
+
+        function switchAuthMode(mode) {
+            currentAuthMode = mode;
+            const tabSignup = document.getElementById('tab-signup');
+            const tabLogin = document.getElementById('tab-login');
+            const nameFieldGroup = document.getElementById('form-group-name');
+            const nameInput = document.getElementById('input-name');
+            const submitBtn = document.getElementById('btn-submit-auth');
+            const resources = languageDictionary[currentLanguage] || languageDictionary['en'];
+
+            if (mode === 'login') {
+                tabLogin.classList.add('active-tab');
+                tabSignup.classList.remove('active-tab');
+                nameFieldGroup.style.display = 'none';
+                nameInput.removeAttribute('required');
+                submitBtn.innerText = resources.btnSubmitLogin;
+            } else {
+                tabSignup.classList.add('active-tab');
+                tabLogin.classList.remove('active-tab');
+                nameFieldGroup.style.display = 'block';
+                nameInput.setAttribute('required', 'true');
+                submitBtn.innerText = resources.btnSubmitSignup;
+            }
+        }
+
+        function executeAuthSubmit(e) {
+            e.preventDefault();
+            // Authentication backend simulator logic would go here
+            closeAuthModal();
+        }
         
         function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
         function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
@@ -1099,16 +1177,12 @@
         function openHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex'; }
         function closeHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'none'; }
 
-        function executeUserRegistration(e) {
-            e.preventDefault();
-            closeRegistrationModal();
-        }
-
         function processPremiumPaymentSimulation() {
             closePaymentModal();
         }
 
         function runLanguageEngine(langCode) {
+            currentLanguage = langCode;
             const resources = languageDictionary[langCode] || languageDictionary['en'];
             
             // Top structural floating banner
@@ -1155,12 +1229,15 @@
             const syllabusHeader = document.querySelector('.syllabus-box h3');
             if (syllabusHeader) syllabusHeader.innerText = resources.syllabusTitle;
 
-            // Forms labels validation updates
-            document.getElementById('modal-heading').innerText = resources.modalHeading;
+            // Registration / Login Form Translation Elements
+            document.getElementById('tab-signup').innerText = resources.tabSignup;
+            document.getElementById('tab-login').innerText = resources.tabLogin;
             document.getElementById('lbl-name').innerText = resources.lblName;
             document.getElementById('lbl-email').innerText = resources.lblEmail;
             document.getElementById('lbl-pass').innerText = resources.lblPass;
-            document.getElementById('btn-submit-reg').innerText = resources.btnSubmitReg;
+            
+            // Re-trigger auth submit button text to update it accurately based on active state language
+            document.getElementById('btn-submit-auth').innerText = (currentAuthMode === 'login') ? resources.btnSubmitLogin : resources.btnSubmitSignup;
 
             // Payment modal strings elements updates
             document.getElementById('pay-modal-title').innerText = resources.payTitle;
