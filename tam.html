@@ -38,6 +38,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         /* Top Info Bar */
@@ -84,6 +85,7 @@
             height: 28px;
             background: linear-gradient(45deg, #009a44, #fed100, #ef4444);
             border-radius: 50%;
+            animation: pulseSticker 2s infinite ease-in-out;
         }
 
         .brand-name {
@@ -180,6 +182,24 @@
             font-weight: 600;
         }
 
+        /* Floating Interactive Sticker */
+        .floating-sticker {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, #fed100, #f59e0b);
+            color: #000;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            z-index: 999;
+            pointer-events: none;
+            animation: floatAnimation 3s infinite ease-in-out;
+            border: 2px solid #fff;
+        }
+
         /* Filter Controls */
         .filter-container {
             display: flex;
@@ -242,8 +262,8 @@
         }
 
         .course-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
         }
 
         .card-image-wrapper {
@@ -261,16 +281,23 @@
         .card-vector-bg {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.15); font-size: 5rem; font-weight: 900;
+            color: rgba(255,255,255,0.12); font-size: 5rem; font-weight: 900;
             position: relative;
         }
 
+        /* Moving Vector Graphic Sticker inside Card */
         .vector-shapes {
             position: absolute; bottom: 10px; right: 10px; left: 10px; top: 10px;
             border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #fff; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             text-align: center; padding: 0 10px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .course-card:hover .vector-shapes {
+            transform: scale(1.08) rotate(2deg);
+            border-color: rgba(255,255,255,0.5);
         }
 
         .card-body-content {
@@ -311,6 +338,7 @@
             padding: 10px 15px;
             border-radius: 8px;
             width: fit-content;
+            position: relative;
         }
         
         .interactive-rating-box span {
@@ -321,14 +349,28 @@
         }
 
         .star-rating-button {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: #4b5563;
             cursor: pointer;
-            transition: color 0.1s ease;
+            transition: color 0.1s ease, transform 0.1s ease;
         }
 
-        .star-rating-button.active-star, .star-rating-button:hover {
+        .star-rating-button:hover {
+            transform: scale(1.2);
+        }
+
+        .star-rating-button.active-star {
             color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Sticker Sticker Pop Effect */
+        .sticker-burst-element {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.5rem;
+            z-index: 9999;
+            animation: burstOutAnimation 0.8s forwards ease-out;
         }
 
         .card-footer-divider {
@@ -491,9 +533,27 @@
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
+        /* Keyframe Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes pulseSticker {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        @keyframes burstOutAnimation {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
+            100% { transform: translate(var(--mx), var(--my)) scale(1.4) rotate(var(--mr)); opacity: 0; }
         }
 
         .modal-overlay {
@@ -530,6 +590,8 @@
     </style>
 </head>
 <body>
+
+    <div class="floating-sticker">✨ EduNet 2026 Live Platform</div>
 
     <div class="top-bar">
         <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
@@ -611,13 +673,13 @@
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
         
-        <div class="interactive-rating-box">
+        <div class="interactive-rating-box" id="rating-component-wrapper">
             <span>Rate Course:</span>
-            <span class="star-rating-button" data-value="1" onclick="submitUserLiveRating(1)">★</span>
-            <span class="star-rating-button" data-value="2" onclick="submitUserLiveRating(2)">★</span>
-            <span class="star-rating-button" data-value="3" onclick="submitUserLiveRating(3)">★</span>
-            <span class="star-rating-button" data-value="4" onclick="submitUserLiveRating(4)">★</span>
-            <span class="star-rating-button" data-value="5" onclick="submitUserLiveRating(5)">★</span>
+            <span class="star-rating-button" data-value="1" onclick="submitUserLiveRating(1, event)">★</span>
+            <span class="star-rating-button" data-value="2" onclick="submitUserLiveRating(2, event)">★</span>
+            <span class="star-rating-button" data-value="3" onclick="submitUserLiveRating(3, event)">★</span>
+            <span class="star-rating-button" data-value="4" onclick="submitUserLiveRating(4, event)">★</span>
+            <span class="star-rating-button" data-value="5" onclick="submitUserLiveRating(5, event)">★</span>
         </div>
         
         <div class="workspace-container" id="workspace-grid-box">
@@ -718,7 +780,7 @@
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
-        // Expanded Course Database (Added more specialized options)
+        // Expanded Course Database
         const coursesDatabase = [
             { 
                 id: 1, 
@@ -815,7 +877,7 @@
                     <div class="card-body-content">
                         <h3 class="course-card-title">${course.title}</h3>
                         <div class="rating-row">
-                            <span class="rating-digits">${course.userRating > 0 ? '⭐ My Rating: ' + course.userRating + '/5' : '🚫 Not Rated Yet'}</span>
+                            <span class="rating-digits">${course.userRating > 0 ? '✨ My Rating: ' + course.userRating + '/5' : '🚫 Not Rated Yet'}</span>
                         </div>
                         <div class="card-footer-divider">
                             <span class="lesson-count-tag">📚 ${course.lessons} Lessons</span>
@@ -858,13 +920,10 @@
                 history.pushState({ view: 'course-inner', courseId: courseId }, '', `#course-${courseId}`);
             }
 
-            // Reset view state to hide video layout dynamically
             document.getElementById('classroom-video-col').style.display = 'none';
             document.getElementById('workspace-grid-box').classList.remove('video-active');
-
             document.getElementById('classroom-title').innerText = selectedCourse.title;
             
-            // Set up rating visualization
             highlightRatingStars(selectedCourse.userRating);
 
             const syllabusWrapper = document.getElementById('dynamic-syllabus-list-wrapper');
@@ -901,13 +960,41 @@
             window.scrollTo(0, 0);
         }
 
-        // Live Rate Option Handler
-        function submitUserLiveRating(ratingValue) {
+        // Live Rating Option Handler + Dynamic Floating Emojis Burst
+        function submitUserLiveRating(ratingValue, event) {
             const selectedCourse = coursesDatabase.find(c => c.id === currentlySelectedCourseId);
             if (selectedCourse) {
                 selectedCourse.userRating = ratingValue;
                 highlightRatingStars(ratingValue);
-                renderCourseCards(coursesDatabase); // Keep catalog sync updated
+                renderCourseCards(coursesDatabase); 
+
+                // Generate Floating Interactive Stickers on Click Engine
+                const totalStickersCount = 12;
+                const stickersArray = ['⭐', '✨', '🎓', '🔥', '🚀'];
+                
+                for(let i=0; i < totalStickersCount; i++) {
+                    const sticker = document.createElement('div');
+                    sticker.className = 'sticker-burst-element';
+                    sticker.innerText = stickersArray[Math.floor(Math.random() * stickersArray.length)];
+                    
+                    // Set initial dynamic positions right under cursor
+                    sticker.style.left = event.clientX + 'px';
+                    sticker.style.top = event.clientY + 'px';
+                    
+                    // Generate random trajectories
+                    const moveX = (Math.random() - 0.5) * 250;
+                    const moveY = (Math.random() - 0.5) * 250 - 100; // Prefer moving upwards
+                    const rotateR = Math.random() * 360;
+                    
+                    sticker.style.setProperty('--mx', `${moveX}px`);
+                    sticker.style.setProperty('--my', `${moveY}px`);
+                    sticker.style.setProperty('--mr', `${rotateR}deg`);
+                    
+                    document.body.appendChild(sticker);
+                    
+                    // Clean up DOM after movement ends
+                    setTimeout(() => sticker.remove(), 800);
+                }
             }
         }
 
@@ -977,7 +1064,6 @@
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById(`${viewName}-view`).classList.add('active-view');
             
-            // Manage top nav active visual accents
             document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active-nav'));
             if(viewName === 'home') document.getElementById('li-dash').classList.add('active-nav');
             if(viewName === 'explore') document.getElementById('li-explore').classList.add('active-nav');
