@@ -391,6 +391,17 @@
         .lesson-row:hover { background: rgba(255,255,255,0.08); }
         .lesson-row.playing-now { border-left: 4px solid var(--accent-green); background: rgba(16, 185, 129, 0.08); }
 
+        /* Syllabus Badges Alignment */
+        .badge-align {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 0.8rem;
+            min-width: 75px;
+            text-align: center;
+        }
+
         /* FLOATING BOTTOM RIGHT STICKY AI ASSISTANT CONSOLE DRAWER */
         .ai-sticky-bottom-widget {
             position: fixed;
@@ -533,6 +544,7 @@
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 
+                <!-- CLICK-BASED DROPDOWN FOR PAYMENT -->
                 <li class="dropdown" id="payment-dropdown-nav">
                     <button class="dropdown-trigger" onclick="togglePaymentDropdown(event)">Payment ▾</button>
                     <div class="dropdown-menu">
@@ -552,6 +564,7 @@
         </nav>
     </header>
 
+    <!-- STICKY SYSTEM-WIDE AI ASSISTANT -->
     <div class="ai-sticky-bottom-widget">
         <div class="ai-floating-card-body" id="ai-widget-panel">
             <h4 style="color: var(--accent-green); border-bottom: 1px solid var(--border-glass); padding-bottom: 6px; font-weight:700;">🤖 EduNet AI Assistant</h4>
@@ -566,6 +579,7 @@
         <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
     </div>
 
+    <!-- VIEW 1: HOME DASHBOARD -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -574,6 +588,7 @@
         </div>
     </main>
 
+    <!-- VIEW 2: EXPLORE COURSES -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
@@ -594,6 +609,7 @@
         <div class="course-grid" id="course-container-box"></div>
     </main>
 
+    <!-- VIEW 3: IN-COURSE WORKSPACE VIEW -->
     <main id="course-inner-view" class="app-view">
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
@@ -608,6 +624,7 @@
                 <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
             </div>
 
+            <!-- SYLLABUS DIRECTORY -->
             <div class="syllabus-box">
                 <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
                 <div id="dynamic-syllabus-list-wrapper"></div>
@@ -615,6 +632,7 @@
         </div>
     </main>
 
+    <!-- HOW TO PAY VIDEO MODAL -->
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
@@ -626,6 +644,7 @@
         </div>
     </div>
 
+    <!-- REGISTRATION MODAL -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
@@ -648,6 +667,7 @@
         </div>
     </div>
 
+    <!-- PAYMENT GATEWAY MODAL WITH SCREENSHOT ATTACHMENT -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -665,6 +685,7 @@
                 <label>Mobile Number (+251)</label>
                 <input type="tel" placeholder="912345678" required>
             </div>
+            <!-- ATTACHMENT OPTION -->
             <div class="form-group">
                 <label style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
                 <input type="file" id="payment-proof-file" accept="image/*" style="padding: 5px 0;">
@@ -876,11 +897,12 @@
                 const row = document.createElement('div');
                 row.className = `lesson-row ${idx === 0 ? 'playing-now' : ''}`;
                 
+                // Adjusted text and badges to look clean and separate
                 const actionBadge = module.isFree 
-                    ? `<span style="color:var(--accent-green); font-weight:bold;">🔓 Watch Free</span>`
-                    : `<span style="color:var(--accent-lock);">🔒 Lock (Pay)</span>`;
+                    ? `<div class="badge-align"><span style="color:var(--accent-green); font-size:1.1rem;">🔓</span><span style="color:var(--accent-green); font-weight:bold;">Watch Free</span></div>`
+                    : `<div class="badge-align"><span style="color:var(--accent-lock); font-size:1.1rem;">🔒</span><span style="color:var(--accent-lock);">Lock (Pay)</span></div>`;
 
-                row.innerHTML = `<span>${module.name}</span> ${actionBadge}`;
+                row.innerHTML = `<span style="max-width:70%; text-align:left;">${module.name}</span> ${actionBadge}`;
                 
                 // FIXED VIDEO CLICK LOADING HANDLER
                 row.onclick = () => {
