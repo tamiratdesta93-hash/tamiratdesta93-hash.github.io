@@ -220,10 +220,6 @@
             margin-top: 1.5rem;
         }
 
-        .course-grid.list-layout-mode {
-            grid-template-columns: 1fr;
-        }
-
         .course-card {
             background: var(--course-card-bg);
             border: 1px solid var(--course-border);
@@ -236,27 +232,11 @@
             cursor: pointer;
         }
 
-        .course-grid.list-layout-mode .course-card {
-            flex-direction: row;
-            height: 180px;
-        }
-
-        .course-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
         .card-image-wrapper {
             position: relative;
             width: 100%;
             height: 180px;
-            background: #e0e7ff;
             overflow: hidden;
-        }
-
-        .course-grid.list-layout-mode .card-image-wrapper {
-            width: 240px;
-            height: 100%;
         }
 
         .card-vector-bg {
@@ -272,15 +252,6 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #fff; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             text-align: center; padding: 0 10px;
-        }
-
-        .bookmark-badge {
-            position: absolute; top: 12px; right: 12px;
-            width: 34px; height: 34px; background: #ffffff;
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: var(--accent-blue);
-            cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            font-size: 0.95rem; border: none; z-index: 10;
         }
 
         .card-body-content {
@@ -303,29 +274,6 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 15px;
-        }
-
-        .star-rating-bar {
-            display: inline-flex;
-            flex-direction: row-reverse;
-            gap: 2px;
-        }
-
-        .star-rating-bar span {
-            color: #cbd5e1;
-            font-size: 1.25rem;
-            cursor: pointer;
-            transition: color 0.15s ease;
-        }
-
-        .star-rating-bar span:hover,
-        .star-rating-bar span:hover ~ span {
-            color: #f59e0b !important;
-        }
-
-        .star-rating-bar span.active-gold,
-        .star-rating-bar span.active-gold ~ span {
-            color: #f59e0b;
         }
 
         .rating-digits { 
@@ -356,13 +304,22 @@
             font-size: 0.9rem;
         }
 
-        /* Classroom Workspace Window Layout */
+        /* Classroom Workspace Layout */
         .workspace-container {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1fr; /* Default single column until video shows */
             gap: 30px;
             margin-top: 2rem;
         }
+        
+        .workspace-container.video-active {
+            grid-template-columns: 2fr 1fr; /* Switch to side-by-side when video active */
+        }
+
+        .video-column {
+            display: none; /* Initially hidden until free module click */
+        }
+
         .classroom-video {
             background: #000;
             width: 100%;
@@ -573,7 +530,6 @@
         <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
     </div>
 
-    <!-- VIEW 1: HOME DASHBOARD -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -582,7 +538,6 @@
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSES -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
@@ -603,17 +558,16 @@
         <div class="course-grid" id="course-container-box"></div>
     </main>
 
-    <!-- VIEW 3: IN-COURSE WORKSPACE VIEW -->
     <main id="course-inner-view" class="app-view">
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
         <p id="classroom-rating" style="color:var(--accent-gold); margin-bottom:1.5rem; font-weight: 600;">Rating</p>
         
-        <div class="workspace-container">
-            <div>
-                <!-- FIXED MATCHING VIDEO ELEMENT ID HERE -->
+        <div class="workspace-container" id="workspace-grid-box">
+            
+            <div class="video-column" id="classroom-video-col">
                 <video id="workspace-main-player" class="classroom-video" controls>
-                    <source id="video-media-source" src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    <source id="video-media-source" src="" type="video/mp4">
                 </video>
                 <h3 style="margin-top:1.5rem; margin-bottom:0.5rem;">About this Course</h3>
                 <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
@@ -626,7 +580,6 @@
         </div>
     </main>
 
-    <!-- HOW TO PAY VIDEO MODAL -->
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
@@ -637,7 +590,6 @@
         </div>
     </div>
 
-    <!-- REGISTRATION MODAL -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
@@ -660,7 +612,6 @@
         </div>
     </div>
 
-    <!-- PAYMENT GATEWAY MODAL WITH SCREENSHOT ATTACHMENT -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -717,7 +668,6 @@
                 totalReviewersCount: 3, 
                 bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", 
                 icon: "💻", 
-                order: 1,
                 syllabus: [
                     { name: "🎬 Module 01: Architecture Concept Foundations (FREE)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
                     { name: "📋 Module 02: Kernel Threading Operations Environment", isFree: false, url: "" },
@@ -732,7 +682,6 @@
                 totalReviewersCount: 2, 
                 bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", 
                 icon: "📈", 
-                order: 2,
                 syllabus: [
                     { name: "🎬 Module 01: Double-Entry Ledger System Mechanics (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
                     { name: "📋 Module 02: Balance Sheet Formulation Strategy Structures", isFree: false, url: "" }
@@ -746,7 +695,6 @@
                 totalReviewersCount: 3, 
                 bg: "linear-gradient(135deg, #ec4899 0%, #9d174d 100%)", 
                 icon: "📱", 
-                order: 3,
                 syllabus: [
                     { name: "🎬 Module 01: Understanding Algorithms & Audiences (FREE)", isFree: true, url: "https://www.w3schools.com/html/movie.mp4" },
                     { name: "📋 Module 02: Creating Paid Ad Campaigns", isFree: false, url: "" },
@@ -758,13 +706,11 @@
         const languageDictionary = {
             en: {
                 heroTitle: "Enjoy learning from hundreds of online courses",
-                heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
-                getStarted: "Get Started Now", dash: "Dashboard", explore: "Explore Courses", regBtn: "Register / Login"
+                heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies."
             },
             am: {
                 heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት።",
-                getStarted: "አሁን ይጀምሩ", dash: "ዳሽቦርድ", explore: "ኮርሶችን ያስሱ", regBtn: "ይመዝገቡ / ይግቡ"
+                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት"
             }
         };
 
@@ -774,8 +720,6 @@
 
             dataArray.forEach(course => {
                 const computedAverage = (course.totalStarsScore / course.totalReviewersCount).toFixed(2);
-                const wholeStarCount = Math.round(computedAverage);
-
                 const card = document.createElement('div');
                 card.className = "course-card";
                 card.setAttribute('onclick', `enterCourseDetails(${course.id})`);
@@ -816,6 +760,10 @@
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
             if (!selectedCourse) return;
 
+            // RESET LAYOUT TO HIDE VIDEO COLUMN INITIALLY
+            document.getElementById('classroom-video-col').style.display = 'none';
+            document.getElementById('workspace-grid-box').classList.remove('video-active');
+
             const avgScore = (selectedCourse.totalStarsScore / selectedCourse.totalReviewersCount).toFixed(2);
             document.getElementById('classroom-title').innerText = selectedCourse.title;
             document.getElementById('classroom-rating').innerText = `⭐ Rating Average: ${avgScore}`;
@@ -825,7 +773,7 @@
 
             selectedCourse.syllabus.forEach((module, idx) => {
                 const row = document.createElement('div');
-                row.className = `lesson-row ${idx === 0 ? 'playing-now' : ''}`;
+                row.className = 'lesson-row';
                 
                 const actionBadge = module.isFree 
                     ? `<div class="badge-align"><span style="color:var(--accent-green); font-size:1.1rem;">🔓</span><span style="color:var(--accent-green); font-weight:bold;">Watch Free</span></div>`
@@ -837,6 +785,11 @@
                     if (module.isFree) {
                         document.querySelectorAll('.lesson-row').forEach(r => r.classList.remove('playing-now'));
                         row.classList.add('playing-now');
+                        
+                        // REVEAL VIDEO WRAPPER AND SWAP COLUMNS ON CLICK
+                        document.getElementById('classroom-video-col').style.display = 'block';
+                        document.getElementById('workspace-grid-box').classList.add('video-active');
+                        
                         switchWorkspaceVideoSource(module.url);
                     } else {
                         openPaymentModal();
@@ -845,20 +798,18 @@
                 syllabusWrapper.appendChild(row);
             });
 
-            switchWorkspaceVideoSource(selectedCourse.syllabus[0].url);
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById('course-inner-view').classList.add('active-view');
             window.scrollTo(0, 0);
         }
 
-        // CORRECTED SOURCE ASSIGNMENT PIPELINE HANDLER
         function switchWorkspaceVideoSource(videoUrl) {
             const player = document.getElementById('workspace-main-player');
             const source = document.getElementById('video-media-source');
             if (player && source) {
                 source.src = videoUrl;
                 player.load();
-                player.play().catch(err => console.log("Playback interaction error:", err));
+                player.play().catch(err => console.log("Playback engine handled:", err));
             }
         }
 
@@ -869,42 +820,4 @@
 
         function submitAiAssistantQuery() {
             const inputField = document.getElementById('ai-user-prompt-input');
-            const promptText = inputField.value.trim();
-            if(!promptText) return;
-            document.getElementById('ai-chat-output-logs').innerHTML += `<p><strong>You:</strong> ${promptText}</p>`;
-            inputField.value = "";
-        }
-
-        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
-        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
-        
-        function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
-        function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
-        
-        function openHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex'; }
-        function closeHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'none'; }
-
-        function executeUserRegistration(e) {
-            e.preventDefault();
-            closeRegistrationModal();
-        }
-
-        function processPremiumPaymentSimulation() {
-            closePaymentModal();
-        }
-
-        function runLanguageEngine(langCode) {
-            const resources = languageDictionary[langCode] || languageDictionary['en'];
-            document.getElementById('hero-title').innerText = resources.heroTitle;
-            document.getElementById('hero-desc').innerText = resources.heroDesc;
-        }
-
-        function navigateView(viewName) {
-            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
-            document.getElementById(`${viewName}-view`).classList.add('active-view');
-        }
-
-        renderCourseCards(coursesDatabase);
-    </script>
-</body>
-</html>
+            const promptText =
