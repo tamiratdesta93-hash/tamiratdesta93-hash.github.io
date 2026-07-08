@@ -220,6 +220,10 @@
             margin-top: 1.5rem;
         }
 
+        .course-grid.list-layout-mode {
+            grid-template-columns: 1fr !important;
+        }
+
         .course-card {
             background: var(--course-card-bg);
             border: 1px solid var(--course-border);
@@ -232,11 +236,26 @@
             cursor: pointer;
         }
 
+        .course-grid.list-layout-mode .course-card {
+            flex-direction: row;
+            height: 180px;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
         .card-image-wrapper {
             position: relative;
             width: 100%;
             height: 180px;
             overflow: hidden;
+        }
+
+        .course-grid.list-layout-mode .card-image-wrapper {
+            width: 240px;
+            height: 100%;
         }
 
         .card-vector-bg {
@@ -307,17 +326,17 @@
         /* Classroom Workspace Layout */
         .workspace-container {
             display: grid;
-            grid-template-columns: 1fr; /* Default single column until video shows */
+            grid-template-columns: 1fr;
             gap: 30px;
             margin-top: 2rem;
         }
         
         .workspace-container.video-active {
-            grid-template-columns: 2fr 1fr; /* Switch to side-by-side when video active */
+            grid-template-columns: 2fr 1fr;
         }
 
         .video-column {
-            display: none; /* Initially hidden until free module click */
+            display: none;
         }
 
         .classroom-video {
@@ -530,6 +549,7 @@
         <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
     </div>
 
+    <!-- VIEW 1: HOME DASHBOARD -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -538,10 +558,11 @@
         </div>
     </main>
 
+    <!-- VIEW 2: EXPLORE COURSES -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
-                <span id="txt-grid">Grid</span>
+                <span id="txt-grid">Layout</span>
                 <button class="view-toggle-btn" id="btn-grid-view" onclick="changeLayout('grid')">⣿</button>
                 <button class="view-toggle-btn inactive-layout" id="btn-list-view" onclick="changeLayout('list')">☰</button>
             </div>
@@ -558,6 +579,7 @@
         <div class="course-grid" id="course-container-box"></div>
     </main>
 
+    <!-- VIEW 3: IN-COURSE WORKSPACE VIEW -->
     <main id="course-inner-view" class="app-view">
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
@@ -565,6 +587,7 @@
         
         <div class="workspace-container" id="workspace-grid-box">
             
+            <!-- LEFT VIDEO COLUMN -->
             <div class="video-column" id="classroom-video-col">
                 <video id="workspace-main-player" class="classroom-video" controls>
                     <source id="video-media-source" src="" type="video/mp4">
@@ -573,6 +596,7 @@
                 <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
             </div>
 
+            <!-- RIGHT MODULES COLUMN -->
             <div class="syllabus-box">
                 <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
                 <div id="dynamic-syllabus-list-wrapper"></div>
@@ -580,6 +604,7 @@
         </div>
     </main>
 
+    <!-- HOW TO PAY VIDEO MODAL -->
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
@@ -590,6 +615,7 @@
         </div>
     </div>
 
+    <!-- REGISTRATION MODAL -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
@@ -612,6 +638,7 @@
         </div>
     </div>
 
+    <!-- PAYMENT GATEWAY MODAL -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -752,15 +779,30 @@
 
         function changeLayout(mode) {
             const container = document.getElementById('course-container-box');
-            if (mode === 'list') container.classList.add('list-layout-mode');
-            else container.classList.remove('list-layout-mode');
+            const btnGrid = document.getElementById('btn-grid-view');
+            const btnList = document.getElementById('btn-list-view');
+            
+            if (mode === 'list') {
+                container.classList.add('list-layout-mode');
+                btnList.classList.remove('inactive-layout');
+                btnGrid.classList.add('inactive-layout');
+            } else {
+                container.classList.remove('list-layout-mode');
+                btnGrid.classList.remove('inactive-layout');
+                btnList.classList.add('inactive-layout');
+            }
         }
 
-        function enterCourseDetails(courseId) {
+        function enterCourseDetails(courseId, isFromPopState = false) {
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
             if (!selectedCourse) return;
 
-            // RESET LAYOUT TO HIDE VIDEO COLUMN INITIALLY
+            // Save state for Browser Back Button functionality
+            if (!isFromPopState) {
+                history.pushState({ view: 'course-inner', courseId: courseId }, '', `#course-${courseId}`);
+            }
+
+            // Reset view state to hide video layout dynamically
             document.getElementById('classroom-video-col').style.display = 'none';
             document.getElementById('workspace-grid-box').classList.remove('video-active');
 
@@ -786,7 +828,6 @@
                         document.querySelectorAll('.lesson-row').forEach(r => r.classList.remove('playing-now'));
                         row.classList.add('playing-now');
                         
-                        // REVEAL VIDEO WRAPPER AND SWAP COLUMNS ON CLICK
                         document.getElementById('classroom-video-col').style.display = 'block';
                         document.getElementById('workspace-grid-box').classList.add('video-active');
                         
@@ -850,11 +891,35 @@
             document.getElementById('hero-desc').innerText = resources.heroDesc;
         }
 
-        function navigateView(viewName) {
+        function navigateView(viewName, isFromPopState = false) {
+            if (!isFromPopState) {
+                history.pushState({ view: viewName }, '', viewName === 'home' ? '/' : `#${viewName}`);
+            }
+
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById(`${viewName}-view`).classList.add('active-view');
+            
+            // Manage top nav active visual accents
+            document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active-nav'));
+            if(viewName === 'home') document.getElementById('li-dash').classList.add('active-nav');
+            if(viewName === 'explore') document.getElementById('li-explore').classList.add('active-nav');
         }
 
+        // BROWSER HISTORY EVENTS LISTENER (Captures back button)
+        window.addEventListener('popstate', function(event) {
+            if (event.state) {
+                if (event.state.view === 'course-inner') {
+                    enterCourseDetails(event.state.courseId, true);
+                } else {
+                    navigateView(event.state.view, true);
+                }
+            } else {
+                navigateView('home', true);
+            }
+        });
+
+        // Initialize state on page load
+        history.replaceState({ view: 'home' }, '', '/');
         renderCourseCards(coursesDatabase);
     </script>
 </body>
