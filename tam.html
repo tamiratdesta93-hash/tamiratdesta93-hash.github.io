@@ -325,13 +325,51 @@
             padding: 20px;
         }
         .lesson-row {
-            padding: 12px;
+            padding: 14px;
             border-bottom: 1px solid var(--border-glass);
             display: flex;
             justify-content: space-between;
+            align-items: center;
             cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            margin-bottom: 8px;
         }
-        .lesson-row:hover { background: rgba(255,255,255,0.05); }
+        .lesson-row:hover { background: rgba(255,255,255,0.08); }
+        .lesson-row.playing-now { border-left: 4px solid var(--accent-green); background: rgba(16, 185, 129, 0.08); }
+
+        /* Floating AI Assistant Chat Panel Drawer */
+        .ai-assistant-drawer {
+            margin-top: 25px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .ai-chat-history {
+            max-height: 180px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .ai-input-wrap {
+            display: flex;
+            gap: 10px;
+        }
+        .ai-input-wrap input {
+            flex-grow: 1;
+            background: #0b0f19;
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+        }
 
         /* Buttons & Functional Modals Components */
         .btn {
@@ -387,7 +425,7 @@
         .modal-window h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%; background: #1f2937; border: 1px solid var(--border-glass);
             padding: 10px 14px; border-radius: 6px; color: white; font-size: 0.95rem;
         }
@@ -418,7 +456,6 @@
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openRegistrationModal()">Register / Login</button></li>
                 <li>
-                    <!-- Restored Full Multilingual Matrix Array Options -->
                     <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
                         <option value="am">አማርኛ (Amharic)</option>
@@ -470,21 +507,38 @@
         
         <div class="workspace-container">
             <div>
-                <video class="classroom-video" controls poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600">
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                <!-- Primary Native Media Node Stream Target -->
+                <video id="workspace-main-player" class="classroom-video" controls poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600">
+                    <source id="video-media-source" src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                 </video>
+                
                 <h3 style="margin-top:1.5rem; margin-bottom:0.5rem;">About this Course</h3>
-                <p style="color:var(--text-dim); line-height:1.6;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
+                <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
+
+                <!-- AI LEARNING ASSISTANT INTERFACE PANEL -->
+                <div class="ai-assistant-drawer">
+                    <h4 style="color: var(--accent-green); display: flex; align-items: center; gap: 8px;">🤖 EduNet AI Tutor Workspace</h4>
+                    <div class="ai-chat-history" id="ai-chat-output-logs">
+                        <p style="color: var(--text-dim);"><em>System: Hello! Ask me anything about this course syllabus, specific lesson targets, or real-world application workflows.</em></p>
+                    </div>
+                    <div class="ai-input-wrap">
+                        <input type="text" id="ai-user-prompt-input" placeholder="Type a message or formula question..." onkeydown="if(event.key === 'Enter') submitAiAssistantQuery()">
+                        <button class="btn btn-primary" onclick="submitAiAssistantQuery()">Ask AI</button>
+                    </div>
+                </div>
             </div>
+
+            <!-- INTERACTIVE INTERACTIVE SYLLABUS LIST -->
             <div class="syllabus-box">
                 <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
-                <div class="lesson-row"><span>📋 Module 01: Core Principles Concept</span><span style="color:var(--accent-green)">Watch</span></div>
-                <div class="lesson-row"><span>📋 Module 02: Systems Operations Setup</span><span>Locked</span></div>
+                <div id="dynamic-syllabus-list-wrapper">
+                    <!-- Dynamic Interactive modules generated programmatically by JavaScript -->
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- RESTORED REGISTRATION MODAL POPUP LAYER WINDOW -->
+    <!-- REGISTRATION MODAL POPUP LAYER WINDOW -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
@@ -507,6 +561,28 @@
         </div>
     </div>
 
+    <!-- INTEGRATED TELEBIRR / CBE BIRR NATIVE SIMULATION CHECKOUT PAYMENT GATEWAY MODAL -->
+    <div class="modal-overlay" id="payment-modal-overlay">
+        <div class="modal-window">
+            <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
+            <h3 style="color: var(--accent-gold);">💳 Premium Asset Activation</h3>
+            <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;">This advanced workflow structure module requires premium licensing clearance.</p>
+            <div class="form-group">
+                <label>Select Local Micro-Payment Core Service</label>
+                <select id="payment-vendor-select">
+                    <option value="telebirr">Telebirr (Ethio Telecom)</option>
+                    <option value="cbe">CBE Birr Wallet</option>
+                    <option value="ebirr">Chapa / E-Birr Connect</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Mobile Number (+251)</label>
+                <input type="tel" placeholder="912345678" required>
+            </div>
+            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Authorize 250 ETB Secure Payment</button>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
     </footer>
@@ -521,56 +597,76 @@
 
         // Memory Structural Object Data Registry 
         const coursesDatabase = [
-            { id: 1, title: "Introduction to Computers & OS Basics", lessons: 4, totalStarsScore: 15, totalReviewersCount: 3, bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", icon: "💻", order: 1 },
-            { id: 2, title: "Accounting & Corporate Finance Modules", lessons: 6, totalStarsScore: 8, totalReviewersCount: 2, bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", icon: "📈", order: 2 },
-            { id: 3, title: "ICT & Network Computing Infrastructure", lessons: 8, totalStarsScore: 19, totalReviewersCount: 4, bg: "linear-gradient(135deg, #ec4899 0%, #701a75 100%)", icon: "🌐", order: 3 }
+            { 
+                id: 1, 
+                title: "Introduction to Computers & OS Basics", 
+                lessons: 4, 
+                totalStarsScore: 15, 
+                totalReviewersCount: 3, 
+                bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", 
+                icon: "💻", 
+                order: 1,
+                syllabus: [
+                    { name: "🎬 Module 01: Architecture Concept Foundations (FREE)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+                    { name: "📋 Module 02: Kernel Threading Operations Environment", isFree: false, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name: "📋 Module 03: Local File Management System Configuration", isFree: false, url: "https://www.w3schools.com/html/movie.mp4" }
+                ]
+            },
+            { 
+                id: 2, 
+                title: "Accounting & Corporate Finance Modules", 
+                lessons: 6, 
+                totalStarsScore: 8, 
+                totalReviewersCount: 2, 
+                bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", 
+                icon: "📈", 
+                order: 2,
+                syllabus: [
+                    { name: "🎬 Module 01: Double-Entry Ledger System Mechanics (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name: "📋 Module 02: Balance Sheet Formulation Strategy Structures", isFree: false, url: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                ]
+            },
+            { 
+                id: 3, 
+                title: "ICT & Network Computing Infrastructure", 
+                lessons: 8, 
+                totalStarsScore: 19, 
+                totalReviewersCount: 4, 
+                bg: "linear-gradient(135deg, #ec4899 0%, #701a75 100%)", 
+                icon: "🌐", 
+                order: 3,
+                syllabus: [
+                    { name: "🎬 Module 01: OSI Reference Stack Architecture Map (FREE)", isFree: true, url: "https://www.w3schools.com/html/movie.mp4" },
+                    { name: "📋 Module 02: Subnetting Matrix Routing Tables Deployments", isFree: false, url: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                ]
+            }
         ];
 
-        // Restored Full Translation Dictionary System Map
+        // Translation Dictionary System Map
         const languageDictionary = {
             en: {
                 heroTitle: "Enjoy learning from hundreds of online courses",
                 heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
-                getStarted: "Get Started Now",
-                dash: "Dashboard",
-                explore: "Explore Courses",
-                regBtn: "Register / Login",
-                heading: "Create Free Account",
-                submit: "Submit Registration",
-                gridSpan: "Grid"
+                getStarted: "Get Started Now", dash: "Dashboard", explore: "Explore Courses", regBtn: "Register / Login",
+                heading: "Create Free Account", submit: "Submit Registration", gridSpan: "Grid"
             },
             am: {
                 heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
                 heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት።",
-                getStarted: "አሁን ይጀምሩ",
-                dash: "ዳሽቦርድ",
-                explore: "ኮርሶችን ያስሱ",
-                regBtn: "ይመዝገቡ / ይግቡ",
-                heading: "ነፃ መለያ ይፍጠሩ",
-                submit: "ምዝገባን አስረክብ",
-                gridSpan: "ፍርግርግ"
+                getStarted: "አሁን ይጀምሩ", dash: "ዳሽቦርድ", explore: "ኮርሶችን ያስሱ", regBtn: "ይመዝገቡ / ይግቡ",
+                heading: "ነፃ መለያ ይፍጠሩ", submit: "ምዝገባን አስረክብ", gridSpan: "ፍርግርግ"
             },
             fr: {
                 heroTitle: "Profitez de l'apprentissage de centaines de cours en ligne",
                 heroDesc: "Fournir des cours de haute qualité en compétences numériques, littératie financière, développement commercial et technologique.",
-                getStarted: "Commencer Maintenant",
-                dash: "Tableau de Bord",
-                explore: "Explorer les Cours",
-                regBtn: "S'inscrire / Se Connecter",
-                heading: "Créer un Compte Gratuit",
-                submit: "Soumettre l'inscription",
-                gridSpan: "Grille"
+                getStarted: "Commencer Maintenant", dash: "Tableau de Bord", explore: "Explorer les Cours", regBtn: "S'inscrire / Se Connecter",
+                heading: "Créer un Compte Gratuit", submit: "Soumettre l'inscription", gridSpan: "Grille"
             },
             ar: {
                 heroTitle: "استمتع بالتعلم من مئات الدورات التدريبية عبر الإنترنت",
                 heroDesc: "تقديم دورات عالية الجودة في المهارات الرقمية، والثقافة المالية، وتطوير الأعمال والتكنولوجيا الناشئة.",
-                getStarted: "ابدأ الآن",
-                dash: "لوحة القيادة",
-                explore: "استكشاف الدورات",
-                regBtn: "تسجيل / دخول",
-                heading: "إنشاء حساب مجاني",
-                submit: "إرسال التسجيل",
-                gridSpan: "شبكة"
+                getStarted: "ابدأ الآن", dash: "لوحة القيادة", explore: "استكشاف الدورات", regBtn: "تسجيل / دخول",
+                heading: "إنشاء حساب مجاني", submit: "إرسال التسجيل", gridSpan: "شبكة"
             }
         };
 
@@ -667,6 +763,77 @@
             }
         }
 
+        /* DYNAMIC WORKSPACE SYLLABUS INTERACTIVE ENGINE */
+        function enterCourseDetails(courseId) {
+            const selectedCourse = coursesDatabase.find(c => c.id === courseId);
+            if (!selectedCourse) return;
+
+            const avgScore = (selectedCourse.totalStarsScore / selectedCourse.totalReviewersCount).toFixed(2);
+            document.getElementById('classroom-title').innerText = selectedCourse.title;
+            document.getElementById('classroom-rating').innerText = `⭐ Rating Average: ${avgScore} out of ${selectedCourse.totalReviewersCount} user submissions.`;
+
+            // Clear & build dynamic syllabus rows
+            const syllabusWrapper = document.getElementById('dynamic-syllabus-list-wrapper');
+            syllabusWrapper.innerHTML = "";
+
+            selectedCourse.syllabus.forEach((module, idx) => {
+                const row = document.createElement('div');
+                row.className = `lesson-row ${idx === 0 ? 'playing-now' : ''}`;
+                
+                const actionBadge = module.isFree 
+                    ? `<span style="color:var(--accent-green); font-weight:bold;">🔓 Watch Free</span>`
+                    : `<span style="color:var(--accent-lock);">🔒 Lock (Pay)</span>`;
+
+                row.innerHTML = `<span>${module.name}</span> ${actionBadge}`;
+                
+                // Add click handler to switch videos dynamically
+                row.onclick = () => {
+                    if (module.isFree) {
+                        document.querySelectorAll('.lesson-row').forEach(r => r.classList.remove('playing-now'));
+                        row.classList.add('playing-now');
+                        switchWorkspaceVideoSource(module.url);
+                    } else {
+                        openPaymentModal();
+                    }
+                };
+
+                syllabusWrapper.appendChild(row);
+            });
+
+            // Default to loading the first video path
+            switchWorkspaceVideoSource(selectedCourse.syllabus[0].url);
+
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+            document.getElementById('course-inner-view').classList.add('active-view');
+            window.scrollTo(0, 0);
+            history.pushState({ view: 'course-inner', id: courseId }, "", "");
+        }
+
+        function switchWorkspaceVideoSource(videoUrl) {
+            const player = document.getElementById('workspace-main-player');
+            const source = document.getElementById('video-media-source');
+            source.src = videoUrl;
+            player.load();
+            player.play().catch(() => {/* Handle browser auto-play blocker alerts silently */});
+        }
+
+        /* AI CONVERSATION DRAWER ENGINE SIMULATION */
+        function submitAiAssistantQuery() {
+            const inputField = document.getElementById('ai-user-prompt-input');
+            const promptText = inputField.value.trim();
+            if(!promptText) return;
+
+            const chatHistory = document.getElementById('ai-chat-output-logs');
+            chatHistory.innerHTML += `<p style='margin-top:5px;'><strong>You:</strong> ${promptText}</p>`;
+            inputField.value = "";
+
+            // Simulate localized AI processing response
+            setTimeout(() => {
+                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Tutor:</strong> That's a great question regarding these training nodes. To master this concept, map the operational criteria to real-world deployment metrics inside Ethiopia's emerging digital infrastructure framework!</p>`;
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }, 750);
+        }
+
         // Language Swapping Translation Core Engine
         function runLanguageEngine(langCode) {
             const resources = languageDictionary[langCode] || languageDictionary['en'];
@@ -681,7 +848,6 @@
             document.getElementById('btn-submit-reg').innerText = resources.submit;
             document.getElementById('txt-grid').innerText = resources.gridSpan;
 
-            // Handle RTL alignment layout switch specifically for Arabic
             if (langCode === 'ar') {
                 document.body.style.direction = "rtl";
                 document.querySelectorAll('.nav-links').forEach(el => el.style.flexDirection = "row-reverse");
@@ -691,10 +857,11 @@
             }
         }
 
-        // Modal Action Controllers
+        // Modal Controllers
         function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
-        document.getElementById('auth-modal-overlay').addEventListener('click', function(e) { if(e.target === this) closeRegistrationModal(); });
         function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
+        function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
+        function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
         
         function executeUserRegistration(e) {
             e.preventDefault();
@@ -703,18 +870,10 @@
             document.getElementById('btn-auth-trigger').innerText = "👤 Profile Overview";
         }
 
-        function enterCourseDetails(courseId) {
-            const selectedCourse = coursesDatabase.find(c => c.id === courseId);
-            if (!selectedCourse) return;
-
-            const avgScore = (selectedCourse.totalStarsScore / selectedCourse.totalReviewersCount).toFixed(2);
-            document.getElementById('classroom-title').innerText = selectedCourse.title;
-            document.getElementById('classroom-rating').innerText = `⭐ Rating Average: ${avgScore} out of ${selectedCourse.totalReviewersCount} user submissions.`;
-
-            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
-            document.getElementById('course-inner-view').classList.add('active-view');
-            window.scrollTo(0, 0);
-            history.pushState({ view: 'course-inner', id: courseId }, "", "");
+        function processPremiumPaymentSimulation() {
+            const vendor = document.getElementById('payment-vendor-select').value;
+            alert(`Simulating secure transaction endpoint routing via ${vendor}... Success! Module unlocked.`);
+            closePaymentModal();
         }
 
         function renderView(viewName) {
@@ -744,6 +903,7 @@
             }
         });
 
+        // Initialize Base Configuration Setup
         history.replaceState({ view: 'home' }, "", "");
         renderCourseCards(coursesDatabase);
     </script>
