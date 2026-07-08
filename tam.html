@@ -313,6 +313,39 @@
             max-width: 420px;
         }
 
+        /* Dynamic Form Tab Controls */
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-glass);
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .auth-tab.active-tab {
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue);
+            margin-bottom: -2px;
+        }
+
+        .auth-form-view {
+            display: none;
+        }
+
+        .auth-form-view.active-form {
+            display: block;
+        }
+
         .input-box {
             width: 100%; padding: 0.75rem 1rem;
             background: #1f2937; border: 1px solid var(--border-glass);
@@ -350,8 +383,7 @@
                         <option value="am">አማርኛ</option>
                     </select>
                 </li>
-                <!-- Updated validation target for returning Senior track processing -->
-                <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Senior Registration</button></li>
+                <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Senior Gateway</button></li>
                 <li>
                     <!-- 3-Dot Action Trigger Dropdown Block -->
                     <div class="three-dot-menu">
@@ -467,21 +499,42 @@
     <!-- FLOATING AI ASSISTANT WIDGET MODULE -->
     <div class="ai-assistant" title="AI Support Sandbox Desk" onclick="alert('Hello student! How can the EduNet Core Intelligent Assistant Engine streamline your course configuration pathways today?')">🤖</div>
 
-    <!-- SENIOR STUDENT ACCESS MODAL FRAME -->
+    <!-- GATEWAY MODAL PANEL (LOGIN AND SIGN UP TABS) -->
     <div class="overlay" id="authGate">
         <div class="auth-panel">
-            <h2 id="m-title" style="font-size: 1.5rem; margin-bottom: 0.3rem;">Senior Re-Registration</h2>
-            <p id="m-sub" style="color: var(--accent-gold); font-size: 0.85rem; margin-bottom: 1.5rem; font-weight: 600;">⚠️ Access Restricted to Existing Senior IDs Only</p>
-            <form onsubmit="processRegistration(event)">
-                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-id">Senior Student ID Number</label>
+            <div class="auth-tabs">
+                <button class="auth-tab active-tab" onclick="switchFormTab('login', this)">Login</button>
+                <button class="auth-tab" onclick="switchFormTab('signup', this)">Sign Up</button>
+            </div>
+            
+            <p style="color: var(--accent-gold); font-size: 0.8rem; margin-bottom: 1rem; text-align: center; font-weight: 600;">⚠️ Senior Academic Track Only</p>
+
+            <!-- TAB BLOCK A: RETURNING STUDENT LOGIN -->
+            <form id="loginForm" class="auth-form-view active-form" onsubmit="handleAuthSubmit(event, 'Login')">
+                <label style="font-size: 0.8rem; font-weight: 600;">Senior Student ID</label>
                 <input type="text" class="input-box" placeholder="ETS/SR/XXXX" required>
                 
-                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-pass">Academic Clearance Pin</label>
+                <label style="font-size: 0.8rem; font-weight: 600;">Account Password</label>
                 <input type="password" class="input-box" placeholder="••••••••" required>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" id="btn-submit">Verify Senior Profile</button>
-                <button type="button" class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: var(--text-dim);" onclick="closeAuth()" id="btn-cancel">Cancel</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Access Portal Account</button>
             </form>
+
+            <!-- TAB BLOCK B: SENIOR PROFILE REGISTER / SIGN UP -->
+            <form id="signupForm" class="auth-form-view" onsubmit="handleAuthSubmit(event, 'Registration')">
+                <label style="font-size: 0.8rem; font-weight: 600;">Senior Student ID</label>
+                <input type="text" class="input-box" placeholder="ETS/SR/XXXX" required>
+
+                <label style="font-size: 0.8rem; font-weight: 600;">Identity Email</label>
+                <input type="email" class="input-box" placeholder="senior@domain.et" required>
+                
+                <label style="font-size: 0.8rem; font-weight: 600;">Create Access Token Pin</label>
+                <input type="password" class="input-box" placeholder="••••••••" required>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Create Senior Account</button>
+            </form>
+
+            <button type="button" class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: var(--text-dim);" onclick="closeAuth()">Cancel</button>
         </div>
     </div>
 
@@ -492,7 +545,6 @@
 
     <!-- Comprehensive Client Control Engine Script -->
     <script>
-        // Real-time System Analytics Live Clock Execution Routine
         function updateSystemClock() {
             const now = new Date();
             document.getElementById('live-clock').innerText = "System Time: " + now.toLocaleString();
@@ -500,7 +552,6 @@
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
 
-        // 3-Dot Options Action Toggle Routine
         function toggleDropdown(event) {
             event.stopPropagation();
             const dropdown = document.getElementById('actionDropdown');
@@ -511,7 +562,7 @@
             document.getElementById('actionDropdown').style.display = 'none';
         }
 
-        // REVERTED: Straightforward tab component layout toggle script execution engine
+        // Standard direct layout component toggling engine
         function switchView(viewName, menuElement) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById(`${viewName}-view`).classList.add('active-view');
@@ -523,12 +574,21 @@
             window.scrollTo(0,0);
         }
 
+        // Inside the Modal Tab Switching Engine
+        function switchFormTab(formType, tabElement) {
+            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active-tab'));
+            tabElement.classList.add('active-tab');
+
+            document.querySelectorAll('.auth-form-view').forEach(form => form.classList.remove('active-form'));
+            document.getElementById(`${formType}Form`).classList.add('active-form');
+        }
+
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
-        function processRegistration(e) {
+        function handleAuthSubmit(e, typeLabel) {
             e.preventDefault();
-            alert("Senior Credentials Validated! Premium advanced core tracking layers have been unlocked successfully.");
+            alert(`${typeLabel} Successful! Senior profile authorized. Locked core tracks have been decrypted.`);
             closeAuth();
             document.querySelectorAll('.btn-locked').forEach(badge => {
                 badge.className = "btn-status btn-free";
@@ -540,26 +600,24 @@
         // Language Engine Switch Translation Mapping Arrays
         const dictionary = {
             en: {
-                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", reg: "Senior Registration",
+                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", reg: "Senior Gateway",
                 hTitle: "Enjoy learning from hundreds of online courses",
                 hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
                 exh: "Available Training Modules", exs: "Select individual access nodes below to view file systems or execute dynamic media playback tracking.",
                 c1: "Accounting & Finance Modules", c1d: "Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.",
                 c2: "ICT & Computing Infrastructure", c2d: "Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.",
                 infh: "Academic System Information Hub", sch: "Schedule Structure Parameters:", crt: "Industrial Certification Matrix:",
-                lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:",
-                mt: "Senior Re-Registration", ms: "⚠️ Access Restricted to Existing Senior IDs Only"
+                lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:"
             },
             am: {
-                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", reg: "የአንጋፋ ተማሪዎች ምዝገባ",
+                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", reg: "የነባር ተማሪዎች መግቢያ",
                 hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
                 hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
                 exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማራጮች ይምረጡ።",
                 c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ መግለጫዎችን፣ የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
                 c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮቶኮሎችን ያጠኑ።",
                 infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግራም መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
-                lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
-                mt: "የነባር ተማሪዎች ምዝገባ", ms: "⚠️ ይህ አገልግሎት ለነባር/አንጋፋ ተማሪዎች ብቻ የተፈቀደ ነው"
+                lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡"
             }
         };
 
@@ -582,8 +640,6 @@
             document.getElementById('box-cert').nextSibling.textContent = " " + word.crt;
             document.getElementById('loc-title').innerText = word.lt;
             document.getElementById('loc-desc').innerText = word.ld;
-            document.getElementById('m-title').innerText = word.mt;
-            document.getElementById('m-sub').innerText = word.ms;
         }
     </script>
 </body>
