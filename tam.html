@@ -12,6 +12,7 @@
             --accent-gold: #f59e0b;
             --bg-space: #0b0f19;
             --card-glass: rgba(22, 30, 49, 0.75);
+            --item-bg: rgba(255, 255, 255, 0.03);
             --text-pure: #ffffff;
             --text-dim: #94a3b8;
             --border-glass: rgba(255, 255, 255, 0.08);
@@ -200,12 +201,16 @@
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
-        /* Explore Grid Layout */
+        /* Explore Clean Grid Layout Upgrade */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 30px;
             margin-top: 2rem;
+        }
+
+        @media (max-width: 500px) {
+            .grid-container { grid-template-columns: 1fr; }
         }
 
         .glass-card {
@@ -214,49 +219,66 @@
             border-radius: 16px;
             padding: 2rem;
             backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .glass-card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
-        .glass-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem; }
+        .card-header h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .card-header p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
 
-        /* Link Access Schedule Tables Setup */
-        .table-wrapper {
-            background: var(--card-glass);
+        /* Modernized List Rows instead of primitive tables */
+        .course-modules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .module-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--item-bg);
             border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 1.5rem;
+            padding: 12px 16px;
+            border-radius: 10px;
+            gap: 15px;
         }
 
-        .lesson-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+        .module-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .lesson-table th, .lesson-table td {
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border-glass);
+        .module-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-pure);
         }
 
-        .lesson-table th { background: rgba(0,0,0,0.2); font-weight: 700; color: var(--text-pure); }
-        .lesson-table td { color: var(--text-dim); font-size: 0.9rem; }
+        .module-meta {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
 
-        /* Link Action Badges */
+        /* Status & Streaming Tags Styling */
         .btn-status {
             display: inline-block;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 700;
             font-size: 0.8rem;
             border: 1px solid transparent;
             text-align: center;
+            white-space: nowrap;
+            cursor: pointer;
         }
 
-        .btn-free { background-color: rgba(16, 185, 129, 0.15); color: var(--accent-green); border-color: var(--accent-green); }
+        .btn-free { background-color: rgba(16, 185, 129, 0.12); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); }
         .btn-free:hover { background: var(--accent-green); color: #fff; }
-        .btn-locked { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-lock); border-color: var(--accent-lock); cursor: not-allowed; }
+        .btn-locked { background-color: rgba(239, 68, 68, 0.08); color: var(--accent-lock); border-color: rgba(239, 68, 68, 0.2); cursor: not-allowed; }
 
         /* Info boxes */
         .info-box {
@@ -421,66 +443,72 @@
 
     <main id="explore-view" class="app-view">
         <h2 id="exp-head" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Available Training Modules</h2>
-        <p id="exp-sub" style="color: var(--text-dim); margin-bottom: 2rem;">Select individual access nodes below to view file systems or execute dynamic media playback tracking.</p>
+        <p id="exp-sub" style="color: var(--text-dim); margin-bottom: 2rem;">Select a class segment resource asset pathway below to watch modern lectures instantly.</p>
 
         <div class="grid-container">
             <div class="glass-card">
-                <h3 id="c1-title">Accounting & Finance Modules</h3>
-                <p id="c1-desc">Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.</p>
+                <div class="card-header">
+                    <h3 id="c1-title">Accounting & Finance Modules</h3>
+                    <p id="c1-desc">Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.</p>
+                </div>
                 
-                <div class="table-wrapper">
-                    <table class="lesson-table">
-                        <thead>
-                            <tr>
-                                <th>Topic Segment</th>
-                                <th>Access Route Link</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Lesson 1: Balance Sheets (🎥 Video)</td>
-                                <td><a href="#" onclick="alert('Playing Dynamic Video Module Layer Asset...')" class="btn-status btn-free">▶️ Watch Free</a></td>
-                            </tr>
-                            <tr>
-                                <td>Lesson 2: Ledger Blueprint (📄 File Document)</td>
-                                <td><a href="#" onclick="alert('Downloading File Document Reference Asset Pack...')" class="btn-status btn-free">👁 View Document</a></td>
-                            </tr>
-                            <tr>
-                                <td>Lesson 3: Income Statements (🎥 Video)</td>
-                                <td><a href="#" class="btn-status btn-locked">🔒 Locked Node</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="course-modules-list">
+                    <div class="module-row">
+                        <div class="module-info">
+                            <span class="module-title" id="m1-t1">Lesson 1: Balance Sheets</span>
+                            <span class="module-meta" id="m-vid1">🎥 Video Presentation Module</span>
+                        </div>
+                        <button onclick="alert('Playing Dynamic Video Module Layer Asset...')" class="btn-status btn-free">▶️ Watch Free</button>
+                    </div>
+
+                    <div class="module-row">
+                        <div class="module-info">
+                            <span class="module-title" id="m1-t2">Lesson 2: Ledger Blueprint</span>
+                            <span class="module-meta" id="m-doc1">📄 Document Reference Guide</span>
+                        </div>
+                        <button onclick="alert('Downloading File Document Reference Asset Pack...')" class="btn-status btn-free">👁 View File</button>
+                    </div>
+
+                    <div class="module-row">
+                        <div class="module-info">
+                            <span class="module-title" id="m1-t3">Lesson 3: Income Statements</span>
+                            <span class="module-meta" id="m-lock1">🎥 Premium Deep-Dive Session</span>
+                        </div>
+                        <button class="btn-status btn-locked">🔒 Locked Node</button>
+                    </div>
                 </div>
             </div>
 
             <div class="glass-card">
-                <h3 id="c2-title">ICT & Computing Infrastructure</h3>
-                <p id="c2-desc">Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.</p>
+                <div class="card-header">
+                    <h3 id="c2-title">ICT & Computing Infrastructure</h3>
+                    <p id="c2-desc">Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.</p>
+                </div>
                 
-                <div class="table-wrapper">
-                    <table class="lesson-table">
-                        <thead>
-                            <tr>
-                                <th>Topic Segment</th>
-                                <th>Access Route Link</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Lesson 1: Networking Basics (🎥 Video)</td>
-                                <td><a href="#" onclick="alert('Launching Networking Stream asset connection...')" class="btn-status btn-free">▶️ Watch Free</a></td>
-                            </tr>
-                            <tr>
-                                <td>Lesson 2: Command Line (📄 File Document)</td>
-                                <td><a href="#" onclick="alert('Downloading Command Line Cheat Sheet PDF...')" class="btn-status btn-free">👁 View Document</a></td>
-                            </tr>
-                            <tr>
-                                <td>Lesson 3: Cyber Security (🎥 Video)</td>
-                                <td><a href="#" class="btn-status btn-locked">🔒 Locked Node</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="course-modules-list">
+                    <div class="module-row">
+                        <div class="module-info">
+                            <span class="module-title" id="m2-t1">Lesson 1: Networking Basics</span>
+                            <span class="module-meta" id="m-vid2">🎥 Video Presentation Module</span>
+                        </div>
+                        <button onclick="alert('Launching Networking Stream asset connection...')" class="btn-status btn-free">▶️ Watch Free</button>
+                    </div>
+
+                    <div class="module-row">
+                        <div class="module-info">
+                            <span class="module-title" id="m2-t2">Lesson 2: Command Line Masterclass</span>
+                            <span class="module-meta" id="m-doc2">📄 Reference Cheat Sheet Document</span>
+                        </div>
+                        <button onclick="alert('Downloading Command Line Cheat Sheet PDF...')" class="btn-status btn-free">👁 View File</button>
+                    </div>
+
+                    <div class="module-row">
+                        <div class="module-info">
+                            <span class="module-title" id="m2-t3">Lesson 3: Core Cyber Security</span>
+                            <span class="module-meta" id="m-lock2">🎥 Premium Advanced Architecture</span>
+                        </div>
+                        <button class="btn-status btn-locked">🔒 Locked Node</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -606,7 +634,6 @@
         // Action Wrapper: Modifies history stack state when a user clicks a tab
         function navigateView(viewName) {
             renderView(viewName);
-            // Push state changes directly into the browser timeline history stack
             history.pushState({ view: viewName }, "", "");
         }
 
@@ -615,7 +642,7 @@
             if (event.state && event.state.view) {
                 renderView(event.state.view);
             } else {
-                renderView('home'); // Defaults safely back to landing layer
+                renderView('home'); 
             }
         });
 
@@ -661,9 +688,15 @@
                 dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", pay: "💳 How to Pay", reg: "Register",
                 hTitle: "Enjoy learning from hundreds of online courses",
                 hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
-                exh: "Available Training Modules", exs: "Select individual access nodes below to view file systems or execute dynamic media playback tracking.",
+                exh: "Available Training Modules", exs: "Select a class segment resource asset pathway below to watch modern lectures instantly.",
                 c1: "Accounting & Finance Modules", c1d: "Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.",
                 c2: "ICT & Computing Infrastructure", c2d: "Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.",
+                m1_1: "Lesson 1: Balance Sheets", m1_v1: "🎥 Video Presentation Module",
+                m1_2: "Lesson 2: Ledger Blueprint", m1_d1: "📄 Document Reference Guide",
+                m1_3: "Lesson 3: Income Statements", m1_l1: "🎥 Premium Deep-Dive Session",
+                m2_1: "Lesson 1: Networking Basics", m2_v2: "🎥 Video Presentation Module",
+                m2_2: "Lesson 2: Command Line Masterclass", m2_d2: "📄 Reference Cheat Sheet Document",
+                m2_3: "Lesson 3: Core Cyber Security", m2_l2: "🎥 Premium Advanced Architecture",
                 infh: "Academic System Information Hub", sch: "Schedule Structure Parameters:", crt: "Industrial Certification Matrix:",
                 lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:",
                 vt: "How to Complete Course Payments", vsub: "Watch this step-by-step instruction pipeline video below."
@@ -671,10 +704,16 @@
             am: {
                 dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", pay: "💳 አከፋፈል መመሪያ", reg: "ይመዝገቡ",
                 hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                hDesc: "በዲጂتال ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክنوሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
-                exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማراጮች ይምረጡ።",
+                hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
+                exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "ትምህርቶችን በቀላሉ ለመከታተል ከታች ካሉት የክፍል አማራጮች አንዱን ይምረጡ።",
                 c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ መግለጫዎችን፣ የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
                 c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮቶኮሎችን ያጠኑ።",
+                m1_1: "ትምህርት 1: የሂሳብ ሚዛን (Balance Sheets)", m1_v1: "🎥 የቪዲዮ ትምህርት ክፍለ-ጊዜ",
+                m1_2: "ትምህርት 2: የሂሳብ መዛግብት መዋቅር", m1_d1: "📄 የማጣቀሻ ሰነድ መመሪያ",
+                m1_3: "ትምህርት 3: የገቢ መግለጫዎች", m1_l1: "🎥 የክፍያ ጥልቅ ትንተና ስልጠና",
+                m2_1: "ትምህርት 1: የኔትወርክ መሠረታዊ ነገሮች", m2_v2: "🎥 የቪዲዮ ትምህርት ክፍለ-ጊዜ",
+                m2_2: "ትምህርት 2: የኮማንድ ላይን ስልጠና", m2_d2: "📄 አጭር የማጣቀሻ ሰነድ",
+                m2_3: "ትምህርት 3: የሳይበር ደህንነት መሠረተ ልማት", m2_l2: "🎥 የላቀ የቴክኖሎጂ አወቃቀር ስልጠና",
                 infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግرام መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
                 lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
                 vt: "የኮርስ ክፍያዎችን እንዴት ማጠናቀቅ እንደሚቻል", vsub: "ከታች ያለውን የደረጃ በደረጃ የማስተማሪያ ቪዲዮ ይመልከቱ።"
@@ -683,9 +722,15 @@
                 dash: "Tableau de bord", exp: "Explorer les cours", info: "Centre d'information", pay: "💳 Comment payer", reg: "S'inscrire",
                 hTitle: "Profitez de centaines de cours en ligne",
                 hDesc: "Fournir des cours de haute qualité en compétences numériques, littératie financière, développement commercial et technologies émergentes.",
-                exh: "Modules de formation disponibles", exs: "Sélectionnez les options ci-dessous pour afficher les documents ou lire les vidéos.",
+                exh: "Modules de formation disponibles", exs: "Sélectionnez un segment ci-dessous pour visionner instantanément les cours.",
                 c1: "Modules de Comptabilité et Finance", c1d: "Maîtrisez les configurations de grands livres, les feuilles de calcul analytiques et la conformité fiscale.",
                 c2: "Infrastructure TIC et Informatique", c2d: "Explorez les architectures réseau, les clusters cloud et les protocoles de vérification Internet.",
+                m1_1: "Leçon 1: Bilans Comptables", m1_v1: "🎥 Module de Présentation Vidéo",
+                m1_2: "Leçon 2: Plan Comptable", m1_d1: "📄 Guide de Référence Documentaire",
+                m1_3: "Leçon 3: Compte de Résultat", m1_l1: "🎥 Session Approfondie Premium",
+                m2_1: "Leçon 1: Bases des Réseaux", m2_v2: "🎥 Module de Présentation Vidéo",
+                m2_2: "Leçon 2: Masterclass Ligne de Commande", m2_d2: "📄 Document d'aide-mémoire",
+                m2_3: "Leçon 3: Sécurité Informatique", m2_l2: "🎥 Architecture Avancée Premium",
                 infh: "Centre d'information académique", sch: "Paramètres de calendrier:", crt: "Matrice de certification industrielle:",
                 lt: "Emplacement du campus central", ld: "Notre bureau administratif principal est situé à l'adresse suivante:",
                 vt: "Comment effectuer les paiements des cours", vsub: "Regardez la vidéo d'instructions étape par étape ci-dessous."
@@ -694,9 +739,15 @@
                 dash: "لوحة التحكم", exp: "استكشاف الدورات", info: "مركز المعلومات", pay: "💳 كيفية الدفع", reg: "تسجيل",
                 hTitle: "استمتع بالتعلم من مئات الدورات التدريبية عبر الإنترنت",
                 hDesc: "تقديم دورات عالية الجودة في المهارات الرقمية، الثقافة المالية، تطوير الأعمال، والتكنولوجيات الناشئة.",
-                exh: "الوحدات التدريبية المتاحة", exs: "حدد خيارات الوصول أدناه لعرض الملفات أو تشغيل تتبع الوسائط الديناميكية.",
+                exh: "الوحدات التدريبية المتاحة", exs: "اختر أحد مسارات الفصول الدراسية أدناه لمشاهدة المحاضرات فورًا.",
                 c1: "وحدات المحاسبة والمالية", c1d: "إتقان إعدادات دفاتر الأستاذ، وجداول البيانات، وتحليل الميزانية الاستراتيجية.",
                 c2: "البنية التحتية لتكنولوجيا المعلومات والاتصالات", c2d: "استكشاف أطر عمل بوابات المنطق، وهندسة شبكات التوجيه، والحوسبة السحابية.",
+                m1_1: "الدرس 1: الميزانيات العمومية", m1_v1: "🎥 وحدة عرض الفيديو",
+                m1_2: "الدرس 2: مخطط دفتر الأستاذ", m1_d1: "📄 دليل مرجعي للمستندات",
+                m1_3: "الدرس 3: بيانات الدخل", m1_l1: "🎥 جلسة تعمق متميزة واحترافية",
+                m2_1: "الدرس 1: أساسيات الشبكات", m2_v2: "🎥 وحدة عرض الفيديو",
+                m2_2: "الدرس 2: احتراف سطر الأوامر", m2_d2: "📄 مستند ورقة الغش المرجعية",
+                m2_3: "الدرس 3: الأمن السيبراني الأساسي", m2_l2: "🎥 بنية تحتية متقدمة متميزة",
                 infh: "مركز معلومات النظام الأكاديمي", sch: "معايير هيكل الجدول الزمني:", crt: "مصفوفة الشهادات الصناعية:",
                 lt: "موقع الحرم الجامعي المركزي", ld: "يقع مكتبنا الإداري الرئيسي في المجمع التكنولوجي في:",
                 vt: "كيفية إتمام مدفوعات الدورة التدريبية", vsub: "شاهد فيديو التعليمات خطوة بخطوة أدناه."
@@ -718,6 +769,21 @@
             document.getElementById('c1-desc').innerText = word.c1d;
             document.getElementById('c2-title').innerText = word.c2;
             document.getElementById('c2-desc').innerText = word.c2d;
+            
+            // Module text translation mapping hooks
+            document.getElementById('m1-t1').innerText = word.m1_1;
+            document.getElementById('m-vid1').innerText = word.m1_v1;
+            document.getElementById('m1-t2').innerText = word.m1_2;
+            document.getElementById('m-doc1').innerText = word.m1_d1;
+            document.getElementById('m1-t3').innerText = word.m1_3;
+            document.getElementById('m-lock1').innerText = word.m1_l1;
+            document.getElementById('m2-t1').innerText = word.m2_1;
+            document.getElementById('m-vid2').innerText = word.m2_v2;
+            document.getElementById('m2-t2').innerText = word.m2_2;
+            document.getElementById('m-doc2').innerText = word.m2_d2;
+            document.getElementById('m2-t3').innerText = word.m2_3;
+            document.getElementById('m-lock2').innerText = word.m2_l2;
+
             document.getElementById('info-head').innerText = word.infh;
             document.getElementById('box-sch').nextSibling.textContent = " " + word.sch;
             document.getElementById('box-cert').nextSibling.textContent = " " + word.crt;
