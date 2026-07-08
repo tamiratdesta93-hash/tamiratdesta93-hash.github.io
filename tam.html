@@ -117,8 +117,9 @@
             color: var(--text-pure);
         }
 
-        /* Clickable Navigation Dropdown Configuration */
+        /* Clickable Dropdown Menu Setup */
         .dropdown {
+            position: relative;
             display: inline-block;
         }
         
@@ -129,9 +130,12 @@
             font-weight: 600;
             cursor: pointer;
             display: block;
+            background: none;
+            border: none;
+            padding: 0;
         }
 
-        .dropdown-trigger:hover {
+        .dropdown-trigger:hover, .dropdown.active .dropdown-trigger {
             color: var(--text-pure);
         }
 
@@ -144,12 +148,13 @@
             border: 1px solid var(--border-glass);
             border-radius: 6px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            min-width: 180px;
+            min-width: 190px;
             z-index: 1100;
             margin-top: 10px;
         }
         
-        .dropdown:hover .dropdown-menu {
+        /* Controlled explicitly by JS toggle click engine */
+        .dropdown.active .dropdown-menu {
             display: block;
         }
         
@@ -387,7 +392,7 @@
         .lesson-row:hover { background: rgba(255,255,255,0.08); }
         .lesson-row.playing-now { border-left: 4px solid var(--accent-green); background: rgba(16, 185, 129, 0.08); }
 
-        /* FLOATING BOTTOM RIGHT STICKY AI ASSISTANT CONSOLE DROWER */
+        /* FLOATING BOTTOM RIGHT STICKY AI ASSISTANT CONSOLE DRAWER */
         .ai-sticky-bottom-widget {
             position: fixed;
             bottom: 25px;
@@ -529,9 +534,9 @@
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 
-                <!-- CLICKABLE PAYMENT NAVIGATION WITH DROPDOWN -->
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-trigger">Payment ▾</a>
+                <!-- CLICK-BASED DROPDOWN FOR PAYMENT -->
+                <li class="dropdown" id="payment-dropdown-nav">
+                    <button class="dropdown-trigger" onclick="togglePaymentDropdown(event)">Payment ▾</button>
                     <div class="dropdown-menu">
                         <a href="#" onclick="openPaymentModal(); return false;">💳 Pay Now</a>
                         <a href="#" onclick="openHowToPayVideoModal(); return false;">📺 How to Pay Video</a>
@@ -652,7 +657,7 @@
         </div>
     </div>
 
-    <!-- PAYMENT GATEWAY MODAL -->
+    <!-- PAYMENT GATEWAY MODAL WITH SCREENSHOT ATTACHMENT -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -670,7 +675,12 @@
                 <label>Mobile Number (+251)</label>
                 <input type="tel" placeholder="912345678" required>
             </div>
-            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Authorize 250 ETB Secure Payment</button>
+            <!-- ATTACHMENT OPTION -->
+            <div class="form-group">
+                <label style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
+                <input type="file" id="payment-proof-file" accept="image/*" style="padding: 5px 0;">
+            </div>
+            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Submit & Authorize Activation</button>
         </div>
     </div>
 
@@ -685,6 +695,18 @@
         }
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
+
+        // Toggle dropdown navigation open/close on click
+        function togglePaymentDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('payment-dropdown-nav');
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking anywhere else on page
+        document.addEventListener('click', function() {
+            document.getElementById('payment-dropdown-nav').classList.remove('active');
+        });
 
         const coursesDatabase = [
             { 
@@ -856,7 +878,7 @@
             inputField.value = "";
 
             setTimeout(() => {
-                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Tutor:</strong> To buy premium assets or configure systems, hover over 'Payment' in the top bar, pick 'Pay Now' and type your active local electronic currency phone link tag.</p>`;
+                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Assistant:</strong> To access premium features, click on 'Payment' in the menu bar to open your payment link choices or check our user visual walkthrough video tutorial guides.</p>`;
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             }, 700);
         }
@@ -864,11 +886,16 @@
         // Modals Management Router Engine
         function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
         function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
-        function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
+        
+        function openPaymentModal() { 
+            document.getElementById('payment-modal-overlay').style.display = 'flex'; 
+            document.getElementById('payment-dropdown-nav').classList.remove('active'); // Close menu
+        }
         function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
         
         function openHowToPayVideoModal() {
             document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex';
+            document.getElementById('payment-dropdown-nav').classList.remove('active'); // Close menu
             document.getElementById('how-to-pay-modal-player').play().catch(() => {});
         }
         function closeHowToPayVideoModal() {
@@ -883,8 +910,13 @@
         }
 
         function processPremiumPaymentSimulation() {
-            alert('Secure transaction completed! Course structure unlocked.');
-            closePaymentModal();
+            const fileInput = document.getElementById('payment-proof-file');
+            if (fileInput.files.length > 0) {
+                alert('Proof submitted! Image received. Your asset access request will be authorized instantly.');
+                closePaymentModal();
+            } else {
+                alert('Please upload your transaction payment screenshot to verify account activation paths.');
+            }
         }
 
         function runLanguageEngine(langCode) {
