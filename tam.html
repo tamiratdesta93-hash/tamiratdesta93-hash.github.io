@@ -94,7 +94,7 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -352,6 +352,23 @@
             border-radius: 8px; color: white; margin: 0.5rem 0 1.25rem;
         }
 
+        /* Video Presentation Custom Layout */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-glass);
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
         footer {
             background: #04070d; text-align: center; padding: 20px;
             margin-top: auto; border-top: 1px solid var(--border-glass); font-size: 0.85rem; color: var(--text-dim);
@@ -377,10 +394,14 @@
                 <li class="active-nav" id="li-dash" onclick="switchView('home', this)"><a>Dashboard</a></li>
                 <li id="li-explore" onclick="switchView('explore', this)"><a>Explore Courses</a></li>
                 <li id="li-info" onclick="switchView('info', this)"><a>Information Hub</a></li>
+                <!-- Added "How to Pay Video Link Node" -->
+                <li id="li-pay" onclick="openPayVideo()"><a>💳 How to Pay</a></li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
                         <option value="en">English</option>
                         <option value="am">አማርኛ</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
                     </select>
                 </li>
                 <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Senior Gateway</button></li>
@@ -538,6 +559,24 @@
         </div>
     </div>
 
+    <!-- DYNAMIC HOW TO PAY MODAL VIDEO PLATFORM DISPLAY CONTAINER -->
+    <div class="overlay" id="videoGate">
+        <div class="auth-panel" style="max-width: 600px; width: 90%;">
+            <h2 id="video-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">How to Complete Course Payments</h2>
+            <p id="video-subtitle" style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;">Watch this step-by-step instruction pipeline video below.</p>
+            
+            <div class="video-wrapper">
+                <!-- Using placeholder streaming asset structure, swap the src track configuration for your platform layout video -->
+                <video id="tutorialVideo" controls preload="metadata">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your modern layout engine framework does not support raw video playback layers.
+                </video>
+            </div>
+
+            <button type="button" class="btn btn-primary" style="width: 100%;" onclick="closePayVideo()">Close Video Guide</button>
+        </div>
+    </div>
+
     <!-- Administrative Footer Component -->
     <footer>
         <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
@@ -586,6 +625,16 @@
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
+        // Video Window Handling
+        function openPayVideo() {
+            document.getElementById('videoGate').style.display = 'flex';
+        }
+        function closePayVideo() {
+            const videoElement = document.getElementById('tutorialVideo');
+            videoElement.pause(); // Auto-stops playback safely when context closes
+            document.getElementById('videoGate').style.display = 'none';
+        }
+
         function handleAuthSubmit(e, typeLabel) {
             e.preventDefault();
             alert(`${typeLabel} Successful! Senior profile authorized. Locked core tracks have been decrypted.`);
@@ -600,24 +649,48 @@
         // Language Engine Switch Translation Mapping Arrays
         const dictionary = {
             en: {
-                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", reg: "Senior Gateway",
+                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", pay: "💳 How to Pay", reg: "Senior Gateway",
                 hTitle: "Enjoy learning from hundreds of online courses",
                 hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
                 exh: "Available Training Modules", exs: "Select individual access nodes below to view file systems or execute dynamic media playback tracking.",
                 c1: "Accounting & Finance Modules", c1d: "Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.",
                 c2: "ICT & Computing Infrastructure", c2d: "Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.",
                 infh: "Academic System Information Hub", sch: "Schedule Structure Parameters:", crt: "Industrial Certification Matrix:",
-                lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:"
+                lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:",
+                vt: "How to Complete Course Payments", vsub: "Watch this step-by-step instruction pipeline video below."
             },
             am: {
-                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", reg: "የነባር ተማሪዎች መግቢያ",
+                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", pay: "💳 አከፋፈል መመሪያ", reg: "የነባር ተማሪዎች መግቢያ",
                 hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
                 hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
                 exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማራጮች ይምረጡ።",
                 c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ መግለጫዎችን፣ የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
                 c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮቶኮሎችን ያጠኑ።",
                 infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግራም መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
-                lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡"
+                lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
+                vt: "የኮርስ ክፍያዎችን እንዴት ማጠናቀቅ እንደሚቻል", vsub: "ከታች ያለውን የደረጃ በደረጃ የማስተማሪያ ቪዲዮ ይመልከቱ።"
+            },
+            fr: {
+                dash: "Tableau de bord", exp: "Explorer les cours", info: "Centre d'information", pay: "💳 Comment payer", reg: "Portail Senior",
+                hTitle: "Profitez de centaines de cours en ligne",
+                hDesc: "Fournir des cours de haute qualité en compétences numériques, littératie financière, développement commercial et technologies émergentes.",
+                exh: "Modules de formation disponibles", exs: "Sélectionnez les options ci-dessous pour afficher les documents ou lire les vidéos.",
+                c1: "Modules de Comptabilité et Finance", c1d: "Maîtrisez les configurations de grands livres, les feuilles de calcul analytiques et la conformité fiscale.",
+                c2: "Infrastructure TIC et Informatique", c2d: "Explorez les architectures réseau, les clusters cloud et les protocoles de vérification Internet.",
+                infh: "Centre d'information académique", sch: "Paramètres de calendrier:", crt: "Matrice de certification industrielle:",
+                lt: "Emplacement du campus central", ld: "Notre bureau administratif principal est situé à l'adresse suivante:",
+                vt: "Comment effectuer les paiements des cours", vsub: "Regardez la vidéo d'instructions étape par étape ci-dessous."
+            },
+            ar: {
+                dash: "لوحة التحكم", exp: "استكشاف الدورات", info: "مركز المعلومات", pay: "💳 كيفية الدفع", reg: "بوابة الطلاب القدامى",
+                hTitle: "استمتع بالتعلم من مئات الدورات التدريبية عبر الإنترنت",
+                hDesc: "تقديم دورات عالية الجودة في المهارات الرقمية، الثقافة المالية، تطوير الأعمال، والتكنولوجيات الناشئة.",
+                exh: "الوحدات التدريبية المتاحة", exs: "حدد خيارات الوصول أدناه لعرض الملفات أو تشغيل تتبع الوسائط الديناميكية.",
+                c1: "وحدات المحاسبة والمالية", c1d: "إتقان إعدادات دفاتر الأستاذ، وجداول البيانات، وتحليل الميزانية الاستراتيجية.",
+                c2: "البنية التحتية لتكنولوجيا المعلومات والاتصالات", c2d: "استكشاف أطر عمل بوابات المنطق، وهندسة شبكات التوجيه، والحوسبة السحابية.",
+                infh: "مركز معلومات النظام الأكاديمي", sch: "معايير هيكل الجدول الزمني:", crt: "مصفوفة الشهادات الصناعية:",
+                lt: "موقع الحرم الجامعي المركزي", ld: "يقع مكتبنا الإداري الرئيسي في المجمع التكنولوجي في:",
+                vt: "كيفية إتمام مدفوعات الدورة التدريبية", vsub: "شاهد فيديو التعليمات خطوة بخطوة أدناه."
             }
         };
 
@@ -626,6 +699,7 @@
             document.getElementById('li-dash').firstElementChild.innerText = word.dash;
             document.getElementById('li-explore').firstElementChild.innerText = word.exp;
             document.getElementById('li-info').firstElementChild.innerText = word.info;
+            document.getElementById('li-pay').firstElementChild.innerText = word.pay;
             document.getElementById('nav-reg-btn').innerText = word.reg;
             document.getElementById('hero-title').innerText = word.hTitle;
             document.getElementById('hero-desc').innerText = word.hDesc;
@@ -640,6 +714,8 @@
             document.getElementById('box-cert').nextSibling.textContent = " " + word.crt;
             document.getElementById('loc-title').innerText = word.lt;
             document.getElementById('loc-desc').innerText = word.ld;
+            document.getElementById('video-title').innerText = word.vt;
+            document.getElementById('video-subtitle').innerText = word.vsub;
         }
     </script>
 </body>
