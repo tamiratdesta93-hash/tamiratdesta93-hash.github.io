@@ -333,15 +333,15 @@
     </div>
 
     <header>
-        <div class="brand" onclick="switchView('home', document.getElementById('li-dash'))">
+        <div class="brand" onclick="navigateTo('home')">
             <div class="brand-icon"></div>
             <div class="brand-name">EduNet Ethiopia</div>
         </div>
         <nav>
             <ul class="nav-links" id="nav-menu">
-                <li class="active-nav" id="li-dash" onclick="switchView('home', this)"><a>Dashboard</a></li>
-                <li id="li-explore" onclick="switchView('explore', this)"><a>Explore Courses</a></li>
-                <li id="li-info" onclick="switchView('info', this)"><a>Information Hub</a></li>
+                <li class="active-nav" id="li-dash" onclick="navigateTo('home')"><a>Dashboard</a></li>
+                <li id="li-explore" onclick="navigateTo('explore')"><a>Explore Courses</a></li>
+                <li id="li-info" onclick="navigateTo('info')"><a>Information Hub</a></li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
                         <option value="en">English</option>
@@ -363,11 +363,11 @@
         </nav>
     </header>
 
-    <main id="home-view" class="app-view active-view">
+    <main id="home-view" class="app-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
             <p id="hero-desc">Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.</p>
-            <button class="btn btn-primary" onclick="switchView('explore', document.getElementById('li-explore'))">Get Started Now</button>
+            <button class="btn btn-primary" onclick="navigateTo('explore')">Get Started Now</button>
         </div>
     </main>
 
@@ -498,23 +498,41 @@
             document.getElementById('actionDropdown').style.display = 'none';
         }
 
-        // FIXED View Routing Management Logic
-        function switchView(viewName, menuElement) {
+        // Trigger safe URL bar updates
+        function navigateTo(viewName) {
+            window.location.hash = viewName;
+        }
+
+        // SYSTEMIC HISTORY ENGINE: Automatically monitors URL state changes (Back/Forward arrows)
+        function renderViewFromHash() {
+            // Read active hash string, fallback to 'home' if empty
+            let viewName = window.location.hash.replace('#', '') || 'home';
+            
+            // Guard loop to ensure only legal sections evaluate
+            if (viewName !== 'home' && viewName !== 'explore' && viewName !== 'info') {
+                viewName = 'home';
+            }
+
             // Hide all structural panels
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             
-            // Show the target active panel section
+            // Show target active view section
             document.getElementById(`${viewName}-view`).classList.add('active-view');
             
-            // Clean up active CSS navigation state classes cleanly
+            // Clean up old navigation link states cleanly
             document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
             
-            // If passed from an interaction element, dynamically re-apply focus styling rules
-            if(menuElement) {
-                menuElement.classList.add('active-nav');
-            }
+            // Dynamically synchronize highlight rules onto nav rows
+            if (viewName === 'home') document.getElementById('li-dash').classList.add('active-nav');
+            if (viewName === 'explore') document.getElementById('li-explore').classList.add('active-nav');
+            if (viewName === 'info') document.getElementById('li-info').classList.add('active-nav');
+
             window.scrollTo(0,0);
         }
+
+        // Setup live listener monitors for native hardware Back arrows
+        window.addEventListener('hashchange', renderViewFromHash);
+        window.addEventListener('load', renderViewFromHash);
 
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
