@@ -3,305 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Railway Learning Academy</title>
+    <title>Professional Academy Dashboard</title>
     <style>
-        /* Modern, Colorful Theme Definitions */
         :root {
             --primary: #2c3e50;
-            --accent-orange: #e67e22;
-            --accent-blue: #3498db;
-            --accent-green: #2ecc71;
-            --text-dark: #2c3e50;
-            --bg-light: #f8f9fa;
-            --white: #ffffff;
-        }
-
-        /* Global Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --accent: #3498db;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --bg: #f5f7fa;
+            --card-sm: #ffffff;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: #333;
         }
 
-        /* Contact Top Bar */
-        .top-bar {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 10px 20px;
-            text-align: right;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            background-color: var(--white);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo span {
-            color: var(--accent-orange);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-blue);
-        }
-
-        /* Hero / Welcome Section */
-        .hero {
-            background: linear-gradient(135deg, #3498db, #2c3e50);
-            color: var(--white);
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Main Container Layout */
-        .main-container {
-            max-width: 1200px;
+        .container {
+            max-width: 1100px;
             margin: 40px auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
-        /* Section Layouts */
-        .section {
-            background: var(--white);
-            padding: 30px;
+        h1, h2 {
+            color: var(--primary);
+        }
+
+        /* Course Selector Tabs/Grid */
+        .course-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
             margin-bottom: 40px;
+        }
+
+        .course-tab {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .course-tab:hover {
+            background: var(--accent);
+        }
+
+        /* Curriculum Section */
+        .curriculum-section {
+            background: var(--card-sm);
+            padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
 
-        .section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 4px;
-            border-radius: 2px;
-        }
-
-        #about h2::after { background-color: var(--accent-blue); }
-        #courses h2::after { background-color: var(--accent-orange); }
-        #info h2::after { background-color: var(--accent-green); }
-        #support h2::after { background-color: var(--primary); }
-
-        /* Grid Framework for Courses */
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .course-card {
-            background: var(--bg-light);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--accent-blue);
-        }
-
-        .course-card.accounting { border-top-color: var(--accent-orange); }
-        .course-card.management { border-top-color: var(--accent-green); }
-
-        .course-content {
-            padding: 20px;
-        }
-
-        .course-content h3 {
-            margin-bottom: 10px;
-        }
-
-        /* Responsive Video Container */
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            margin-top: 15px;
-            border-radius: 6px;
-            background: #000;
-        }
-
-        .video-wrapper video {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .lesson-table {
             width: 100%;
-            height: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
         }
 
-        /* Information & Location Styles */
-        .info-box {
-            background-color: #e8f4fd;
-            padding: 15px;
-            border-left: 5px solid var(--accent-blue);
-            margin-bottom: 15px;
+        .lesson-table th, .lesson-table td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .lesson-table th {
+            background-color: #f8f9fa;
+            color: var(--primary);
+        }
+
+        /* Status Badges & Buttons */
+        .btn-status {
+            display: inline-block;
+            padding: 6px 12px;
             border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-align: center;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 20px;
-            margin-top: 60px;
-            font-size: 0.9rem;
+        .btn-free {
+            background-color: #e8f8f5;
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .btn-free:hover {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-locked {
+            background-color: #fdebd0;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            cursor: not-allowed;
+        }
+
+        /* Quick Floating AI Helper Circle */
+        .ai-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        📞 Support Phone Number: +1 (555) 019-2834
+<div class="container">
+    
+    <h2>Select Your Department</h2>
+    <div class="course-menu">
+        <a href="#accounting" class="course-tab">Accounting</a>
+        <a href="#ict" class="course-tab">ICT Department</a>
+        <a href="#business" class="course-tab">Management</a>
+        <a href="#marketing" class="course-tab">Marketing</a>
     </div>
 
-    <nav class="navbar">
-        <div class="logo">
-            🚂 Railway<span>Academy</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#courses">Courses</a></li>
-            <li><a href="#info">Information</a></li>
-            <li><a href="#support">Support</a></li>
-            <li><a href="#location">Location</a></li>
-        </ul>
-    </nav>
+    <div id="accounting" class="curriculum-section">
+        <h2>Accounting & Finance Modules</h2>
+        <p>Select a file or video lesson below. Modules 1 & 2 are completely free.</p>
 
-    <header id="home" class="hero">
-        <h1>Accelerate Your Professional Growth</h1>
-        <p>Unlock structured curriculum modules, expert industry guides, and self-paced video streaming files instantly.</p>
-    </header>
+        <table class="lesson-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Lesson Topic</th>
+                    <th>Schedule Date / Time</th>
+                    <th>Access Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>🎥 Video</td>
+                    <td>Lesson 1: Introduction to Balance Sheets</td>
+                    <td>July 10, 2026 - 09:00 AM</td>
+                    <td><a href="YOUR_VIDEO_LINK_HERE" class="btn-status btn-free">▶ Watch Free</a></td>
+                </tr>
+                <tr>
+                    <td>📄 Note / File</td>
+                    <td>Lesson 2: Ledger Setup Blueprint</td>
+                    <td>July 12, 2026 - 11:00 AM</td>
+                    <td><a href="YOUR_NOTE_LINK_HERE" class="btn-status btn-free">👁 View Free</a></td>
+                </tr>
+                <tr>
+                    <td>🎥 Video</td>
+                    <td>Lesson 3: Advanced Income Statements</td>
+                    <td>July 15, 2026 - 02:00 PM</td>
+                    <td><a href="#" class="btn-status btn-locked">🔒 Locked (Pay)</a></td>
+                </tr>
+                <tr>
+                    <td>📄 Note / File</td>
+                    <td>Lesson 4: Tax Compliance Sheet</td>
+                    <td>July 18, 2026 - 10:00 AM</td>
+                    <td><a href="#" class="btn-status btn-locked">🔒 Locked (Pay)</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <main class="main-container">
+    <div id="ict" class="curriculum-section">
+        <h2>ICT & Computing Modules</h2>
+        <p>Explore technology tracks. Modules 1 & 2 are completely free.</p>
 
-        <section id="about" class="section">
-            <h2>About Our System</h2>
-            <p>Welcome to our educational portal. We provide comprehensive tracks engineered to guide beginners into advanced career practices. Our modular learning platform organizes visual curriculum step-by-step for structured knowledge retention.</p>
-        </section>
+        <table class="lesson-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Lesson Topic</th>
+                    <th>Schedule Date / Time</th>
+                    <th>Access Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>🎥 Video</td>
+                    <td>Lesson 1: Networking Basics</td>
+                    <td>July 11, 2026 - 08:30 AM</td>
+                    <td><a href="YOUR_VIDEO_LINK_HERE" class="btn-status btn-free">▶ Watch Free</a></td>
+                </tr>
+                <tr>
+                    <td>📄 Note / File</td>
+                    <td>Lesson 2: Command Line Cheat Sheet</td>
+                    <td>July 13, 2026 - 04:00 PM</td>
+                    <td><a href="YOUR_NOTE_LINK_HERE" class="btn-status btn-free">👁 View Free</a></td>
+                </tr>
+                <tr>
+                    <td>🎥 Video</td>
+                    <td>Lesson 3: Cyber Security Practices</td>
+                    <td>July 16, 2026 - 01:00 PM</td>
+                    <td><a href="#" class="btn-status btn-locked">🔒 Locked (Pay)</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <section id="courses" class="section">
-            <h2>Our Core Curriculum Tracks</h2>
-            <p>Select your track below to access specialized video lectures and tracking documents.</p>
+</div>
 
-            <div class="course-grid">
-                <div class="course-card accounting">
-                    <div class="course-content">
-                        <h3>Accounting Management</h3>
-                        <p>Master ledger configuration, financial analysis metrics, corporate sheets, and strategic bookkeeping applications.</p>
-                        
-                        <div class="video-wrapper">
-                            <video controls poster="https://via.placeholder.com/600x340?text=Accounting+Video+Cover">
-                                <source src="videos/accounting-lesson1.mp4" type="video/mp4">
-                                Your browser does not support the video playback features.
-                            </video>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card management">
-                    <div class="course-content">
-                        <h3>Business Operations</h3>
-                        <p>Explore leadership dynamics, optimized operations scale, organizational performance patterns, and scale architecture.</p>
-                        
-                        <div class="video-wrapper">
-                            <video controls poster="https://via.placeholder.com/600x340?text=Management+Video+Cover">
-                                <source src="videos/management-lesson1.mp4" type="video/mp4">
-                                Your browser does not support the video playback features.
-                            </video>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="info" class="section">
-            <h2>Course Information</h2>
-            <div class="info-box">
-                <strong>Schedule:</strong> New learning tracks open on a rolling weekly release cycle.
-            </div>
-            <div class="info-box">
-                <strong>Certification:</strong> Completing all module track reviews yields an industrial completion verified certificate document.
-            </div>
-        </section>
-
-        <section id="support" class="section">
-            <h2>Technical Support Desk</h2>
-            <p>Experiencing streaming friction or credential login issues? Reach out directly via email at <strong>support@railwayacademy.com</strong> or call the service desk listed on the header navigation frame.</p>
-        </section>
-
-        <section id="location" class="section">
-            <h2>Campus Location</h2>
-            <p>Our centralized administrative infrastructure office complex is located at:</p>
-            <p style="margin-top: 10px; font-weight: bold; color: var(--accent-orange);">
-                🏢 405 Station Boulevard, Sector 4, Metro Central District
-            </p>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Railway Learning Academy System. All properties secured under standard rights framework.</p>
-    </footer>
+<div class="ai-assistant" title="AI Assistant">🤖</div>
 
 </body>
 </html>
