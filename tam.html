@@ -301,6 +301,36 @@
             font-weight: 600; 
         }
 
+        /* Interactive Rating Component */
+        .interactive-rating-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: fit-content;
+        }
+        
+        .interactive-rating-box span {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-right: 8px;
+        }
+
+        .star-rating-button {
+            font-size: 1.5rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: color 0.1s ease;
+        }
+
+        .star-rating-button.active-star, .star-rating-button:hover {
+            color: var(--accent-gold);
+        }
+
         .card-footer-divider {
             margin-top: auto;
             border-top: 1px solid var(--course-border);
@@ -549,7 +579,6 @@
         <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
     </div>
 
-    <!-- VIEW 1: HOME DASHBOARD -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -558,7 +587,6 @@
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSES -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
@@ -579,15 +607,21 @@
         <div class="course-grid" id="course-container-box"></div>
     </main>
 
-    <!-- VIEW 3: IN-COURSE WORKSPACE VIEW -->
     <main id="course-inner-view" class="app-view">
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
-        <p id="classroom-rating" style="color:var(--accent-gold); margin-bottom:1.5rem; font-weight: 600;">Rating</p>
+        
+        <div class="interactive-rating-box">
+            <span>Rate Course:</span>
+            <span class="star-rating-button" data-value="1" onclick="submitUserLiveRating(1)">★</span>
+            <span class="star-rating-button" data-value="2" onclick="submitUserLiveRating(2)">★</span>
+            <span class="star-rating-button" data-value="3" onclick="submitUserLiveRating(3)">★</span>
+            <span class="star-rating-button" data-value="4" onclick="submitUserLiveRating(4)">★</span>
+            <span class="star-rating-button" data-value="5" onclick="submitUserLiveRating(5)">★</span>
+        </div>
         
         <div class="workspace-container" id="workspace-grid-box">
             
-            <!-- LEFT VIDEO COLUMN -->
             <div class="video-column" id="classroom-video-col">
                 <video id="workspace-main-player" class="classroom-video" controls>
                     <source id="video-media-source" src="" type="video/mp4">
@@ -596,7 +630,6 @@
                 <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
             </div>
 
-            <!-- RIGHT MODULES COLUMN -->
             <div class="syllabus-box">
                 <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
                 <div id="dynamic-syllabus-list-wrapper"></div>
@@ -604,7 +637,6 @@
         </div>
     </main>
 
-    <!-- HOW TO PAY VIDEO MODAL -->
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
@@ -615,7 +647,6 @@
         </div>
     </div>
 
-    <!-- REGISTRATION MODAL -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
@@ -638,7 +669,6 @@
         </div>
     </div>
 
-    <!-- PAYMENT GATEWAY MODAL -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -669,6 +699,8 @@
     </footer>
 
     <script>
+        let currentlySelectedCourseId = null;
+
         function updateSystemClock() {
             const now = new Date();
             document.getElementById('live-clock').innerText = "System Time: " + now.toLocaleString();
@@ -686,13 +718,13 @@
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
+        // Expanded Course Database (Added more specialized options)
         const coursesDatabase = [
             { 
                 id: 1, 
                 title: "Introduction to Computers & OS Basics", 
                 lessons: 3, 
-                totalStarsScore: 15, 
-                totalReviewersCount: 3, 
+                userRating: 0,
                 bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", 
                 icon: "💻", 
                 syllabus: [
@@ -705,8 +737,7 @@
                 id: 2, 
                 title: "Accounting & Corporate Finance Modules", 
                 lessons: 2, 
-                totalStarsScore: 8, 
-                totalReviewersCount: 2, 
+                userRating: 0,
                 bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", 
                 icon: "📈", 
                 syllabus: [
@@ -718,14 +749,38 @@
                 id: 3, 
                 title: "Digital Marketing & Social Media Growth", 
                 lessons: 3, 
-                totalStarsScore: 14, 
-                totalReviewersCount: 3, 
+                userRating: 0,
                 bg: "linear-gradient(135deg, #ec4899 0%, #9d174d 100%)", 
                 icon: "📱", 
                 syllabus: [
                     { name: "🎬 Module 01: Understanding Algorithms & Audiences (FREE)", isFree: true, url: "https://www.w3schools.com/html/movie.mp4" },
                     { name: "📋 Module 02: Creating Paid Ad Campaigns", isFree: false, url: "" },
                     { name: "📋 Module 03: Analytics, ROI, and Brand Strategy", isFree: false, url: "" }
+                ]
+            },
+            { 
+                id: 4, 
+                title: "Web Development Bootcamp (HTML, CSS & JS)", 
+                lessons: 3, 
+                userRating: 0,
+                bg: "linear-gradient(135deg, #f59e0b 0%, #7c2d12 100%)", 
+                icon: "🌐", 
+                syllabus: [
+                    { name: "🎬 Module 01: Web Document Structure Basics (FREE)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+                    { name: "📋 Module 02: CSS Flexbox Layout Frameworks", isFree: false, url: "" },
+                    { name: "📋 Module 03: JavaScript DOM Manipulation Actions", isFree: false, url: "" }
+                ]
+            },
+            { 
+                id: 5, 
+                title: "Graphic Design Masterclass using Canva & Figma", 
+                lessons: 2, 
+                userRating: 0,
+                bg: "linear-gradient(135deg, #a855f7 0%, #4c1d95 100%)", 
+                icon: "🎨", 
+                syllabus: [
+                    { name: "🎬 Module 01: Typography & Visual Hierarchy Laws (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name: "📋 Module 02: Layout Prototyping Systems", isFree: false, url: "" }
                 ]
             }
         ];
@@ -746,7 +801,6 @@
             container.innerHTML = ""; 
 
             dataArray.forEach(course => {
-                const computedAverage = (course.totalStarsScore / course.totalReviewersCount).toFixed(2);
                 const card = document.createElement('div');
                 card.className = "course-card";
                 card.setAttribute('onclick', `enterCourseDetails(${course.id})`);
@@ -761,7 +815,7 @@
                     <div class="card-body-content">
                         <h3 class="course-card-title">${course.title}</h3>
                         <div class="rating-row">
-                            <span class="rating-digits">⭐ ${computedAverage} (${course.totalReviewersCount} ratings)</span>
+                            <span class="rating-digits">${course.userRating > 0 ? '⭐ My Rating: ' + course.userRating + '/5' : '🚫 Not Rated Yet'}</span>
                         </div>
                         <div class="card-footer-divider">
                             <span class="lesson-count-tag">📚 ${course.lessons} Lessons</span>
@@ -797,6 +851,8 @@
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
             if (!selectedCourse) return;
 
+            currentlySelectedCourseId = courseId;
+
             // Save state for Browser Back Button functionality
             if (!isFromPopState) {
                 history.pushState({ view: 'course-inner', courseId: courseId }, '', `#course-${courseId}`);
@@ -806,9 +862,10 @@
             document.getElementById('classroom-video-col').style.display = 'none';
             document.getElementById('workspace-grid-box').classList.remove('video-active');
 
-            const avgScore = (selectedCourse.totalStarsScore / selectedCourse.totalReviewersCount).toFixed(2);
             document.getElementById('classroom-title').innerText = selectedCourse.title;
-            document.getElementById('classroom-rating').innerText = `⭐ Rating Average: ${avgScore}`;
+            
+            // Set up rating visualization
+            highlightRatingStars(selectedCourse.userRating);
 
             const syllabusWrapper = document.getElementById('dynamic-syllabus-list-wrapper');
             syllabusWrapper.innerHTML = "";
@@ -842,6 +899,27 @@
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById('course-inner-view').classList.add('active-view');
             window.scrollTo(0, 0);
+        }
+
+        // Live Rate Option Handler
+        function submitUserLiveRating(ratingValue) {
+            const selectedCourse = coursesDatabase.find(c => c.id === currentlySelectedCourseId);
+            if (selectedCourse) {
+                selectedCourse.userRating = ratingValue;
+                highlightRatingStars(ratingValue);
+                renderCourseCards(coursesDatabase); // Keep catalog sync updated
+            }
+        }
+
+        function highlightRatingStars(ratingValue) {
+            document.querySelectorAll('.star-rating-button').forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                if (starVal <= ratingValue) {
+                    star.classList.add('active-star');
+                } else {
+                    star.classList.remove('active-star');
+                }
+            });
         }
 
         function switchWorkspaceVideoSource(videoUrl) {
