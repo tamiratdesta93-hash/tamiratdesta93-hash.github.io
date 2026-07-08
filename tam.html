@@ -100,17 +100,12 @@
 
         .nav-links li {
             cursor: pointer;
-        }
-
-        .nav-links a {
-            text-decoration: none;
             color: var(--text-dim);
             font-size: 0.95rem;
             font-weight: 600;
-            cursor: pointer;
         }
 
-        .nav-links a:hover, .nav-links li.active-nav a {
+        .nav-links li:hover, .nav-links li.active-nav {
             color: var(--text-pure);
         }
 
@@ -391,10 +386,10 @@
         </div>
         <nav>
             <ul class="nav-links" id="nav-menu">
-                <li class="active-nav" id="li-dash" onclick="switchView('home', this)"><a>Dashboard</a></li>
-                <li id="li-explore" onclick="switchView('explore', this)"><a>Explore Courses</a></li>
-                <li id="li-info" onclick="switchView('info', this)"><a>Information Hub</a></li>
-                <li id="li-pay" onclick="openPayVideo()"><a>💳 How to Pay</a></li>
+                <li class="active-nav" id="li-dash" onclick="switchView('home', this)">Dashboard</li>
+                <li id="li-explore" onclick="switchView('explore', this)">Explore Courses</li>
+                <li id="li-info" onclick="switchView('info', this)">Information Hub</li>
+                <li id="li-pay" onclick="openPayVideo()">💳 How to Pay</li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
                         <option value="en">English</option>
@@ -630,6 +625,7 @@
             document.getElementById(`${formType}Form`).classList.add('active-form');
         }
 
+        // Open and close login modal functions
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
@@ -669,14 +665,14 @@
             },
             am: {
                 dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", pay: "💳 አከፋፈል መመሪያ", reg: "ይመዝገቡ",
-                hTitle: "በمቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                hDesc: "በ디ጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
+                hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
+                hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክنوሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
                 exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማراጮች ይምረጡ።",
-                c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ መግለጫዎችን፣ የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
-                c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮتوኮሎችን ያጠኑ።",
+                c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ مግለጫዎችን، የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
+                c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክлаውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮتو科ሎችን ያጠኑ።",
                 infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግرام መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
                 lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
-                vt: "የኮርስ ክፍያዎችን እንዴት ማጠናቀቅ እንደሚቻል", vsub: "ከታች ያለውን የደረጃ በደረጃ የማስተማሪያ ቪዲዮ ይመልجه።"
+                vt: "የኮርስ ክፍያዎችን እንዴት ማጠናቀቅ እንደሚቻል", vsub: "ከታች ያለውን የደረጃ በደረጃ የማስተማሪያ ቪዲዮ ይመልከቱ።"
             },
             fr: {
                 dash: "Tableau de bord", exp: "Explorer les cours", info: "Centre d'information", pay: "💳 Comment payer", reg: "S'inscrire",
@@ -704,10 +700,10 @@
 
         function toggleLanguage(lang) {
             const word = dictionary[lang];
-            document.getElementById('li-dash').firstElementChild.innerText = word.dash;
-            document.getElementById('li-explore').firstElementChild.innerText = word.exp;
-            document.getElementById('li-info').firstElementChild.innerText = word.info;
-            document.getElementById('li-pay').firstElementChild.innerText = word.pay;
+            document.getElementById('li-dash').innerText = word.dash;
+            document.getElementById('li-explore').innerText = word.exp;
+            document.getElementById('li-info').innerText = word.info;
+            document.getElementById('li-pay').innerText = word.pay;
             document.getElementById('nav-reg-btn').innerText = word.reg;
             document.getElementById('hero-title').innerText = word.hTitle;
             document.getElementById('hero-desc').innerText = word.hDesc;
