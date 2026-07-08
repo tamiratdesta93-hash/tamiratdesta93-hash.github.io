@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduNet Ethiopia | Premium Learning Platform</title>
+    <title>EduNet Ethiopia | Premium Learning Management System</title>
     <style>
         :root {
             --accent-blue: #2563eb;
             --accent-green: #10b981;
             --accent-lock: #ef4444;
+            --accent-gold: #f59e0b;
             --bg-space: #0b0f19;
-            --card-glass: rgba(22, 30, 49, 0.7);
+            --card-glass: rgba(22, 30, 49, 0.75);
             --text-pure: #ffffff;
             --text-dim: #94a3b8;
             --border-glass: rgba(255, 255, 255, 0.08);
@@ -20,7 +21,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             transition: background 0.3s ease, transform 0.2s ease;
         }
 
@@ -32,13 +33,31 @@
             flex-direction: column;
         }
 
-        /* Top Navigation Bar */
+        /* Top Info Bar */
+        .top-bar {
+            background: #04070d;
+            border-bottom: 1px solid var(--border-glass);
+            padding: 8px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        #live-clock {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* Premium Navigation Bar */
         header {
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(12px);
-            background: rgba(11, 15, 25, 0.8);
+            background: rgba(11, 15, 25, 0.85);
             border-bottom: 1px solid var(--border-glass);
             padding: 1.25rem 5%;
             display: flex;
@@ -54,11 +73,10 @@
         }
 
         .brand-icon {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             background: linear-gradient(45deg, #009a44, #fed100, #ef4444);
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(37, 99, 255, 0.3);
         }
 
         .brand-name {
@@ -67,22 +85,32 @@
             letter-spacing: -0.5px;
         }
 
-        nav ul {
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links {
             display: flex;
             list-style: none;
             gap: 25px;
             align-items: center;
         }
 
-        nav a {
-            text-decoration: none;
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            font-weight: 500;
+        .nav-links li {
             cursor: pointer;
         }
 
-        nav a:hover, nav li.active-nav a {
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links li.active-nav a {
             color: var(--text-pure);
         }
 
@@ -94,8 +122,56 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.85rem;
+            font-weight: 600;
         }
 
+        /* 3-Dot Dropdown Actions Menu */
+        .three-dot-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .three-dot-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 0 5px;
+            line-height: 1;
+        }
+
+        .three-dot-btn:hover { color: var(--text-pure); }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 30px;
+            background-color: #111827;
+            border: 1px solid var(--border-glass);
+            min-width: 160px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            z-index: 1100;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text-dim);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1f2937;
+            color: var(--text-pure);
+        }
+
+        /* Standard Buttons */
         .btn {
             padding: 0.55rem 1.25rem;
             border-radius: 8px;
@@ -104,37 +180,16 @@
             cursor: pointer;
             border: none;
         }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-glass);
-            color: var(--text-pure);
-        }
-
-        .btn-outline:hover { background: rgba(255,255,255,0.05); }
-
-        .btn-primary {
-            background: var(--accent-blue);
-            color: white;
-        }
-
+        .btn-primary { background: var(--accent-blue); color: white; }
         .btn-primary:hover { background: #1d4ed8; }
 
-        /* Auth Warning Banner */
-        .auth-banner {
-            background: linear-gradient(90deg, #ef4444, #b91c1c);
-            padding: 0.8rem;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        /* View Switching Framework */
+        /* Structural Views */
         .app-view {
             display: none;
             padding: 3rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
             animation: fadeIn 0.4s ease forwards;
         }
 
@@ -145,18 +200,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Hero / Dashboard Grid */
-        .hero {
-            text-align: center;
-            padding: 4rem 1rem;
-        }
-
-        .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 800; }
+        /* Hero */
+        .hero { text-align: center; padding: 4rem 1rem; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
+        /* Explore Grid Layout */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
             margin-top: 2rem;
         }
@@ -165,109 +217,80 @@
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
             border-radius: 16px;
-            padding: 1.75rem;
+            padding: 2rem;
             backdrop-filter: blur(8px);
-            cursor: pointer;
         }
 
-        .glass-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(37, 99, 255, 0.4);
-        }
+        .glass-card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+        .glass-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem; }
 
-        .card-icon { font-size: 2.2rem; margin-bottom: 1rem; display: inline-block; }
-        .glass-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
-        .glass-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
-        .card-meta { font-size: 0.8rem; font-weight: bold; color: var(--accent-green); }
-
-        /* Premium Integrated Video Classroom */
-        .workspace-layout {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 30px;
-        }
-
-        @media (max-width: 968px) {
-            .workspace-layout { grid-template-columns: 1fr; }
-        }
-
-        .player-deck {
-            background: #020617;
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 1.25rem;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            background-color: #000;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%; border: 0;
-        }
-
-        .course-tags {
-            display: flex; gap: 0.5rem; margin: 1.25rem 0 0.5rem;
-        }
-
-        .tag {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-glass);
-            padding: 0.25rem 0.6rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        .playlist-deck {
+        /* Link Access Schedule Tables Setup */
+        .table-wrapper {
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .playlist-item {
-            list-style: none;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .playlist-item:hover { background: rgba(255,255,255,0.04); }
-        .playlist-item.active-item {
-            background: rgba(37, 99, 235, 0.1);
-            border-color: var(--accent-blue);
-        }
-
-        .badge { font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.5rem; border-radius: 4px; }
-        .badge-free { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
-        .badge-lock { background: rgba(239, 68, 68, 0.15); color: var(--accent-lock); }
-
-        /* Multilingual Toolkit Download Rows */
-        .lang-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-glass);
-            border: 1px solid var(--border-glass);
-            padding: 1.25rem 1.75rem;
             border-radius: 12px;
-            margin-bottom: 12px;
+            overflow: hidden;
+            margin-top: 1.5rem;
         }
+
+        .lesson-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .lesson-table th, .lesson-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .lesson-table th { background: rgba(0,0,0,0.2); font-weight: 700; color: var(--text-pure); }
+        .lesson-table td { color: var(--text-dim); font-size: 0.9rem; }
+
+        /* Link Action Badges */
+        .btn-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 1px solid transparent;
+            text-align: center;
+        }
+
+        .btn-free { background-color: rgba(16, 185, 129, 0.15); color: var(--accent-green); border-color: var(--accent-green); }
+        .btn-free:hover { background: var(--accent-green); color: #fff; }
+        .btn-locked { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-lock); border-color: var(--accent-lock); cursor: not-allowed; }
+
+        /* Info boxes */
+        .info-box {
+            background: rgba(37, 99, 235, 0.08);
+            padding: 15px 20px;
+            border-left: 4px solid var(--accent-blue);
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        /* Floating AI Assistant Core Component */
+        .ai-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 20px rgba(37, 99, 255, 0.4);
+            cursor: pointer;
+            font-size: 26px;
+            z-index: 2000;
+        }
+        .ai-assistant:hover { transform: scale(1.1); }
 
         /* Overlay Modals */
         .overlay {
@@ -278,7 +301,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
+            z-index: 3000;
         }
 
         .auth-panel {
@@ -291,304 +314,269 @@
         }
 
         .input-box {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: #1f2937;
-            border: 1px solid var(--border-glass);
-            border-radius: 8px;
-            color: white;
-            margin: 0.5rem 0 1.25rem;
+            width: 100%; padding: 0.75rem 1rem;
+            background: #1f2937; border: 1px solid var(--border-glass);
+            border-radius: 8px; color: white; margin: 0.5rem 0 1.25rem;
         }
-        .input-box:focus { outline: none; border-color: var(--accent-blue); }
+
+        footer {
+            background: #04070d; text-align: center; padding: 20px;
+            margin-top: auto; border-top: 1px solid var(--border-glass); font-size: 0.85rem; color: var(--text-dim);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Main Navigation Header -->
+    <div class="top-bar">
+        <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
+        <div id="live-clock">Loading System Time...</div>
+    </div>
+
     <header>
-        <div class="brand" onclick="switchView('home')">
+        <div class="brand" onclick="switchView('home', document.getElementById('li-dash'))">
             <div class="brand-icon"></div>
             <div class="brand-name">EduNet Ethiopia</div>
         </div>
         <nav>
-            <ul id="nav-menu">
-                <li class="active-nav"><a onclick="switchView('home', this)" id="nav-dash">Dashboard</a></li>
-                <li><a onclick="switchView('explore', this)" id="nav-explore">Explore Courses</a></li>
-                <li><a onclick="switchView('toolkits', this)" id="nav-toolkits">Toolkits</a></li>
+            <ul class="nav-links" id="nav-menu">
+                <li class="active-nav" id="li-dash" onclick="switchView('home', this)"><a>Dashboard</a></li>
+                <li id="li-explore" onclick="switchView('explore', this)"><a>Explore Courses</a></li>
+                <li id="li-info" onclick="switchView('info', this)"><a>Information Hub</a></li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
                         <option value="en">English</option>
                         <option value="am">አማርኛ</option>
                     </select>
                 </li>
-                <li><button class="btn btn-outline" onclick="openAuth()" id="nav-register">Register Now</button></li>
+                <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Register Now</button></li>
+                <li>
+                    <div class="three-dot-menu">
+                        <button class="three-dot-btn" onclick="toggleDropdown(event)">⋮</button>
+                        <div class="dropdown-content" id="actionDropdown">
+                            <a href="mailto:support@edunet.et">📧 Technical Support</a>
+                            <a onclick="alert('System Diagnostic Status: 100% Operational Framework Token Active.')">⚙️ System Diagnostics</a>
+                            <a onclick="alert('Session Clear Protocol triggered safely.')">🔄 Clear Cache Session</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
 
-    <!-- Locked Warning Alert Banner -->
-    <div class="auth-banner" id="secureBanner">
-        🔒 Access Restriction: You must register or log in to unlock this specific module stream.
-    </div>
-
-    <!-- VIEW 1: PREMIUM HOME -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
             <p id="hero-desc">Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.</p>
-            <button class="btn btn-primary" onclick="switchView('explore')">Start Learning</button>
+            <button class="btn btn-primary" onclick="switchView('explore', document.getElementById('li-explore'))">Get Started Now</button>
         </div>
     </main>
 
-    <!-- VIEW 2: COURSE ARCHITECTURE EXPLORER -->
     <main id="explore-view" class="app-view">
-        <h2 id="exp-heading">Available Training Modules</h2>
-        <p style="color: var(--text-dim); margin-bottom: 2rem;" id="exp-subheading">Select a domain track to launch the stream workspace player.</p>
+        <h2 id="exp-head" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Available Training Modules</h2>
+        <p id="exp-sub" style="color: var(--text-dim); margin-bottom: 2rem;">Select individual access nodes below to view file systems or execute dynamic media playback tracking.</p>
 
         <div class="grid-container">
-            <div class="glass-card" onclick="launchClassroom('Introduction to Computers')">
-                <span class="card-icon">💻</span>
-                <h3 id="c1-title">Introduction to Computers</h3>
-                <p id="c1-desc">Master physical computer structures including internal system operations, operating layers, CPUs, and system hardware.</p>
-                <div class="card-meta">⭐ 4.00/1 Reviews (Beginner)</div>
-            </div>
-            <div class="glass-card" onclick="launchClassroom('Digital Financial Literacy')">
-                <span class="card-icon">🪙</span>
-                <h3 id="c2-title">Digital & Financial Literacy</h3>
-                <p id="c2-desc">Understand remote payment architectures, secure transactional apps, e-money configurations, and banking processing loops.</p>
-                <div class="card-meta">⭐ 4.33/3 Reviews (Core Skills)</div>
-            </div>
-            <div class="glass-card" onclick="launchClassroom('Online Safety & Cybersecurity')">
-                <span class="card-icon">🛡️</span>
-                <h3 id="c3-title">Online Safety & Security</h3>
-                <p id="c3-desc">Protect systemic user profiles, implement secure data connections, learn safe web verification protocols and active thread mitigation.</p>
-                <div class="card-meta">⭐ 4.50/4 Reviews (Intermediate)</div>
-            </div>
-        </div>
-    </main>
-
-    <!-- VIEW 3: INTEGRATED CLASSROOM SUITE (COMBINED WITH REAL PLAYER LOGIC) -->
-    <main id="classroom-view" class="app-view">
-        <h2 id="active-course-title" style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--accent-blue);">Course Stream</h2>
-        
-        <div class="workspace-layout">
-            <div class="player-deck">
-                <div class="video-container">
-                    <!-- Embedded real sample video that updates smoothly -->
-                    <iframe id="mainEmbedPlayer" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                </div>
-                <div class="course-tags">
-                    <span class="tag" id="tag-level">Beginner</span>
-                    <span class="tag" id="tag-cat">Basic Internet Skills</span>
-                </div>
-                <h3 id="video-title" style="margin-top: 1rem; font-size: 1.3rem;">Lesson 1: Introduction to Computer Hardware Components</h3>
-                <p id="video-desc" style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-top: 0.5rem;">
-                    In this introduction, we discuss CPU, memories, input devices, and output devices. በአጠቃላይ ሃርድዌር የሆኑ እና አጠቃላይ ሰርኪዩት ሲስተሙ ሃርድዌር የምንላቸውን በሙሉ እንመለከታለን።
-                </p>
-            </div>
-
-            <!-- Sidebar Playlist -->
-            <aside class="playlist-deck">
-                <h4 style="font-weight: 700; margin-bottom: 0.5rem;" id="list-header">Playlist Modules</h4>
+            <div class="glass-card">
+                <h3 id="c1-title">Accounting & Finance Modules</h3>
+                <p id="c1-desc">Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.</p>
                 
-                <div class="playlist-item active-item" onclick="loadVideoAsset('Lesson 1: Introduction to Computer Hardware Components', 'In this introduction, we discuss CPU, memories, input devices, and output devices. በአጠቃላይ ሃርድዌር የሆኑ እና አጠቃላይ ሰርኪዩት ሲስተሙ ሃርድዌር የምንላቸውን በሙሉ እንመለከታለን።', 'https://www.youtube.com/embed/dQw4w9WgXcQ', false, this)">
-                    <div>
-                        <strong>1. Intro & Hardware Basics</strong>
-                        <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">⏱️ 27:24 mins • Preview</div>
-                    </div>
-                    <span class="badge badge-free">FREE</span>
+                <div class="table-wrapper">
+                    <table class="lesson-table">
+                        <thead>
+                            <tr>
+                                <th>Topic Segment</th>
+                                <th>Access Route Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lesson 1: Balance Sheets (🎥 Video)</td>
+                                <td><a href="#" onclick="alert('Playing Dynamic Video Module Layer Asset...')" class="btn-status btn-free">▶️ Watch Free</a></td>
+                            </tr>
+                            <tr>
+                                <td>Lesson 2: Ledger Blueprint (📄 File Document)</td>
+                                <td><a href="#" onclick="alert('Downloading File Document Reference Asset Pack...')" class="btn-status btn-free">👁 View Document</a></td>
+                            </tr>
+                            <tr>
+                                <td>Lesson 3: Income Statements (🎥 Video)</td>
+                                <td><a href="#" class="btn-status btn-locked">🔒 Locked Node</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="playlist-item" onclick="loadVideoAsset('', '', '', true, this)">
-                    <div>
-                        <strong>2. The Computer Core System</strong>
-                        <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">⏱️ 16:34 mins • Locked</div>
-                    </div>
-                    <span class="badge badge-lock">LOCKED</span>
+            <div class="glass-card">
+                <h3 id="c2-title">ICT & Computing Infrastructure</h3>
+                <p id="c2-desc">Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.</p>
+                
+                <div class="table-wrapper">
+                    <table class="lesson-table">
+                        <thead>
+                            <tr>
+                                <th>Topic Segment</th>
+                                <th>Access Route Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lesson 1: Networking Basics (🎥 Video)</td>
+                                <td><a href="#" onclick="alert('Launching Networking Stream asset connection...')" class="btn-status btn-free">▶️ Watch Free</a></td>
+                            </tr>
+                            <tr>
+                                <td>Lesson 2: Command Line (📄 File Document)</td>
+                                <td><a href="#" onclick="alert('Downloading Command Line Cheat Sheet PDF...')" class="btn-status btn-free">👁 View Document</a></td>
+                            </tr>
+                            <tr>
+                                <td>Lesson 3: Cyber Security (🎥 Video)</td>
+                                <td><a href="#" class="btn-status btn-locked">🔒 Locked Node</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="playlist-item" onclick="loadVideoAsset('', '', '', true, this)">
-                    <div>
-                        <strong>3. Overview of Operating Systems</strong>
-                        <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">⏱️ 13:27 mins • Locked</div>
-                    </div>
-                    <span class="badge badge-lock">LOCKED</span>
-                </div>
-            </aside>
+            </div>
         </div>
     </main>
 
-    <!-- VIEW 4: LOCALIZED TOOLKITS & RESOURCE CENTER -->
-    <main id="toolkits-view" class="app-view">
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;" id="tk-heading">Downloadable Multi-Language Resource Toolkits</h2>
-        <p style="color: var(--text-dim); margin-bottom: 2.5rem;" id="tk-subheading">Access and save localized study manuals across different regional languages.</p>
-
-        <div class="lang-row">
-            <div>
-                <strong>አማርኛ (Amharic Language Toolkit)</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">የዲጂታል እና ፋይናንስ ክህሎት ስልጠና ማኑዋል (PDF Toolkit)</p>
-            </div>
-            <button class="btn btn-primary" onclick="alert('Downloading Amharic Resource Pack bundle...')">Download PDF</button>
+    <main id="info-view" class="app-view">
+        <h2 id="info-head" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Academic System Information Hub</h2>
+        
+        <div class="info-box">
+            <strong id="box-sch">Schedule Structure Parameters:</strong> New advanced skill track modules release on a systemic rolling weekly scheduling architecture framework cycle.
+        </div>
+        <div class="info-box">
+            <strong id="box-cert">Industrial Certification Matrix:</strong> Successfully processing and completing every required domain module track review grants a verified completion digital document.
         </div>
 
-        <div class="lang-row">
-            <div>
-                <strong>Afaan Oromo Language Pack</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">Digital and Financial Literacy Training Toolkit available in PDF.</p>
-            </div>
-            <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Available Soon</button>
-        </div>
-
-        <div class="lang-row">
-            <div>
-                <strong>ትግርኛ (Tigrigna System Pack)</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">ዲጂታልን ፋይናንስን ክእለት ስልጠና ዶክመንት</p>
-            </div>
-            <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Available Soon</button>
-        </div>
-
-        <div class="lang-row">
-            <div>
-                <strong>Sidama Language Module</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">Digital and Financial Literacy Sidamign Training Toolkit.</p>
-            </div>
-            <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Available Soon</button>
+        <div class="glass-card" style="margin-top: 2rem;">
+            <h3 id="loc-title" style="margin-bottom: 0.5rem;">Central Campus Location</h3>
+            <p id="loc-desc" style="color: var(--text-dim); margin-bottom: 1rem;">Our primary administrative structure tech complex office is located at:</p>
+            <p style="font-weight: 700; color: var(--accent-gold);">🏢 405 Station Boulevard, Sector 4, Metro Central District, Addis Ababa</p>
         </div>
     </main>
 
-    <!-- AUTH HOVER OVERLAY SYSTEM MODAL -->
+    <div class="ai-assistant" title="AI Support Sandbox Desk" onclick="alert('Hello student! How can the EduNet Core Intelligent Assistant Engine streamline your course configuration pathways today?')">🤖</div>
+
     <div class="overlay" id="authGate">
         <div class="auth-panel">
-            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="modal-title">Create Account</h2>
-            <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;" id="modal-sub">Sign up to unlock all protected platform video nodes instantly.</p>
-            <form onsubmit="processUserAuth(event)">
-                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-email">Username or Email Address</label>
-                <input type="text" class="input-box" placeholder="name@domain.et" required>
+            <h2 id="m-title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Create Account</h2>
+            <p id="m-sub" style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;">Sign up to unlock all protected platform learning assets instantly.</p>
+            <form onsubmit="processRegistration(event)">
+                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-email">Secure Identity Email</label>
+                <input type="email" class="input-box" placeholder="student@domain.et" required>
                 
-                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-pass">Password</label>
+                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-pass">Password Auth Token</label>
                 <input type="password" class="input-box" placeholder="••••••••" required>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" id="btn-submit">Register & Access</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" id="btn-submit">Register Profile</button>
                 <button type="button" class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: var(--text-dim);" onclick="closeAuth()" id="btn-cancel">Cancel</button>
             </form>
         </div>
     </div>
 
-    <!-- Interface & Translation Engine Script -->
+    <footer>
+        <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
+    </footer>
+
     <script>
-        let isRegistered = false;
+        // Real-time System Analytics Live Clock Execution Routine
+        function updateSystemClock() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = "System Time: " + now.toLocaleString();
+        }
+        setInterval(updateSystemClock, 1000);
+        updateSystemClock();
 
-        // Multilingual Translation Matrix Map Array
-        const lexicon = {
-            en: {
-                dash: "Dashboard", explore: "Explore Courses", toolkits: "Toolkits", reg: "Register Now",
-                hTitle: "Enjoy learning from hundreds of online courses",
-                hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
-                expHead: "All Available Training Modules", expSub: "Select a domain track to launch the stream workspace player.",
-                c1: "Introduction to Computers", c1d: "Master physical computer structures including internal system operations, operating layers, CPUs, and system hardware.",
-                c2: "Digital & Financial Literacy", c2d: "Understand remote payment architectures, secure transactional apps, e-money configurations, and banking processing loops.",
-                c3: "Online Safety & Security", c3d: "Protect systemic user profiles, implement secure data connections, learn safe web verification protocols and active thread mitigation.",
-                tkHead: "Downloadable Multi-Language Resource Toolkits", tkSub: "Access and save localized study manuals across different regional languages.",
-                playlist: "Playlist Modules", mTitle: "Create Account", mSub: "Sign up to unlock all protected platform video nodes instantly."
-            },
-            am: {
-                dash: "ዳሽቦርድ", explore: "ኮርሶችን ያስሱ", toolkits: "የስልጠና መጽሐፍት", reg: "አሁን ይመዝገቡ",
-                hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
-                expHead: "ያሉ ሁሉም የስልጠና ሞጁሎች", expSub: "የቪዲዮ ማጫወቻውን ለመክፈት የሚፈልጉትን የትምህርት መስክ ይምረጡ።",
-                c1: "የኮምፒውተር መግቢያ", c1d: "የስርዓተ ክወና አወቃቀሮችን፣ ሲፒዩዎችን፣ የኮምፒውተር አካላትን እና ጠቅላላ የሃርድዌር ሲስተሞችን ጠልቀው ይረዱ።",
-                c2: "ዲጂታል የፋይናንስ ክህሎት", c2d: "የርቀት ክፍያ ስርዓቶችን፣ የሞባይል ባንኪንግ መተግበሪያዎችን እና የዲጂታል ገንዘብ ዝውውርን ይረዱ።",
-                c3: "የመስመር ላይ ደህንነት ጥበቃ", c3d: "የግል መረጃዎችን ደህንነት ለመጠበቅ፣ አስተማማኝ የኢንተርኔት ግንኙነቶችን ለመጠቀም እና ስጋቶችን ለመከላከል የሚያግዝ ስልጠና።",
-                tkHead: "በተለያዩ ቋንቋዎች የተዘጋጁ የትምህርት ማኑዋሎች", tkSub: "በተለያዩ የሀገሪቱ ክልላዊ ቋንቋዎች የተዘጋጁ የስልጠና ማኑዋሎችን እዚህ ያውርዱ።",
-                playlist: "የቪዲዮ ዝርዝሮች", mTitle: "አዲስ አካውንት ይፍጠሩ", mSub: "ሁሉንም የተቆለፉ ትምህርቶች ወዲያውኑ ለመክፈት ይመዝገቡ።"
-            }
-        };
+        // 3-Dot Options Action Toggle Routine
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('actionDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
 
+        window.onclick = function() {
+            document.getElementById('actionDropdown').style.display = 'none';
+        }
+
+        // FIXED View Routing Management Logic
         function switchView(viewName, menuElement) {
+            // Hide all structural panels
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+            
+            // Show the target active panel section
             document.getElementById(`${viewName}-view`).classList.add('active-view');
             
-            if(menuElement) {
-                document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
-                menuElement.parentElement.classList.add('active-nav');
-            }
-            document.getElementById('secureBanner').style.display = 'none';
-            window.scrollTo(0,0);
-        }
-
-        function launchClassroom(courseName) {
-            document.getElementById('active-course-title').innerText = `Classroom Engine: ${courseName}`;
-            switchView('classroom');
-        }
-
-        function loadVideoAsset(title, description, videoUrl, isLocked, listElement) {
-            const banner = document.getElementById('secureBanner');
+            // Clean up active CSS navigation state classes cleanly
+            document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
             
-            if (isLocked && !isRegistered) {
-                banner.style.display = 'block';
-                alert("🔒 Restrict System Target:\nThis training module is locked. Register or sign up now to access this video module resource.");
-                openAuth();
-                return;
+            // If passed from an interaction element, dynamically re-apply focus styling rules
+            if(menuElement) {
+                menuElement.classList.add('active-nav');
             }
-
-            banner.style.display = 'none';
-            document.querySelectorAll('.playlist-item').forEach(item => item.classList.remove('active-item'));
-            listElement.classList.add('active-item');
-
-            document.getElementById('mainEmbedPlayer').src = videoUrl;
-            document.getElementById('video-title').innerText = title;
-            document.getElementById('video-desc').innerText = description;
+            window.scrollTo(0,0);
         }
 
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
-        function processUserAuth(event) {
-            event.preventDefault();
-            isRegistered = true;
-            alert("Authentication Success! Your student account profile has been assigned. All course modules unlocked.");
+        function processRegistration(e) {
+            e.preventDefault();
+            alert("Registration Complete! Your profile token is authorized. All structural locked nodes have been successfully cleared.");
             closeAuth();
-
-            // Graphically unlock items instantly inside UI database tree
-            document.querySelectorAll('.badge-lock').forEach(badge => {
-                badge.className = "badge badge-free";
-                badge.innerText = "UNLOCKED";
+            document.querySelectorAll('.btn-locked').forEach(badge => {
+                badge.className = "btn-status btn-free";
+                badge.innerText = "▶️ Unlocked Stream";
+                badge.setAttribute('onclick', "alert('Access granted! Executing dynamic streaming data matrix node.')");
             });
-
-            // Re-bind click handlers to run live video arrays
-            const tracks = document.getElementsByClassName('playlist-item');
-            tracks[1].setAttribute('onclick', "loadVideoAsset('Lesson 2: The Computer Core System Hardware Architecture', 'Deep analysis mapping central internal operational system arrays, clock speeds, caches, data pipelines and microprocessing architectures.', 'https://www.youtube.com/embed/P7id7g9_Vto', false, this)");
-            tracks[2].setAttribute('onclick', "loadVideoAsset('Lesson 3: Overview of Modern Operating Systems Frameworks', 'Core architecture exploration regarding software kernel execution management loops, files permissions and access drivers setups.', 'https://www.youtube.com/embed/26QPDBe-NB8', false, this)");
         }
 
-        function toggleLanguage(lang) {
-            const dict = lexicon[lang];
-            
-            // Apply text translations globally
-            document.getElementById('nav-dash').innerText = dict.dash;
-            document.getElementById('nav-explore').innerText = dict.explore;
-            document.getElementById('nav-toolkits').innerText = dict.toolkits;
-            document.getElementById('nav-register').innerText = dict.reg;
-            
-            document.getElementById('hero-title').innerText = dict.hTitle;
-            document.getElementById('hero-desc').innerText = dict.hDesc;
-            
-            document.getElementById('exp-heading').innerText = dict.expHead;
-            document.getElementById('exp-subheading').innerText = dict.expSub;
-            
-            document.getElementById('c1-title').innerText = dict.c1;
-            document.getElementById('c1-desc').innerText = dict.c1d;
-            document.getElementById('c2-title').innerText = dict.c2;
-            document.getElementById('c2-desc').innerText = dict.c2d;
-            document.getElementById('c3-title').innerText = dict.c3;
-            document.getElementById('c3-desc').innerText = dict.c3d;
-            
-            document.getElementById('tk-heading').innerText = dict.tkHead;
-            document.getElementById('tk-subheading').innerText = dict.tkSub;
-            document.getElementById('list-header').innerText = dict.playlist;
+        // Language Engine Switch Translation Mapping Arrays
+        const dictionary = {
+            en: {
+                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", reg: "Register Now",
+                hTitle: "Enjoy learning from hundreds of online courses",
+                hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
+                exh: "Available Training Modules", exs: "Select individual access nodes below to view file systems or execute dynamic media playback tracking.",
+                c1: "Accounting & Finance Modules", c1d: "Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.",
+                c2: "ICT & Computing Infrastructure", c2d: "Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.",
+                infh: "Academic System Information Hub", sch: "Schedule Structure Parameters:", crt: "Industrial Certification Matrix:",
+                lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:",
+                mt: "Create Account", ms: "Sign up to unlock all protected platform learning assets instantly."
+            },
+            am: {
+                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", reg: "አሁን ይመዝገቡ",
+                hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
+                hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
+                exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማራጮች ይምረጡ።",
+                c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ መግለጫዎችን፣ የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
+                c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮቶኮሎችን ያጠኑ።",
+                infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግራም መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
+                lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
+                mt: "አዲስ አካውንት ይፍጠሩ", ms: "ሁሉንም የተቆለፉ ትምህርቶች ወዲያውኑ ለመክፈት ይመዝገቡ።"
+            }
+        };
 
-            document.getElementById('modal-title').innerText = dict.mTitle;
-            document.getElementById('modal-sub').innerText = dict.mSub;
+        function toggleLanguage(lang) {
+            const word = dictionary[lang];
+            document.getElementById('li-dash').firstElementChild.innerText = word.dash;
+            document.getElementById('li-explore').firstElementChild.innerText = word.exp;
+            document.getElementById('li-info').firstElementChild.innerText = word.info;
+            document.getElementById('nav-reg-btn').innerText = word.reg;
+            document.getElementById('hero-title').innerText = word.hTitle;
+            document.getElementById('hero-desc').innerText = word.hDesc;
+            document.getElementById('exp-head').innerText = word.exh;
+            document.getElementById('exp-sub').innerText = word.exs;
+            document.getElementById('c1-title').innerText = word.c1;
+            document.getElementById('c1-desc').innerText = word.c1d;
+            document.getElementById('c2-title').innerText = word.c2;
+            document.getElementById('c2-desc').innerText = word.c2d;
+            document.getElementById('info-head').innerText = word.infh;
+            document.getElementById('box-sch').nextSibling.textContent = " " + word.sch;
+            document.getElementById('box-cert').nextSibling.textContent = " " + word.crt;
+            document.getElementById('loc-title').innerText = word.lt;
+            document.getElementById('loc-desc').innerText = word.ld;
+            document.getElementById('m-title').innerText = word.mt;
+            document.getElementById('m-sub').innerText = word.ms;
         }
     </script>
 </body>
