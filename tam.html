@@ -310,7 +310,7 @@
             padding: 2.5rem;
             border-radius: 20px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
         }
 
         .input-box {
@@ -327,29 +327,33 @@
 </head>
 <body>
 
+    <!-- Top Info Bar with live real-time Clock -->
     <div class="top-bar">
         <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
         <div id="live-clock">Loading System Time...</div>
     </div>
 
+    <!-- Navigation Header -->
     <header>
-        <div class="brand" onclick="navigateTo('home')">
+        <div class="brand" onclick="switchView('home', document.getElementById('li-dash'))">
             <div class="brand-icon"></div>
             <div class="brand-name">EduNet Ethiopia</div>
         </div>
         <nav>
             <ul class="nav-links" id="nav-menu">
-                <li class="active-nav" id="li-dash" onclick="navigateTo('home')"><a>Dashboard</a></li>
-                <li id="li-explore" onclick="navigateTo('explore')"><a>Explore Courses</a></li>
-                <li id="li-info" onclick="navigateTo('info')"><a>Information Hub</a></li>
+                <li class="active-nav" id="li-dash" onclick="switchView('home', this)"><a>Dashboard</a></li>
+                <li id="li-explore" onclick="switchView('explore', this)"><a>Explore Courses</a></li>
+                <li id="li-info" onclick="switchView('info', this)"><a>Information Hub</a></li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
                         <option value="en">English</option>
                         <option value="am">አማርኛ</option>
                     </select>
                 </li>
-                <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Register Now</button></li>
+                <!-- Updated validation target for returning Senior track processing -->
+                <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Senior Registration</button></li>
                 <li>
+                    <!-- 3-Dot Action Trigger Dropdown Block -->
                     <div class="three-dot-menu">
                         <button class="three-dot-btn" onclick="toggleDropdown(event)">⋮</button>
                         <div class="dropdown-content" id="actionDropdown">
@@ -363,19 +367,22 @@
         </nav>
     </header>
 
-    <main id="home-view" class="app-view">
+    <!-- VIEW 1: HOME/DASHBOARD -->
+    <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
             <p id="hero-desc">Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.</p>
-            <button class="btn btn-primary" onclick="navigateTo('explore')">Get Started Now</button>
+            <button class="btn btn-primary" onclick="switchView('explore', document.getElementById('li-explore'))">Get Started Now</button>
         </div>
     </main>
 
+    <!-- VIEW 2: EXPLORE COURSE REGISTRATION TABLES -->
     <main id="explore-view" class="app-view">
         <h2 id="exp-head" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Available Training Modules</h2>
         <p id="exp-sub" style="color: var(--text-dim); margin-bottom: 2rem;">Select individual access nodes below to view file systems or execute dynamic media playback tracking.</p>
 
         <div class="grid-container">
+            <!-- Course Block 1 -->
             <div class="glass-card">
                 <h3 id="c1-title">Accounting & Finance Modules</h3>
                 <p id="c1-desc">Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.</p>
@@ -406,6 +413,7 @@
                 </div>
             </div>
 
+            <!-- Course Block 2 -->
             <div class="glass-card">
                 <h3 id="c2-title">ICT & Computing Infrastructure</h3>
                 <p id="c2-desc">Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.</p>
@@ -438,6 +446,7 @@
         </div>
     </main>
 
+    <!-- VIEW 3: SYSTEM REGISTRATION INFO HUB, CERTIFICATION & OFFICE SITE MAP -->
     <main id="info-view" class="app-view">
         <h2 id="info-head" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Academic System Information Hub</h2>
         
@@ -455,29 +464,33 @@
         </div>
     </main>
 
+    <!-- FLOATING AI ASSISTANT WIDGET MODULE -->
     <div class="ai-assistant" title="AI Support Sandbox Desk" onclick="alert('Hello student! How can the EduNet Core Intelligent Assistant Engine streamline your course configuration pathways today?')">🤖</div>
 
+    <!-- SENIOR STUDENT ACCESS MODAL FRAME -->
     <div class="overlay" id="authGate">
         <div class="auth-panel">
-            <h2 id="m-title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Create Account</h2>
-            <p id="m-sub" style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;">Sign up to unlock all protected platform learning assets instantly.</p>
+            <h2 id="m-title" style="font-size: 1.5rem; margin-bottom: 0.3rem;">Senior Re-Registration</h2>
+            <p id="m-sub" style="color: var(--accent-gold); font-size: 0.85rem; margin-bottom: 1.5rem; font-weight: 600;">⚠️ Access Restricted to Existing Senior IDs Only</p>
             <form onsubmit="processRegistration(event)">
-                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-email">Secure Identity Email</label>
-                <input type="email" class="input-box" placeholder="student@domain.et" required>
+                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-id">Senior Student ID Number</label>
+                <input type="text" class="input-box" placeholder="ETS/SR/XXXX" required>
                 
-                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-pass">Password Auth Token</label>
+                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-pass">Academic Clearance Pin</label>
                 <input type="password" class="input-box" placeholder="••••••••" required>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" id="btn-submit">Register Profile</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" id="btn-submit">Verify Senior Profile</button>
                 <button type="button" class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: var(--text-dim);" onclick="closeAuth()" id="btn-cancel">Cancel</button>
             </form>
         </div>
     </div>
 
+    <!-- Administrative Footer Component -->
     <footer>
         <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
     </footer>
 
+    <!-- Comprehensive Client Control Engine Script -->
     <script>
         // Real-time System Analytics Live Clock Execution Routine
         function updateSystemClock() {
@@ -498,48 +511,24 @@
             document.getElementById('actionDropdown').style.display = 'none';
         }
 
-        // Trigger safe URL bar updates
-        function navigateTo(viewName) {
-            window.location.hash = viewName;
-        }
-
-        // SYSTEMIC HISTORY ENGINE: Automatically monitors URL state changes (Back/Forward arrows)
-        function renderViewFromHash() {
-            // Read active hash string, fallback to 'home' if empty
-            let viewName = window.location.hash.replace('#', '') || 'home';
-            
-            // Guard loop to ensure only legal sections evaluate
-            if (viewName !== 'home' && viewName !== 'explore' && viewName !== 'info') {
-                viewName = 'home';
-            }
-
-            // Hide all structural panels
+        // REVERTED: Straightforward tab component layout toggle script execution engine
+        function switchView(viewName, menuElement) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
-            
-            // Show target active view section
             document.getElementById(`${viewName}-view`).classList.add('active-view');
             
-            // Clean up old navigation link states cleanly
             document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
-            
-            // Dynamically synchronize highlight rules onto nav rows
-            if (viewName === 'home') document.getElementById('li-dash').classList.add('active-nav');
-            if (viewName === 'explore') document.getElementById('li-explore').classList.add('active-nav');
-            if (viewName === 'info') document.getElementById('li-info').classList.add('active-nav');
-
+            if(menuElement) {
+                menuElement.classList.add('active-nav');
+            }
             window.scrollTo(0,0);
         }
-
-        // Setup live listener monitors for native hardware Back arrows
-        window.addEventListener('hashchange', renderViewFromHash);
-        window.addEventListener('load', renderViewFromHash);
 
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
         function processRegistration(e) {
             e.preventDefault();
-            alert("Registration Complete! Your profile token is authorized. All structural locked nodes have been successfully cleared.");
+            alert("Senior Credentials Validated! Premium advanced core tracking layers have been unlocked successfully.");
             closeAuth();
             document.querySelectorAll('.btn-locked').forEach(badge => {
                 badge.className = "btn-status btn-free";
@@ -551,7 +540,7 @@
         // Language Engine Switch Translation Mapping Arrays
         const dictionary = {
             en: {
-                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", reg: "Register Now",
+                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", reg: "Senior Registration",
                 hTitle: "Enjoy learning from hundreds of online courses",
                 hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
                 exh: "Available Training Modules", exs: "Select individual access nodes below to view file systems or execute dynamic media playback tracking.",
@@ -559,10 +548,10 @@
                 c2: "ICT & Computing Infrastructure", c2d: "Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.",
                 infh: "Academic System Information Hub", sch: "Schedule Structure Parameters:", crt: "Industrial Certification Matrix:",
                 lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:",
-                mt: "Create Account", ms: "Sign up to unlock all protected platform learning assets instantly."
+                mt: "Senior Re-Registration", ms: "⚠️ Access Restricted to Existing Senior IDs Only"
             },
             am: {
-                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", reg: "አሁን ይመዝገቡ",
+                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", reg: "የአንጋፋ ተማሪዎች ምዝገባ",
                 hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
                 hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
                 exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማራጮች ይምረጡ።",
@@ -570,7 +559,7 @@
                 c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮቶኮሎችን ያጠኑ።",
                 infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግራም መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
                 lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
-                mt: "አዲስ አካውንት ይፍጠሩ", ms: "ሁሉንም የተቆለፉ ትምህርቶች ወዲያውኑ ለመክፈት ይመዝገቡ።"
+                mt: "የነባር ተማሪዎች ምዝገባ", ms: "⚠️ ይህ አገልግሎት ለነባር/አንጋፋ ተማሪዎች ብቻ የተፈቀደ ነው"
             }
         };
 
