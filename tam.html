@@ -182,7 +182,25 @@
             font-weight: 600;
         }
 
-        /* Filter Controls Bar */
+        /* Floating Interactive Sticker */
+        .floating-sticker {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, #fed100, #f59e0b);
+            color: #000;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            z-index: 999;
+            pointer-events: none;
+            animation: floatAnimation 3s infinite ease-in-out;
+            border: 2px solid #fff;
+        }
+
+        /* Filter Controls */
         .filter-container {
             display: flex;
             justify-content: space-between;
@@ -212,16 +230,7 @@
             background: transparent;
             color: #64748b;
         }
-        .filter-select { 
-            background: #1f2937; 
-            color: white; 
-            border: 1px solid var(--border-glass); 
-            padding: 8px 16px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            outline: none;
-        }
+        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
 
         /* Grid Framework Layouts */
         .course-grid {
@@ -277,6 +286,7 @@
             position: relative;
         }
 
+        /* Moving Vector Graphic Sticker inside Card */
         .vector-shapes {
             position: absolute;
             bottom: 10px; right: 10px; left: 10px; top: 10px;
@@ -320,6 +330,7 @@
             font-weight: 600; 
         }
 
+        /* Interactive Rating Component */
         .interactive-rating-box {
             display: flex;
             align-items: center;
@@ -355,6 +366,7 @@
             text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
         }
 
+        /* Sticker Sticker Pop Effect */
         .sticker-burst-element {
             position: fixed;
             pointer-events: none;
@@ -438,6 +450,66 @@
             text-align: center;
         }
 
+        /* AI Sticky bottom bar */
+        .ai-sticky-bottom-widget {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .ai-toggle-bubble {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .ai-floating-card-body {
+            display: none;
+            width: 350px;
+            background: #111827;
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.4);
+            padding: 16px;
+            margin-bottom: 15px;
+            flex-direction: column;
+            gap: 12px;
+            animation: fadeIn 0.25s ease forwards;
+        }
+        .ai-chat-history {
+            height: 200px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .ai-input-wrap {
+            display: flex;
+            gap: 8px;
+        }
+        .ai-input-wrap input {
+            flex-grow: 1;
+            background: #0b0f19;
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
         .btn {
             padding: 0.55rem 1.25rem;
             border-radius: 8px;
@@ -463,39 +535,16 @@
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
-        /* Auth Panel UI Subsystem */
-        .auth-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-glass);
-            margin-bottom: 20px;
-        }
-        .auth-tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-        }
-        .auth-tab.active-tab {
-            color: var(--text-pure);
-            border-bottom-color: var(--accent-blue);
-        }
-        .auth-form-panel {
-            display: none;
-        }
-        .auth-form-panel.active-panel {
-            display: block;
-        }
-
         /* Keyframe Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         @keyframes pulseSticker {
@@ -544,6 +593,8 @@
 </head>
 <body>
 
+    <div class="floating-sticker" id="platform-banner">✨ EduNet 2026 Live Platform</div>
+
     <div class="top-bar">
         <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
         <div id="live-clock">Loading System Time...</div>
@@ -554,6 +605,7 @@
             <div class="brand-icon"></div>
             <div class="brand-name">EduNet Ethiopia</div>
         </div>
+     
         <nav>
             <ul class="nav-links" id="nav-menu">
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
@@ -567,7 +619,7 @@
                     </div>
                 </li>
 
-                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openAuthModal()">Sign Up / Login</button></li>
+                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openRegistrationModal()">Register / Login</button></li>
                 <li>
                     <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
@@ -577,6 +629,20 @@
             </ul>
         </nav>
     </header>
+
+    <div class="ai-sticky-bottom-widget">
+        <div class="ai-floating-card-body" id="ai-widget-panel">
+            <h4 style="color: var(--accent-green); border-bottom: 1px solid var(--border-glass); padding-bottom: 6px; font-weight:700;">🤖 EduNet AI Assistant</h4>
+            <div class="ai-chat-history" id="ai-chat-output-logs">
+                <p style="color: var(--text-dim);"><em id="ai-sys-welcome">System: Hello! How can I assist you today?</em></p>
+            </div>
+            <div class="ai-input-wrap">
+                <input type="text" id="ai-user-prompt-input" placeholder="Ask AI anything..." onkeydown="if(event.key === 'Enter') submitAiAssistantQuery()">
+                <button class="btn btn-primary" style="padding: 0 10px;" onclick="submitAiAssistantQuery()">Ask</button>
+            </div>
+        </div>
+        <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
+    </div>
 
     <main id="home-view" class="app-view active-view">
         <div class="hero">
@@ -648,54 +714,33 @@
 
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
-            <span class="close-modal-x" onclick="closeAuthModal()">✕</span>
-            
-            <div class="auth-tabs">
-                <button class="auth-tab active-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
-                <button class="auth-tab" id="tab-login" onclick="switchAuthTab('login')">Log In</button>
-            </div>
-
-            <div class="auth-form-panel active-panel" id="panel-signup">
-                <form id="register-form" onsubmit="executeUserRegistration(event)">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" required placeholder="Abebe Bikila">
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" required placeholder="abebe@domain.et">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account</button>
-                </form>
-            </div>
-
-            <div class="auth-form-panel" id="panel-login">
-                <form id="login-form" onsubmit="executeUserLogin(event)">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" required placeholder="abebe@domain.et">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; background: var(--accent-green);">Access Account</button>
-                </form>
-            </div>
+            <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
+            <h3 id="modal-heading">Create Free Account</h3>
+            <form id="register-form" onsubmit="executeUserRegistration(event)">
+                <div class="form-group">
+                    <label id="lbl-name">Full Name</label>
+                    <input type="text" required placeholder="Abebe Bikila">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-email">Email Address</label>
+                    <input type="email" required placeholder="abebe@domain.et">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-pass">Password</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-reg">Submit Registration</button>
+            </form>
         </div>
     </div>
 
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
-            <h3 style="color: var(--accent-gold);">💳 Premium Asset Activation</h3>
-            <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;">This advanced workflow structure module requires premium licensing clearance.</p>
+            <h3 style="color: var(--accent-gold);" id="pay-modal-title">💳 Premium Asset Activation</h3>
+            <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;" id="pay-modal-desc">This advanced workflow structure module requires premium licensing clearance.</p>
             <div class="form-group">
-                <label>Select Local Micro-Payment Core Service</label>
+                <label id="pay-vendor-lbl">Select Local Micro-Payment Core Service</label>
                 <select id="payment-vendor-select">
                     <option value="telebirr">Telebirr (Ethio Telecom)</option>
                     <option value="cbe">CBE Birr Wallet</option>
@@ -703,14 +748,14 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Mobile Number (+251)</label>
+                <label id="pay-phone-lbl">Mobile Number (+251)</label>
                 <input type="tel" placeholder="912345678" required>
             </div>
             <div class="form-group">
-                <label style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
+                <label style="color: var(--accent-gold);" id="pay-proof-lbl">📎 Attach Payment Screenshot (Proof)</label>
                 <input type="file" id="payment-proof-file" accept="image/*" style="padding: 5px 0;">
             </div>
-            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Submit & Authorize Activation</button>
+            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()" id="pay-submit-btn">Submit & Authorize Activation</button>
         </div>
     </div>
 
@@ -738,11 +783,9 @@
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
-        // Expanded Course Database containing incremental tracking indexes
         const coursesDatabase = [
             { 
                 id: 1, 
-                orderIndex: 1,
                 title: "Introduction to Computers & OS Basics", 
                 lessons: 3, 
                 userRating: 0,
@@ -756,7 +799,6 @@
             },
             { 
                 id: 2, 
-                orderIndex: 2,
                 title: "Accounting & Corporate Finance Modules", 
                 lessons: 2, 
                 userRating: 0,
@@ -769,7 +811,6 @@
             },
             { 
                 id: 3, 
-                orderIndex: 3,
                 title: "Digital Marketing & Social Media Growth", 
                 lessons: 3, 
                 userRating: 0,
@@ -783,7 +824,6 @@
             },
             { 
                 id: 4, 
-                orderIndex: 4,
                 title: "Web Development Bootcamp (HTML, CSS & JS)", 
                 lessons: 3, 
                 userRating: 0,
@@ -797,7 +837,6 @@
             },
             { 
                 id: 5, 
-                orderIndex: 5,
                 title: "Graphic Design Masterclass using Canva & Figma", 
                 lessons: 2, 
                 userRating: 0,
@@ -812,12 +851,78 @@
 
         const languageDictionary = {
             en: {
+                liveSticker: "✨ EduNet 2026 Live Platform",
                 heroTitle: "Enjoy learning from hundreds of online courses",
-                heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies."
+                heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
+                dashNav: "Dashboard",
+                exploreNav: "Explore Courses",
+                paymentNav: "Payment ▾",
+                payNow: "💳 Pay Now",
+                payVideo: "📺 How to Pay Video",
+                authBtn: "Register / Login",
+                heroCta: "Get Started Now",
+                layoutTxt: "Layout",
+                sortNewest: "⏳ Sort: Newest First",
+                sortOldest: "⏳ Sort: Oldest First",
+                sortAZ: "🔤 Title: A-Z",
+                sortZA: "🔤 Title: Z-A",
+                backExplore: "⬅ Back to Explore",
+                rateCourse: "Rate Course:",
+                aboutCourse: "About this Course",
+                courseDesc: "Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.",
+                syllabusTitle: "Course Syllabus",
+                modalHeading: "Create Free Account",
+                lblName: "Full Name",
+                lblEmail: "Email Address",
+                lblPass: "Password",
+                btnSubmitReg: "Submit Registration",
+                aiTitle: "🤖 EduNet AI Assistant",
+                aiWelcome: "System: Hello! How can I assist you today?",
+                aiPlaceholder: "Ask AI anything...",
+                aiAskBtn: "Ask",
+                payTitle: "💳 Premium Asset Activation",
+                payDesc: "This advanced workflow structure module requires premium licensing clearance.",
+                payVendor: "Select Local Micro-Payment Core Service",
+                payPhone: "Mobile Number (+251)",
+                payProof: "📎 Attach Payment Screenshot (Proof)",
+                paySubmit: "Submit & Authorize Activation"
             },
             am: {
+                liveSticker: "✨ ኢዱኔት 2026 የቀጥታ መድረክ",
                 heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት"
+                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት",
+                dashNav: "ዳሽቦርድ",
+                exploreNav: "ኮርሶችን ያስሱ",
+                paymentNav: "ክፍያ ▾",
+                payNow: "💳 አሁን ይክፈሉ",
+                payVideo: "📺 እንዴት መክፈል እንደሚቻል ቪዲዮ",
+                authBtn: "ይመዝገቡ / ይግቡ",
+                heroCta: "አሁን ይጀምሩ",
+                layoutTxt: "አቀማመጥ",
+                sortNewest: "⏳ አዲስ መጀመሪያ",
+                sortOldest: "⏳ የቆየ መጀመሪያ",
+                sortAZ: "🔤 ርዕስ: ከሀ-ፖ",
+                sortZA: "🔤 ርዕስ: ከፖ-ሀ",
+                backExplore: "⬅ ወደ ማሰሻ ይመለሱ",
+                rateCourse: "ኮርሱን ደረጃ ይስጡ:",
+                aboutCourse: "ስለዚህ ኮርስ",
+                courseDesc: "በዚህ የተሟላ ሞጁል መዋቅር ውስጥ ለእውነተኛ ዓለም ኢንተርፕራይዝ መተግበሪያዎች የተነደፉ ዓለም አቀፍ ሀብቶችን ወዲያውኑ ያግኙ።",
+                syllabusTitle: "የኮርስ ይዘት",
+                modalHeading: "ነፃ አካውንት ይፍጠሩ",
+                lblName: "ሙሉ ስም",
+                lblEmail: "ኢሜይል አድራሻ",
+                lblPass: "የይለፍ ቃል",
+                btnSubmitReg: "ምዝገባውን ያስገቡ",
+                aiTitle: "🤖 የኢዱኔት AI ረዳት",
+                aiWelcome: "ስርዓት፡ ሰላም! ዛሬ እንዴት ልረዳዎት እችላለሁ?",
+                aiPlaceholder: "AI ን ማንኛውንም ነገር ይጠይቁ...",
+                aiAskBtn: "ጠይቅ",
+                payTitle: "💳 ፕሪሚየም አገልግሎት ማግበር",
+                payDesc: "ይህ የላቀ የሞጁል መዋቅር የፕሪሚየም ፈቃድ ማረጋገጫ ይፈልጋል።",
+                payVendor: "የአካባቢ ማይክሮ-ክፍያ አገልግሎት ይምረጡ",
+                payPhone: "የሞባይል ቁጥር (+251)",
+                payProof: "📎 የክፍያ ቅጽበታዊ ገጽ እይታ ያያይዙ (ማረጋገጫ)",
+                paySubmit: "ማግበሪያውን ያስገቡ እና ያረጋግጡ"
             }
         };
 
@@ -852,22 +957,8 @@
             });
         }
 
-        // Active dynamic sorting processor routine
         function runSortFilterEngine() {
-            const sortValue = document.getElementById('sort-filter').value;
-            let sortedCourses = [...coursesDatabase];
-
-            if (sortValue === 'newest') {
-                sortedCourses.sort((a, b) => b.orderIndex - a.orderIndex);
-            } else if (sortValue === 'oldest') {
-                sortedCourses.sort((a, b) => a.orderIndex - b.orderIndex);
-            } else if (sortValue === 'az') {
-                sortedCourses.sort((a, b) => a.title.localeCompare(b.title));
-            } else if (sortValue === 'za') {
-                sortedCourses.sort((a, b) => b.title.localeCompare(a.title));
-            }
-
-            renderCourseCards(sortedCourses);
+            renderCourseCards(coursesDatabase);
         }
 
         function changeLayout(mode) {
@@ -901,7 +992,6 @@
             document.getElementById('classroom-title').innerText = selectedCourse.title;
             
             highlightRatingStars(selectedCourse.userRating);
-
             const syllabusWrapper = document.getElementById('dynamic-syllabus-list-wrapper');
             syllabusWrapper.innerHTML = "";
 
@@ -930,7 +1020,6 @@
                 };
                 syllabusWrapper.appendChild(row);
             });
-
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById('course-inner-view').classList.add('active-view');
             window.scrollTo(0, 0);
@@ -941,7 +1030,7 @@
             if (selectedCourse) {
                 selectedCourse.userRating = ratingValue;
                 highlightRatingStars(ratingValue);
-                runSortFilterEngine(); 
+                renderCourseCards(coursesDatabase); 
 
                 const totalStickersCount = 12;
                 const stickersArray = ['⭐', '✨', '🎓', '🔥', '🚀'];
@@ -984,29 +1073,25 @@
             if (player && source) {
                 source.src = videoUrl;
                 player.load();
-                player.play().catch(err => console.log("Playback failure intercepted:", err));
+                player.play().catch(err => console.log("Playback engine handled:", err));
             }
         }
 
-        /* Authentication Controls */
-        function openAuthModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
-        function closeAuthModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
-        
-        function switchAuthTab(targetTab) {
-            document.querySelectorAll('.auth-tab').forEach(btn => btn.classList.remove('active-tab'));
-            document.querySelectorAll('.auth-form-panel').forEach(panel => panel.classList.remove('active-panel'));
-
-            if (targetTab === 'signup') {
-                document.getElementById('tab-signup').classList.add('active-tab');
-                document.getElementById('panel-signup').classList.add('active-panel');
-            } else {
-                document.getElementById('tab-login').classList.add('active-tab');
-                document.getElementById('panel-login').classList.add('active-panel');
-            }
+        function toggleAiWidgetPanel() {
+            const panel = document.getElementById('ai-widget-panel');
+            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        function executeUserRegistration(e) { e.preventDefault(); closeAuthModal(); }
-        function executeUserLogin(e) { e.preventDefault(); closeAuthModal(); }
+        function submitAiAssistantQuery() {
+            const inputField = document.getElementById('ai-user-prompt-input');
+            const promptText = inputField.value.trim();
+            if(!promptText) return;
+            document.getElementById('ai-chat-output-logs').innerHTML += `<p><strong>You:</strong> ${promptText}</p>`;
+            inputField.value = "";
+        }
+
+        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
+        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
         
         function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
         function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
@@ -1014,12 +1099,89 @@
         function openHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex'; }
         function closeHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'none'; }
 
-        function processPremiumPaymentSimulation() { closePaymentModal(); }
+        function executeUserRegistration(e) {
+            e.preventDefault();
+            closeRegistrationModal();
+        }
+
+        function processPremiumPaymentSimulation() {
+            closePaymentModal();
+        }
 
         function runLanguageEngine(langCode) {
             const resources = languageDictionary[langCode] || languageDictionary['en'];
+            
+            // Top structural floating banner
+            document.getElementById('platform-banner').innerText = resources.liveSticker;
+
+            // Hero panel translation updates
             document.getElementById('hero-title').innerText = resources.heroTitle;
             document.getElementById('hero-desc').innerText = resources.heroDesc;
+            document.getElementById('hero-cta').innerText = resources.heroCta;
+
+            // Nav link header options mapping updates
+            document.getElementById('li-dash').innerText = resources.dashNav;
+            document.getElementById('li-explore').innerText = resources.exploreNav;
+            document.querySelector('#payment-dropdown-nav .dropdown-trigger').innerText = resources.paymentNav;
+            
+            const paymentLinks = document.querySelectorAll('#payment-dropdown-nav .dropdown-menu a');
+            if (paymentLinks.length >= 2) {
+                paymentLinks[0].innerText = resources.payNow;
+                paymentLinks[1].innerText = resources.payVideo;
+            }
+            document.getElementById('btn-auth-trigger').innerText = resources.authBtn;
+
+            // Sorting select bar elements updates
+            document.getElementById('txt-grid').innerText = resources.layoutTxt;
+            const sortFilter = document.getElementById('sort-filter');
+            sortFilter.options[0].text = resources.sortNewest;
+            sortFilter.options[1].text = resources.sortOldest;
+            sortFilter.options[2].text = resources.sortAZ;
+            sortFilter.options[3].text = resources.sortZA;
+
+            // Workspace view details items updates
+            const backBtn = document.querySelector('#course-inner-view .btn');
+            if (backBtn) backBtn.innerText = resources.backExplore;
+            
+            const ratingBoxLabel = document.querySelector('#rating-component-wrapper span');
+            if (ratingBoxLabel) ratingBoxLabel.innerText = resources.rateCourse;
+            
+            const aboutHeader = document.querySelector('#classroom-video-col h3');
+            if (aboutHeader) aboutHeader.innerText = resources.aboutCourse;
+            
+            const aboutDesc = document.querySelector('#classroom-video-col p');
+            if (aboutDesc) aboutDesc.innerText = resources.courseDesc;
+            
+            const syllabusHeader = document.querySelector('.syllabus-box h3');
+            if (syllabusHeader) syllabusHeader.innerText = resources.syllabusTitle;
+
+            // Forms labels validation updates
+            document.getElementById('modal-heading').innerText = resources.modalHeading;
+            document.getElementById('lbl-name').innerText = resources.lblName;
+            document.getElementById('lbl-email').innerText = resources.lblEmail;
+            document.getElementById('lbl-pass').innerText = resources.lblPass;
+            document.getElementById('btn-submit-reg').innerText = resources.btnSubmitReg;
+
+            // Payment modal strings elements updates
+            document.getElementById('pay-modal-title').innerText = resources.payTitle;
+            document.getElementById('pay-modal-desc').innerText = resources.payDesc;
+            document.getElementById('pay-vendor-lbl').innerText = resources.payVendor;
+            document.getElementById('pay-phone-lbl').innerText = resources.payPhone;
+            document.getElementById('pay-proof-lbl').innerText = resources.payProof;
+            document.getElementById('pay-submit-btn').innerText = resources.paySubmit;
+
+            // Embedded AI core components widget updates
+            const aiCardHeader = document.querySelector('#ai-widget-panel h4');
+            if (aiCardHeader) aiCardHeader.innerText = resources.aiTitle;
+            
+            const aiWelcomeMsg = document.getElementById('ai-sys-welcome');
+            if (aiWelcomeMsg) aiWelcomeMsg.innerText = resources.aiWelcome;
+
+            const aiInput = document.getElementById('ai-user-prompt-input');
+            if (aiInput) aiInput.placeholder = resources.aiPlaceholder;
+            
+            const aiAskBtn = document.querySelector('.ai-input-wrap .btn');
+            if (aiAskBtn) aiAskBtn.innerText = resources.aiAskBtn;
         }
 
         function navigateView(viewName, isFromPopState = false) {
@@ -1047,9 +1209,8 @@
             }
         });
 
-        // Initialize Application State Engine
         history.replaceState({ view: 'home' }, '', '/');
-        runSortFilterEngine();
+        renderCourseCards(coursesDatabase);
     </script>
 </body>
 </html>
