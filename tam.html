@@ -182,24 +182,6 @@
             font-weight: 600;
         }
 
-        /* Floating Interactive Sticker */
-        .floating-sticker {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: linear-gradient(135deg, #fed100, #f59e0b);
-            color: #000;
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            z-index: 999;
-            pointer-events: none;
-            animation: floatAnimation 3s infinite ease-in-out;
-            border: 2px solid #fff;
-        }
-
         /* Filter Controls */
         .filter-container {
             display: flex;
@@ -215,7 +197,7 @@
         .filter-left span { color: var(--text-dim); font-size: 0.9rem; margin-right: 5px; }
         
         .view-toggle-btn { 
-            background: #1f2937; 
+            background: #1f2937;
             border: 1px solid var(--border-glass); 
             color: white; 
             width: 34px;
@@ -279,7 +261,8 @@
         }
 
         .card-vector-bg {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             display: flex; align-items: center; justify-content: center;
             color: rgba(255,255,255,0.12); font-size: 5rem; font-weight: 900;
             position: relative;
@@ -287,7 +270,8 @@
 
         /* Moving Vector Graphic Sticker inside Card */
         .vector-shapes {
-            position: absolute; bottom: 10px; right: 10px; left: 10px; top: 10px;
+            position: absolute;
+            bottom: 10px; right: 10px; left: 10px; top: 10px;
             border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #fff; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -323,7 +307,7 @@
         }
 
         .rating-digits { 
-            color: var(--course-text-muted); 
+            color: var(--course-text-muted);
             font-size: 0.85rem; 
             font-weight: 600; 
         }
@@ -448,66 +432,6 @@
             text-align: center;
         }
 
-        /* AI Sticky bottom bar */
-        .ai-sticky-bottom-widget {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 5000;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .ai-toggle-bubble {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        .ai-floating-card-body {
-            display: none;
-            width: 350px;
-            background: #111827;
-            border: 1px solid var(--border-glass);
-            border-radius: 14px;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.4);
-            padding: 16px;
-            margin-bottom: 15px;
-            flex-direction: column;
-            gap: 12px;
-            animation: fadeIn 0.25s ease forwards;
-        }
-        .ai-chat-history {
-            height: 200px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.2);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        .ai-input-wrap {
-            display: flex;
-            gap: 8px;
-        }
-        .ai-input-wrap input {
-            flex-grow: 1;
-            background: #0b0f19;
-            border: 1px solid var(--border-glass);
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
-
         .btn {
             padding: 0.55rem 1.25rem;
             border-radius: 8px;
@@ -537,12 +461,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes floatAnimation {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         @keyframes pulseSticker {
@@ -591,8 +509,6 @@
 </head>
 <body>
 
-    <div class="floating-sticker">✨ EduNet 2026 Live Platform</div>
-
     <div class="top-bar">
         <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
         <div id="live-clock">Loading System Time...</div>
@@ -626,20 +542,6 @@
             </ul>
         </nav>
     </header>
-
-    <div class="ai-sticky-bottom-widget">
-        <div class="ai-floating-card-body" id="ai-widget-panel">
-            <h4 style="color: var(--accent-green); border-bottom: 1px solid var(--border-glass); padding-bottom: 6px; font-weight:700;">🤖 EduNet AI Assistant</h4>
-            <div class="ai-chat-history" id="ai-chat-output-logs">
-                <p style="color: var(--text-dim);"><em>System: Hello! How can I assist you today?</em></p>
-            </div>
-            <div class="ai-input-wrap">
-                <input type="text" id="ai-user-prompt-input" placeholder="Ask AI anything..." onkeydown="if(event.key === 'Enter') submitAiAssistantQuery()">
-                <button class="btn btn-primary" style="padding: 0 10px;" onclick="submitAiAssistantQuery()">Ask</button>
-            </div>
-        </div>
-        <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
-    </div>
 
     <main id="home-view" class="app-view active-view">
         <div class="hero">
@@ -983,9 +885,9 @@
                     
                     // Generate random trajectories
                     const moveX = (Math.random() - 0.5) * 250;
-                    const moveY = (Math.random() - 0.5) * 250 - 100; // Prefer moving upwards
+                    const moveY = (Math.random() - 0.5) * 250 - 100;
+                    // Prefer moving upwards
                     const rotateR = Math.random() * 360;
-                    
                     sticker.style.setProperty('--mx', `${moveX}px`);
                     sticker.style.setProperty('--my', `${moveY}px`);
                     sticker.style.setProperty('--mr', `${rotateR}deg`);
@@ -1017,19 +919,6 @@
                 player.load();
                 player.play().catch(err => console.log("Playback engine handled:", err));
             }
-        }
-
-        function toggleAiWidgetPanel() {
-            const panel = document.getElementById('ai-widget-panel');
-            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function submitAiAssistantQuery() {
-            const inputField = document.getElementById('ai-user-prompt-input');
-            const promptText = inputField.value.trim();
-            if(!promptText) return;
-            document.getElementById('ai-chat-output-logs').innerHTML += `<p><strong>You:</strong> ${promptText}</p>`;
-            inputField.value = "";
         }
 
         function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
