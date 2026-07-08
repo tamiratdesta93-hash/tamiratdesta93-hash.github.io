@@ -153,7 +153,6 @@
             margin-top: 10px;
         }
         
-        /* Controlled explicitly by JS toggle click engine */
         .dropdown.active .dropdown-menu {
             display: block;
         }
@@ -534,7 +533,6 @@
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 
-                <!-- CLICK-BASED DROPDOWN FOR PAYMENT -->
                 <li class="dropdown" id="payment-dropdown-nav">
                     <button class="dropdown-trigger" onclick="togglePaymentDropdown(event)">Payment ▾</button>
                     <div class="dropdown-menu">
@@ -554,7 +552,6 @@
         </nav>
     </header>
 
-    <!-- STICKY SYSTEM-WIDE AI ASSISTANT -->
     <div class="ai-sticky-bottom-widget">
         <div class="ai-floating-card-body" id="ai-widget-panel">
             <h4 style="color: var(--accent-green); border-bottom: 1px solid var(--border-glass); padding-bottom: 6px; font-weight:700;">🤖 EduNet AI Assistant</h4>
@@ -569,7 +566,6 @@
         <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
     </div>
 
-    <!-- VIEW 1: HOME DASHBOARD -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -578,7 +574,6 @@
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSES -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
@@ -599,7 +594,6 @@
         <div class="course-grid" id="course-container-box"></div>
     </main>
 
-    <!-- VIEW 3: IN-COURSE WORKSPACE VIEW -->
     <main id="course-inner-view" class="app-view">
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
@@ -614,7 +608,6 @@
                 <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
             </div>
 
-            <!-- SYLLABUS DIRECTORY -->
             <div class="syllabus-box">
                 <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
                 <div id="dynamic-syllabus-list-wrapper"></div>
@@ -622,7 +615,6 @@
         </div>
     </main>
 
-    <!-- HOW TO PAY VIDEO MODAL -->
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
@@ -634,7 +626,6 @@
         </div>
     </div>
 
-    <!-- REGISTRATION MODAL -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
@@ -657,7 +648,6 @@
         </div>
     </div>
 
-    <!-- PAYMENT GATEWAY MODAL WITH SCREENSHOT ATTACHMENT -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -675,7 +665,6 @@
                 <label>Mobile Number (+251)</label>
                 <input type="tel" placeholder="912345678" required>
             </div>
-            <!-- ATTACHMENT OPTION -->
             <div class="form-group">
                 <label style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
                 <input type="file" id="payment-proof-file" accept="image/*" style="padding: 5px 0;">
@@ -696,18 +685,17 @@
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
 
-        // Toggle dropdown navigation open/close on click
         function togglePaymentDropdown(event) {
             event.stopPropagation();
             const dropdown = document.getElementById('payment-dropdown-nav');
             dropdown.classList.toggle('active');
         }
 
-        // Close dropdown when clicking anywhere else on page
         document.addEventListener('click', function() {
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
+        // Expanded Courses Database
         const coursesDatabase = [
             { 
                 id: 1, 
@@ -736,6 +724,64 @@
                 syllabus: [
                     { name: "🎬 Module 01: Double-Entry Ledger System Mechanics (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
                     { name: "📋 Module 02: Balance Sheet Formulation Strategy Structures", isFree: false, url: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                ]
+            },
+            { 
+                id: 3, 
+                title: "Digital Marketing & Social Media Growth", 
+                lessons: 3, 
+                totalStarsScore: 14, 
+                totalReviewersCount: 3, 
+                bg: "linear-gradient(135deg, #ec4899 0%, #9d174d 100%)", 
+                icon: "📱", 
+                order: 3,
+                syllabus: [
+                    { name: "🎬 Module 01: Understanding Algorithms & Audiences (FREE)", isFree: true, url: "https://www.w3schools.com/html/movie.mp4" },
+                    { name: "📋 Module 02: Creating Paid Ad Campaigns", isFree: false, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+                    { name: "📋 Module 03: Analytics, ROI, and Brand Strategy", isFree: false, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+                ]
+            },
+            { 
+                id: 4, 
+                title: "Python Programming Essentials", 
+                lessons: 2, 
+                totalStarsScore: 10, 
+                totalReviewersCount: 2, 
+                bg: "linear-gradient(135deg, #f59e0b 0%, #78350f 100%)", 
+                icon: "🐍", 
+                order: 4,
+                syllabus: [
+                    { name: "🎬 Module 01: Variables, Loops, and Logic (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name: "📋 Module 02: Functions, OOP, and Data Pipelines", isFree: false, url: "https://www.w3schools.com/html/movie.mp4" }
+                ]
+            },
+            { 
+                id: 5, 
+                title: "Graphic Design Fundamentals", 
+                lessons: 3, 
+                totalStarsScore: 13, 
+                totalReviewersCount: 3, 
+                bg: "linear-gradient(135deg, #8b5cf6 0%, #4c1d95 100%)", 
+                icon: "🎨", 
+                order: 5,
+                syllabus: [
+                    { name: "🎬 Module 01: Color Theory & Layout Balance (FREE)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+                    { name: "📋 Module 02: Typography and Brand Layout Assets", isFree: false, url: "https://www.w3schools.com/html/movie.mp4" },
+                    { name: "📋 Module 03: UI Components Designing Principles", isFree: false, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+                ]
+            },
+            { 
+                id: 6, 
+                title: "Entrepreneurship & Startup Launchpad", 
+                lessons: 2, 
+                totalStarsScore: 9, 
+                totalReviewersCount: 2, 
+                bg: "linear-gradient(135deg, #06b6d4 0%, #083344 100%)", 
+                icon: "🚀", 
+                order: 6,
+                syllabus: [
+                    { name: "🎬 Module 01: Idea Generation & Business Canvas (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name: "📋 Module 02: Pitching to Local Investors & Scale Plans", isFree: false, url: "https://www.w3schools.com/html/mov_bbb.mp4" }
                 ]
             }
         ];
@@ -836,6 +882,7 @@
 
                 row.innerHTML = `<span>${module.name}</span> ${actionBadge}`;
                 
+                // FIXED VIDEO CLICK LOADING HANDLER
                 row.onclick = () => {
                     if (module.isFree) {
                         document.querySelectorAll('.lesson-row').forEach(r => r.classList.remove('playing-now'));
@@ -878,24 +925,23 @@
             inputField.value = "";
 
             setTimeout(() => {
-                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Assistant:</strong> To access premium features, click on 'Payment' in the menu bar to open your payment link choices or check our user visual walkthrough video tutorial guides.</p>`;
+                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Assistant:</strong> Open 'Payment' menu dropdown options to select either premium active gateways or watch how to configure options tutorial videos.</p>`;
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             }, 700);
         }
 
-        // Modals Management Router Engine
         function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
         function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
         
         function openPaymentModal() { 
             document.getElementById('payment-modal-overlay').style.display = 'flex'; 
-            document.getElementById('payment-dropdown-nav').classList.remove('active'); // Close menu
+            document.getElementById('payment-dropdown-nav').classList.remove('active');
         }
         function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
         
         function openHowToPayVideoModal() {
             document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex';
-            document.getElementById('payment-dropdown-nav').classList.remove('active'); // Close menu
+            document.getElementById('payment-dropdown-nav').classList.remove('active');
             document.getElementById('how-to-pay-modal-player').play().catch(() => {});
         }
         function closeHowToPayVideoModal() {
