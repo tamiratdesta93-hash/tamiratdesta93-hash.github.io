@@ -820,4 +820,42 @@
 
         function submitAiAssistantQuery() {
             const inputField = document.getElementById('ai-user-prompt-input');
-            const promptText =
+            const promptText = inputField.value.trim();
+            if(!promptText) return;
+            document.getElementById('ai-chat-output-logs').innerHTML += `<p><strong>You:</strong> ${promptText}</p>`;
+            inputField.value = "";
+        }
+
+        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
+        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
+        
+        function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
+        function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
+        
+        function openHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex'; }
+        function closeHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'none'; }
+
+        function executeUserRegistration(e) {
+            e.preventDefault();
+            closeRegistrationModal();
+        }
+
+        function processPremiumPaymentSimulation() {
+            closePaymentModal();
+        }
+
+        function runLanguageEngine(langCode) {
+            const resources = languageDictionary[langCode] || languageDictionary['en'];
+            document.getElementById('hero-title').innerText = resources.heroTitle;
+            document.getElementById('hero-desc').innerText = resources.heroDesc;
+        }
+
+        function navigateView(viewName) {
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+            document.getElementById(`${viewName}-view`).classList.add('active-view');
+        }
+
+        renderCourseCards(coursesDatabase);
+    </script>
+</body>
+</html>
