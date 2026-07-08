@@ -127,87 +127,7 @@
             font-weight: 600;
         }
 
-        /* Dropdown Actions Menu */
-        .three-dot-menu {
-            position: relative;
-            display: inline-block;
-        }
-
-        .three-dot-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 0 5px;
-            line-height: 1;
-        }
-
-        .three-dot-btn:hover { color: var(--text-pure); }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 30px;
-            background-color: #111827;
-            border: 1px solid var(--border-glass);
-            min-width: 160px;
-            border-radius: 8px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            z-index: 1100;
-            overflow: hidden;
-        }
-
-        .dropdown-content a {
-            color: var(--text-dim);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #1f2937;
-            color: var(--text-pure);
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.55rem 1.25rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-        }
-        .btn-primary { background: var(--accent-blue); color: white; }
-        .btn-primary:hover { background: #1d4ed8; }
-
-        /* Views */
-        .app-view {
-            display: none;
-            padding: 3rem 5%;
-            max-width: 1300px;
-            margin: 0 auto;
-            width: 100%;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        .app-view.active-view { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero */
-        .hero { text-align: center; padding: 4rem 1rem; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
-        .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
-
-        /* Filter Row Layout Controls */
+        /* Layout Layout Controls Container */
         .filter-container {
             display: flex;
             justify-content: space-between;
@@ -239,7 +159,7 @@
         }
         .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
 
-        /* Course Grid & List Multi-Layout Structure */
+        /* Course Layout Output Rules */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -247,7 +167,6 @@
             margin-top: 1.5rem;
         }
 
-        /* Dynamic Alternative List Layout Toggle Configuration Rules */
         .course-grid.list-layout-mode {
             grid-template-columns: 1fr;
         }
@@ -266,7 +185,7 @@
 
         .course-grid.list-layout-mode .course-card {
             flex-direction: row;
-            height: 160px;
+            height: 180px;
         }
 
         .course-card:hover {
@@ -322,19 +241,46 @@
             font-size: 1.15rem;
             font-weight: 700;
             color: var(--course-text-dark);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             line-height: 1.4;
         }
 
+        /* Interactive Ratable Star Core Elements */
         .rating-row {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
         }
 
-        .stars-gold { color: #f59e0b; font-size: 1rem; letter-spacing: -1px; }
-        .rating-digits { color: var(--course-text-muted); font-size: 0.85rem; font-weight: 600; }
+        .star-rating-bar {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            gap: 2px;
+        }
+
+        .star-rating-bar span {
+            color: #cbd5e1;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .star-rating-bar span:hover,
+        .star-rating-bar span:hover ~ span {
+            color: #f59e0b !important;
+        }
+
+        .star-rating-bar span.active-gold,
+        .star-rating-bar span.active-gold ~ span {
+            color: #f59e0b;
+        }
+
+        .rating-digits { 
+            color: var(--course-text-muted); 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+        }
 
         .card-footer-divider {
             margin-top: auto;
@@ -358,7 +304,7 @@
             font-size: 0.9rem;
         }
 
-        /* Course Inside Workspace Viewer Layout */
+        /* Workspace Architecture View */
         .workspace-container {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -387,13 +333,66 @@
         }
         .lesson-row:hover { background: rgba(255,255,255,0.05); }
 
-        .info-box {
-            background: rgba(37, 99, 235, 0.08);
-            padding: 15px 20px;
-            border-left: 4px solid var(--accent-blue);
-            margin-bottom: 15px;
-            border-radius: 4px;
+        /* Buttons & Functional Modals Components */
+        .btn {
+            padding: 0.55rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
         }
+        .btn-primary { background: var(--accent-blue); color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary { background: #1f2937; color: white; border: 1px solid var(--border-glass); }
+
+        /* Views Configuration Rules */
+        .app-view {
+            display: none;
+            padding: 3rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .app-view.active-view { display: block; }
+        .hero { text-align: center; padding: 4rem 1rem; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
+        .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal Popup System Rules */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+        }
+        .modal-window {
+            background: #111827;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            width: 100%; max-width: 420px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .modal-window h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
+        .form-group input {
+            width: 100%; background: #1f2937; border: 1px solid var(--border-glass);
+            padding: 10px 14px; border-radius: 6px; color: white; font-size: 0.95rem;
+        }
+        .form-group input:focus { outline: 2px solid var(--accent-blue); }
+        .close-modal-x { position: absolute; top: 20px; right: 20px; cursor: pointer; color: var(--text-dim); font-size: 1.2rem; }
 
         footer {
             background: #04070d; text-align: center; padding: 20px;
@@ -417,11 +416,14 @@
             <ul class="nav-links" id="nav-menu">
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
-                <li id="li-info" onclick="navigateView('info')">Information Hub</li>
+                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openRegistrationModal()">Register / Login</button></li>
                 <li>
-                    <select class="lang-select" onchange="toggleLanguage(this.value)">
+                    <!-- Restored Full Multilingual Matrix Array Options -->
+                    <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
-                        <option value="am">አማርኛ</option>
+                        <option value="am">አማርኛ (Amharic)</option>
+                        <option value="fr">Français (French)</option>
+                        <option value="ar">العربية (Arabic)</option>
                     </select>
                 </li>
             </ul>
@@ -433,11 +435,11 @@
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
             <p id="hero-desc">Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.</p>
-            <button class="btn btn-primary" onclick="navigateView('explore')">Get Started Now</button>
+            <button class="btn btn-primary" id="hero-cta" onclick="navigateView('explore')">Get Started Now</button>
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSES (FULLY ACTIONABLE GRID/LIST & FILTERS) -->
+    <!-- VIEW 2: EXPLORE COURSES (DYNAMIC STAR RATINGS) -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
@@ -446,7 +448,6 @@
                 <button class="view-toggle-btn inactive-layout" id="btn-list-view" onclick="changeLayout('list')">☰</button>
             </div>
             <div>
-                <!-- Fully Functional Sort Filter Select Array Trigger -->
                 <select class="filter-select" id="sort-filter" onchange="runSortFilterEngine()">
                     <option value="newest">⏳ Sort: Newest First</option>
                     <option value="oldest">⏳ Sort: Oldest First</option>
@@ -456,17 +457,16 @@
             </div>
         </div>
 
-        <!-- Target Course Cards Output Grid -->
         <div class="course-grid" id="course-container-box">
-            <!-- Rendered Dynamically via JS Engine below -->
+            <!-- Dynamic Data Loop Injection -->
         </div>
     </main>
 
-    <!-- VIEW 3: LIVE RE-RENDER INTERACTIVE INNER COURSE PAGE LAYOUT VIEW -->
+    <!-- VIEW 3: LIVE RE-RENDER IN-COURSE WORKSPACE VIEW -->
     <main id="course-inner-view" class="app-view">
         <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
-        <p id="classroom-rating" style="color:var(--accent-gold); margin-bottom:1.5rem;">★★★★★</p>
+        <p id="classroom-rating" style="color:var(--accent-gold); margin-bottom:1.5rem; font-weight: 600;">Rating</p>
         
         <div class="workspace-container">
             <div>
@@ -474,31 +474,44 @@
                     <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                 </video>
                 <h3 style="margin-top:1.5rem; margin-bottom:0.5rem;">About this Course</h3>
-                <p style="color:var(--text-dim); line-height:1.6;">This course provides an expert-led structure designed to master key foundational principles, execution frameworks, and practical applications within the sector.</p>
+                <p style="color:var(--text-dim); line-height:1.6;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
             </div>
             <div class="syllabus-box">
                 <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
-                <div class="lesson-row"><span>📋 Module 01: Core Framework Overview</span><span style="color:var(--accent-green)">Watch</span></div>
-                <div class="lesson-row"><span>📋 Module 02: Structural Execution Deep-Dive</span><span>Locked</span></div>
-                <div class="lesson-row"><span>📋 Module 03: Practical Implementation Pipeline</span><span>Locked</span></div>
-                <div class="lesson-row"><span>📋 Module 04: Capstone Review Assessment</span><span>Locked</span></div>
+                <div class="lesson-row"><span>📋 Module 01: Core Principles Concept</span><span style="color:var(--accent-green)">Watch</span></div>
+                <div class="lesson-row"><span>📋 Module 02: Systems Operations Setup</span><span>Locked</span></div>
             </div>
         </div>
     </main>
 
-    <!-- VIEW 4: INFORMATION HUB -->
-    <main id="info-view" class="app-view">
-        <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Academic System Information Hub</h2>
-        <div class="info-box"><strong>Schedule Structure Parameters:</strong> New advanced skill track modules release on a systemic rolling weekly scheduling cycle.</div>
-        <div class="info-box"><strong>Industrial Certification Matrix:</strong> Successfully processing and completing every required module track reviews grants a verified digital completion certificate.</div>
-    </main>
+    <!-- RESTORED REGISTRATION MODAL POPUP LAYER WINDOW -->
+    <div class="modal-overlay" id="auth-modal-overlay">
+        <div class="modal-window">
+            <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
+            <h3 id="modal-heading">Create Free Account</h3>
+            <form id="register-form" onsubmit="executeUserRegistration(event)">
+                <div class="form-group">
+                    <label id="lbl-name">Full Name</label>
+                    <input type="text" required placeholder="Abebe Bikila">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-email">Email Address</label>
+                    <input type="email" required placeholder="abebe@domain.et">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-pass">Password</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-reg">Submit Registration</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
     </footer>
 
     <script>
-        // System Clock Initialization Engine
         function updateSystemClock() {
             const now = new Date();
             document.getElementById('live-clock').innerText = "System Time: " + now.toLocaleString();
@@ -506,21 +519,71 @@
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
 
-        // Database Course Objects Array (Includes Sorting IDs & Title strings)
+        // Memory Structural Object Data Registry 
         const coursesDatabase = [
-            { id: 1, title: "Introduction to Computers & OS Basics", lessons: 4, rating: "5.00 / 12", stars: "★★★★★", bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", icon: "💻", code: "intro", order: 1 },
-            { id: 2, title: "Accounting & Corporate Finance Modules", lessons: 6, rating: "4.20 / 8", stars: "★★★★☆", bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", icon: "📈", code: "accounting", order: 2 },
-            { id: 3, title: "ICT & Network Computing Infrastructure", lessons: 8, rating: "4.80 / 15", stars: "★★★★★", bg: "linear-gradient(135deg, #ec4899 0%, #701a75 100%)", icon: "🌐", code: "ict", order: 3 }
+            { id: 1, title: "Introduction to Computers & OS Basics", lessons: 4, totalStarsScore: 15, totalReviewersCount: 3, bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", icon: "💻", order: 1 },
+            { id: 2, title: "Accounting & Corporate Finance Modules", lessons: 6, totalStarsScore: 8, totalReviewersCount: 2, bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", icon: "📈", order: 2 },
+            { id: 3, title: "ICT & Network Computing Infrastructure", lessons: 8, totalStarsScore: 19, totalReviewersCount: 4, bg: "linear-gradient(135deg, #ec4899 0%, #701a75 100%)", icon: "🌐", order: 3 }
         ];
+
+        // Restored Full Translation Dictionary System Map
+        const languageDictionary = {
+            en: {
+                heroTitle: "Enjoy learning from hundreds of online courses",
+                heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
+                getStarted: "Get Started Now",
+                dash: "Dashboard",
+                explore: "Explore Courses",
+                regBtn: "Register / Login",
+                heading: "Create Free Account",
+                submit: "Submit Registration",
+                gridSpan: "Grid"
+            },
+            am: {
+                heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
+                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት።",
+                getStarted: "አሁን ይጀምሩ",
+                dash: "ዳሽቦርድ",
+                explore: "ኮርሶችን ያስሱ",
+                regBtn: "ይመዝገቡ / ይግቡ",
+                heading: "ነፃ መለያ ይፍጠሩ",
+                submit: "ምዝገባን አስረክብ",
+                gridSpan: "ፍርግርግ"
+            },
+            fr: {
+                heroTitle: "Profitez de l'apprentissage de centaines de cours en ligne",
+                heroDesc: "Fournir des cours de haute qualité en compétences numériques, littératie financière, développement commercial et technologique.",
+                getStarted: "Commencer Maintenant",
+                dash: "Tableau de Bord",
+                explore: "Explorer les Cours",
+                regBtn: "S'inscrire / Se Connecter",
+                heading: "Créer un Compte Gratuit",
+                submit: "Soumettre l'inscription",
+                gridSpan: "Grille"
+            },
+            ar: {
+                heroTitle: "استمتع بالتعلم من مئات الدورات التدريبية عبر الإنترنت",
+                heroDesc: "تقديم دورات عالية الجودة في المهارات الرقمية، والثقافة المالية، وتطوير الأعمال والتكنولوجيا الناشئة.",
+                getStarted: "ابدأ الآن",
+                dash: "لوحة القيادة",
+                explore: "استكشاف الدورات",
+                regBtn: "تسجيل / دخول",
+                heading: "إنشاء حساب مجاني",
+                submit: "إرسال التسجيل",
+                gridSpan: "شبكة"
+            }
+        };
 
         let currentLayoutMode = "grid";
 
-        // Layout Rendering Engine Grid Cards generator
         function renderCourseCards(dataArray) {
             const container = document.getElementById('course-container-box');
-            container.innerHTML = ""; // Clear existing elements safely
+            container.innerHTML = ""; 
 
             dataArray.forEach(course => {
+                const computedAverage = (course.totalStarsScore / course.totalReviewersCount).toFixed(2);
+                const wholeStarCount = Math.round(computedAverage);
+
                 const card = document.createElement('div');
                 card.className = "course-card";
                 card.setAttribute('onclick', `enterCourseDetails(${course.id})`);
@@ -531,14 +594,22 @@
                             ${course.icon}
                             <div class="vector-shapes">${course.title.split('&')[0]}</div>
                         </div>
-                        <button class="bookmark-badge" onclick="event.stopPropagation(); alert('Saved to bookmarks!');" title="Save Course">🔖</button>
+                        <button class="bookmark-badge" onclick="event.stopPropagation(); alert('Saved!');">🔖</button>
                     </div>
                     <div class="card-body-content">
                         <h3 class="course-card-title">${course.title}</h3>
-                        <div class="rating-row">
-                            <span class="stars-gold">${course.stars}</span>
-                            <span class="rating-digits">(${course.rating})</span>
+                        
+                        <div class="rating-row" onclick="event.stopPropagation();">
+                            <div class="star-rating-bar" data-course-id="${course.id}">
+                                <span data-star-value="5" class="${wholeStarCount >= 5 ? 'active-gold' : ''}">★</span>
+                                <span data-star-value="4" class="${wholeStarCount >= 4 ? 'active-gold' : ''}">★</span>
+                                <span data-star-value="3" class="${wholeStarCount >= 3 ? 'active-gold' : ''}">★</span>
+                                <span data-star-value="2" class="${wholeStarCount >= 2 ? 'active-gold' : ''}">★</span>
+                                <span data-star-value="1" class="${wholeStarCount >= 1 ? 'active-gold' : ''}">★</span>
+                            </div>
+                            <span class="rating-digits">(${computedAverage} / ${course.totalReviewersCount} ratings)</span>
                         </div>
+
                         <div class="card-footer-divider">
                             <span class="lesson-count-tag">📚 ${course.lessons} Lessons</span>
                             <span class="see-more-link">See More</span>
@@ -547,27 +618,38 @@
                 `;
                 container.appendChild(card);
             });
+
+            document.querySelectorAll('.star-rating-bar span').forEach(starItem => {
+                starItem.addEventListener('click', function() {
+                    const chosenScore = parseInt(this.getAttribute('data-star-value'));
+                    const parentBarId = parseInt(this.parentElement.getAttribute('data-course-id'));
+                    submitNewUserReview(parentBarId, chosenScore);
+                });
+            });
         }
 
-        // Dropdown Value Sorting filter rules configuration
+        function submitNewUserReview(courseId, scoreValue) {
+            const targetCourse = coursesDatabase.find(c => c.id === courseId);
+            if (targetCourse) {
+                targetCourse.totalStarsScore += scoreValue;
+                targetCourse.totalReviewersCount += 1;
+                alert(`Review added! Rated: ${scoreValue} Stars`);
+                runSortFilterEngine();
+            }
+        }
+
         function runSortFilterEngine() {
             const filterValue = document.getElementById('sort-filter').value;
             let workingCopy = [...coursesDatabase];
 
-            if (filterValue === "newest") {
-                workingCopy.sort((a, b) => b.order - a.order);
-            } else if (filterValue === "oldest") {
-                workingCopy.sort((a, b) => a.order - b.order);
-            } else if (filterValue === "az") {
-                workingCopy.sort((a, b) => a.title.localeCompare(b.title));
-            } else if (filterValue === "za") {
-                workingCopy.sort((a, b) => b.title.localeCompare(a.title));
-            }
+            if (filterValue === "newest") workingCopy.sort((a, b) => b.order - a.order);
+            else if (filterValue === "oldest") workingCopy.sort((a, b) => a.order - b.order);
+            else if (filterValue === "az") workingCopy.sort((a, b) => a.title.localeCompare(b.title));
+            else if (filterValue === "za") workingCopy.sort((a, b) => b.title.localeCompare(a.title));
 
             renderCourseCards(workingCopy);
         }
 
-        // Layout Changer Engine (Grid vs List Layout Mode)
         function changeLayout(mode) {
             currentLayoutMode = mode;
             const container = document.getElementById('course-container-box');
@@ -585,31 +667,63 @@
             }
         }
 
-        // Active Deep Navigation: Entering Course Details Functional Module 
+        // Language Swapping Translation Core Engine
+        function runLanguageEngine(langCode) {
+            const resources = languageDictionary[langCode] || languageDictionary['en'];
+            
+            document.getElementById('hero-title').innerText = resources.heroTitle;
+            document.getElementById('hero-desc').innerText = resources.heroDesc;
+            document.getElementById('hero-cta').innerText = resources.getStarted;
+            document.getElementById('li-dash').innerText = resources.dash;
+            document.getElementById('li-explore').innerText = resources.explore;
+            document.getElementById('btn-auth-trigger').innerText = resources.regBtn;
+            document.getElementById('modal-heading').innerText = resources.heading;
+            document.getElementById('btn-submit-reg').innerText = resources.submit;
+            document.getElementById('txt-grid').innerText = resources.gridSpan;
+
+            // Handle RTL alignment layout switch specifically for Arabic
+            if (langCode === 'ar') {
+                document.body.style.direction = "rtl";
+                document.querySelectorAll('.nav-links').forEach(el => el.style.flexDirection = "row-reverse");
+            } else {
+                document.body.style.direction = "ltr";
+                document.querySelectorAll('.nav-links').forEach(el => el.style.flexDirection = "row");
+            }
+        }
+
+        // Modal Action Controllers
+        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
+        document.getElementById('auth-modal-overlay').addEventListener('click', function(e) { if(e.target === this) closeRegistrationModal(); });
+        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
+        
+        function executeUserRegistration(e) {
+            e.preventDefault();
+            alert('Registration Successful! Account profile active.');
+            closeRegistrationModal();
+            document.getElementById('btn-auth-trigger').innerText = "👤 Profile Overview";
+        }
+
         function enterCourseDetails(courseId) {
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
             if (!selectedCourse) return;
 
+            const avgScore = (selectedCourse.totalStarsScore / selectedCourse.totalReviewersCount).toFixed(2);
             document.getElementById('classroom-title').innerText = selectedCourse.title;
-            document.getElementById('classroom-rating').innerText = `${selectedCourse.stars} (${selectedCourse.rating})`;
+            document.getElementById('classroom-rating').innerText = `⭐ Rating Average: ${avgScore} out of ${selectedCourse.totalReviewersCount} user submissions.`;
 
-            // Toggle target view engine
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.getElementById('course-inner-view').classList.add('active-view');
             window.scrollTo(0, 0);
             history.pushState({ view: 'course-inner', id: courseId }, "", "");
         }
 
-        // Main View Routing Engine 
         function renderView(viewName) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             const targetView = document.getElementById(`${viewName}-view`);
             if (targetView) targetView.classList.add('active-view');
             
             document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
-            let menuId = 'li-dash';
-            if (viewName === 'explore') menuId = 'li-explore';
-            if (viewName === 'info') menuId = 'li-info';
+            let menuId = (viewName === 'explore') ? 'li-explore' : 'li-dash';
             
             const activeMenuItem = document.getElementById(menuId);
             if (activeMenuItem) activeMenuItem.classList.add('active-nav');
@@ -623,19 +737,15 @@
 
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.view) {
-                if (event.state.view === 'course-inner') {
-                    enterCourseDetails(event.state.id);
-                } else {
-                    renderView(event.state.view);
-                }
+                if (event.state.view === 'course-inner') enterCourseDetails(event.state.id);
+                else renderView(event.state.view);
             } else {
                 renderView('home'); 
             }
         });
 
-        // Initialize App State
         history.replaceState({ view: 'home' }, "", "");
-        renderCourseCards(coursesDatabase); // Build primary course data set layout initial output array.
+        renderCourseCards(coursesDatabase);
     </script>
 </body>
 </html>
