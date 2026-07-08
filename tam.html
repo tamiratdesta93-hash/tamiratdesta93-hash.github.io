@@ -372,23 +372,21 @@
 </head>
 <body>
 
-    <!-- Top Info Bar with live real-time Clock -->
     <div class="top-bar">
         <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
         <div id="live-clock">Loading System Time...</div>
     </div>
 
-    <!-- Navigation Header -->
     <header>
-        <div class="brand" onclick="switchView('home', document.getElementById('li-dash'))">
+        <div class="brand" onclick="navigateView('home')">
             <div class="brand-icon"></div>
             <div class="brand-name">EduNet Ethiopia</div>
         </div>
         <nav>
             <ul class="nav-links" id="nav-menu">
-                <li class="active-nav" id="li-dash" onclick="switchView('home', this)">Dashboard</li>
-                <li id="li-explore" onclick="switchView('explore', this)">Explore Courses</li>
-                <li id="li-info" onclick="switchView('info', this)">Information Hub</li>
+                <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
+                <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
+                <li id="li-info" onclick="navigateView('info')">Information Hub</li>
                 <li id="li-pay" onclick="openPayVideo()">💳 How to Pay</li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
@@ -400,7 +398,6 @@
                 </li>
                 <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Register</button></li>
                 <li>
-                    <!-- 3-Dot Action Trigger Dropdown Block -->
                     <div class="three-dot-menu">
                         <button class="three-dot-btn" onclick="toggleDropdown(event)">⋮</button>
                         <div class="dropdown-content" id="actionDropdown">
@@ -414,22 +411,19 @@
         </nav>
     </header>
 
-    <!-- VIEW 1: HOME/DASHBOARD -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
             <p id="hero-desc">Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.</p>
-            <button class="btn btn-primary" onclick="switchView('explore', document.getElementById('li-explore'))">Get Started Now</button>
+            <button class="btn btn-primary" onclick="navigateView('explore')">Get Started Now</button>
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSE REGISTRATION TABLES -->
     <main id="explore-view" class="app-view">
         <h2 id="exp-head" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Available Training Modules</h2>
         <p id="exp-sub" style="color: var(--text-dim); margin-bottom: 2rem;">Select individual access nodes below to view file systems or execute dynamic media playback tracking.</p>
 
         <div class="grid-container">
-            <!-- Course Block 1 -->
             <div class="glass-card">
                 <h3 id="c1-title">Accounting & Finance Modules</h3>
                 <p id="c1-desc">Master ledger configurations, corporate metrics spreadsheets, tax compliance tracking layouts, and strategic balance analysis.</p>
@@ -460,7 +454,6 @@
                 </div>
             </div>
 
-            <!-- Course Block 2 -->
             <div class="glass-card">
                 <h3 id="c2-title">ICT & Computing Infrastructure</h3>
                 <p id="c2-desc">Explore logic gating execution frameworks, physical routing table architecture, cloud clusters, and internet verification protocols.</p>
@@ -493,7 +486,6 @@
         </div>
     </main>
 
-    <!-- VIEW 3: SYSTEM REGISTRATION INFO HUB, CERTIFICATION & OFFICE SITE MAP -->
     <main id="info-view" class="app-view">
         <h2 id="info-head" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Academic System Information Hub</h2>
         
@@ -511,10 +503,8 @@
         </div>
     </main>
 
-    <!-- FLOATING AI ASSISTANT WIDGET MODULE -->
     <div class="ai-assistant" title="AI Support Sandbox Desk" onclick="alert('Hello student! How can the EduNet Core Intelligent Assistant Engine streamline your course configuration pathways today?')">🤖</div>
 
-    <!-- GATEWAY MODAL PANEL (LOGIN AND SIGN UP TABS) -->
     <div class="overlay" id="authGate">
         <div class="auth-panel">
             <div class="auth-tabs">
@@ -522,7 +512,6 @@
                 <button class="auth-tab" onclick="switchFormTab('signup', this)">Sign Up</button>
             </div>
 
-            <!-- TAB BLOCK A: GENERAL USER LOGIN -->
             <form id="loginForm" class="auth-form-view active-form" onsubmit="handleAuthSubmit(event, 'Login')">
                 <label style="font-size: 0.8rem; font-weight: 600;">Username or Email</label>
                 <input type="text" class="input-box" placeholder="Enter your username/email" required>
@@ -533,7 +522,6 @@
                 <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Access Portal Account</button>
             </form>
 
-            <!-- TAB BLOCK B: GENERAL SIGN UP -->
             <form id="signupForm" class="auth-form-view" onsubmit="handleAuthSubmit(event, 'Registration')">
                 <label style="font-size: 0.8rem; font-weight: 600;">Full Name</label>
                 <input type="text" class="input-box" placeholder="John Doe" required>
@@ -551,7 +539,6 @@
         </div>
     </div>
 
-    <!-- DYNAMIC HOW TO PAY MODAL VIDEO DISPLAY CONTAINER -->
     <div class="overlay" id="videoGate">
         <div class="auth-panel" style="max-width: 600px; width: 90%;">
             <h2 id="video-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">How to Complete Course Payments</h2>
@@ -568,12 +555,10 @@
         </div>
     </div>
 
-    <!-- Administrative Footer Component -->
     <footer>
         <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
     </footer>
 
-    <!-- Comprehensive Client Control Engine Script -->
     <script>
         function updateSystemClock() {
             const now = new Date();
@@ -592,29 +577,50 @@
             document.getElementById('actionDropdown').style.display = 'none';
         }
 
-        // Standard direct layout component toggling engine
-        function switchView(viewName, menuElement) {
-            // Hide all views
+        // Core Layout Toggling Engine (Renders UI View changes)
+        function renderView(viewName) {
             document.querySelectorAll('.app-view').forEach(view => {
                 view.classList.remove('active-view');
             });
             
-            // Show requested view
             const targetView = document.getElementById(`${viewName}-view`);
             if (targetView) {
                 targetView.classList.add('active-view');
             }
             
-            // Manage link state highlights
             document.querySelectorAll('#nav-menu li').forEach(li => {
                 li.classList.remove('active-nav');
             });
             
-            if(menuElement) {
-                menuElement.classList.add('active-nav');
+            let menuId = 'li-dash';
+            if (viewName === 'explore') menuId = 'li-explore';
+            if (viewName === 'info') menuId = 'li-info';
+            
+            const activeMenuItem = document.getElementById(menuId);
+            if (activeMenuItem) {
+                activeMenuItem.classList.add('active-nav');
             }
             window.scrollTo(0,0);
         }
+
+        // Action Wrapper: Modifies history stack state when a user clicks a tab
+        function navigateView(viewName) {
+            renderView(viewName);
+            // Push state changes directly into the browser timeline history stack
+            history.pushState({ view: viewName }, "", "");
+        }
+
+        // Browser Back/Forward Button Monitoring Event Listener
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.view) {
+                renderView(event.state.view);
+            } else {
+                renderView('home'); // Defaults safely back to landing layer
+            }
+        });
+
+        // Setup baseline landing state inside history stack on load initialization
+        history.replaceState({ view: 'home' }, "", "");
 
         // Inside the Modal Tab Switching Engine
         function switchFormTab(formType, tabElement) {
@@ -625,7 +631,6 @@
             document.getElementById(`${formType}Form`).classList.add('active-form');
         }
 
-        // Open and close login modal functions
         function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
         function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
@@ -666,10 +671,10 @@
             am: {
                 dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "መረጃ ማዕከል", pay: "💳 አከፋፈል መመሪያ", reg: "ይመዝገቡ",
                 hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክنوሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
+                hDesc: "በዲጂتال ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክنوሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
                 exh: "ያሉ ሁሉም የስልጠና ሞጁሎች", exs: "የፋይል ሰነዶችን ለማውረድ ወይም ቪዲዮዎችን ለማጫወት ከታች ያሉትን አማراጮች ይምረጡ።",
-                c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ مግለጫዎችን، የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
-                c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክлаውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮتو科ሎችን ያጠኑ።",
+                c1: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች", c1d: "የሂሳብ መዛግብት አያያዝን፣ የድርጅት የፋይናንስ መግለጫዎችን፣ የግብር አከፋፈል እና የሂሳብ ሚዛን ትንተናን ጠልቀው ይረዱ።",
+                c2: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት", c2d: "የኮምፒውተር ፕሮሰሰር አወቃቀሮችን፣ የኔትወርክ መስመሮችን፣ የክላውድ ሲስተሞችን እና የኢንተርኔት ደህንነት ፕሮቶኮሎችን ያጠኑ።",
                 infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግرام መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
                 lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖሎጂ ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
                 vt: "የኮርስ ክፍያዎችን እንዴት ማጠናቀቅ እንደሚቻል", vsub: "ከታች ያለውን የደረጃ በደረጃ የማስተማሪያ ቪዲዮ ይመልከቱ።"
