@@ -117,10 +117,24 @@
             color: var(--text-pure);
         }
 
-        /* Navigation Dropdown Configuration */
+        /* Clickable Navigation Dropdown Configuration */
         .dropdown {
             display: inline-block;
         }
+        
+        .dropdown-trigger {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+        }
+
+        .dropdown-trigger:hover {
+            color: var(--text-pure);
+        }
+
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -134,9 +148,11 @@
             z-index: 1100;
             margin-top: 10px;
         }
+        
         .dropdown:hover .dropdown-menu {
             display: block;
         }
+        
         .dropdown-menu a {
             color: var(--text-dim);
             padding: 12px 16px;
@@ -513,11 +529,11 @@
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 
-                <!-- NEW GLOBAL NAVIGATION PAYMENTS MODULE DROPDOWN -->
+                <!-- CLICKABLE PAYMENT NAVIGATION WITH DROPDOWN -->
                 <li class="dropdown">
-                    <span>Payment Options ▾</span>
+                    <a href="javascript:void(0)" class="dropdown-trigger">Payment ▾</a>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="openPaymentModal(); return false;">💳 Pay Now (Premium)</a>
+                        <a href="#" onclick="openPaymentModal(); return false;">💳 Pay Now</a>
                         <a href="#" onclick="openHowToPayVideoModal(); return false;">📺 How to Pay Video</a>
                     </div>
                 </li>
@@ -527,15 +543,13 @@
                     <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
                         <option value="am">አማርኛ (Amharic)</option>
-                        <option value="fr">Français (French)</option>
-                        <option value="ar">العربية (Arabic)</option>
                     </select>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <!-- FLOATING SYSTEM-WIDE BOTTOM STICKY AI ASSISTANT CONSOLE -->
+    <!-- STICKY SYSTEM-WIDE AI ASSISTANT -->
     <div class="ai-sticky-bottom-widget">
         <div class="ai-floating-card-body" id="ai-widget-panel">
             <h4 style="color: var(--accent-green); border-bottom: 1px solid var(--border-glass); padding-bottom: 6px; font-weight:700;">🤖 EduNet AI Assistant</h4>
@@ -559,7 +573,7 @@
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSE MODULES -->
+    <!-- VIEW 2: EXPLORE COURSES -->
     <main id="explore-view" class="app-view">
         <div class="filter-container">
             <div class="filter-left">
@@ -588,7 +602,6 @@
         
         <div class="workspace-container">
             <div>
-                <!-- Primary Workspace Player Video -->
                 <video id="workspace-main-player" class="classroom-video" controls poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600">
                     <source id="video-media-source" src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                 </video>
@@ -604,7 +617,7 @@
         </div>
     </main>
 
-    <!-- DEDICATED HOW TO PAY POPUP MODAL WINDOW -->
+    <!-- HOW TO PAY VIDEO MODAL -->
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
@@ -639,7 +652,7 @@
         </div>
     </div>
 
-    <!-- PAYMENT GATEWAY CHANNELS MODAL -->
+    <!-- PAYMENT GATEWAY MODAL -->
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
@@ -673,7 +686,6 @@
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
 
-        // Database Configuration Array
         const coursesDatabase = [
             { 
                 id: 1, 
@@ -781,7 +793,6 @@
             else container.classList.remove('list-layout-mode');
         }
 
-        /* SYLLABUS CELL ENGINE CLICKS MAPPING */
         function enterCourseDetails(courseId) {
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
             if (!selectedCourse) return;
@@ -803,7 +814,6 @@
 
                 row.innerHTML = `<span>${module.name}</span> ${actionBadge}`;
                 
-                // Clicking on free module plays video, premium module triggers modal checkout
                 row.onclick = () => {
                     if (module.isFree) {
                         document.querySelectorAll('.lesson-row').forEach(r => r.classList.remove('playing-now'));
@@ -830,7 +840,7 @@
             player.play().catch(() => {});
         }
 
-        /* BOTTOM STICKY WIDGET INTERACTION ROUTER RULES */
+        /* AI WIDGET CONTROL INTERACTION LAYER */
         function toggleAiWidgetPanel() {
             const panel = document.getElementById('ai-widget-panel');
             panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
@@ -846,12 +856,12 @@
             inputField.value = "";
 
             setTimeout(() => {
-                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Tutor:</strong> To settle payments instantly, hover over 'Payment Options' in the top nav menu, click 'Pay Now' and type your wallet phone number tracking token path link.</p>`;
+                chatHistory.innerHTML += `<p style='color:var(--accent-green); margin-top:5px;'><strong>AI Tutor:</strong> To buy premium assets or configure systems, hover over 'Payment' in the top bar, pick 'Pay Now' and type your active local electronic currency phone link tag.</p>`;
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             }, 700);
         }
 
-        // Modals Logic Framework Routing
+        // Modals Management Router Engine
         function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
         function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
         function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
@@ -892,5 +902,3 @@
     </script>
 </body>
 </html>
-
-```
