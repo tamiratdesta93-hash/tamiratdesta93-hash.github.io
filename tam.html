@@ -17,7 +17,7 @@
             --text-dim: #94a3b8;
             --border-glass: rgba(255, 255, 255, 0.08);
             
-            /* Course Card Light Mode Specific Styles to mimic target screenshot */
+            /* Course Card Styles */
             --course-card-bg: #ffffff;
             --course-text-dark: #1e293b;
             --course-text-muted: #64748b;
@@ -127,7 +127,7 @@
             font-weight: 600;
         }
 
-        /* 3-Dot Dropdown Actions Menu */
+        /* Dropdown Actions Menu */
         .three-dot-menu {
             position: relative;
             display: inline-block;
@@ -173,7 +173,7 @@
             color: var(--text-pure);
         }
 
-        /* Standard Buttons */
+        /* Buttons */
         .btn {
             padding: 0.55rem 1.25rem;
             border-radius: 8px;
@@ -185,7 +185,7 @@
         .btn-primary { background: var(--accent-blue); color: white; }
         .btn-primary:hover { background: #1d4ed8; }
 
-        /* Structural Views */
+        /* Views */
         .app-view {
             display: none;
             padding: 3rem 5%;
@@ -207,27 +207,49 @@
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
-        /* --- Explore Section Filter Controls --- */
+        /* Filter Row Layout Controls */
         .filter-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255,255,255,0.05);
+            background: #111827;
             padding: 12px 20px;
             border-radius: 8px;
             margin-bottom: 2rem;
             border: 1px solid var(--border-glass);
         }
-        .filter-left { display: flex; align-items: center; gap: 15px; font-weight: 600; }
-        .view-toggle-btn { background: #1f2937; border: 1px solid var(--border-glass); color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer;}
-        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        .filter-left { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+        .filter-left span { color: var(--text-dim); font-size: 0.9rem; margin-right: 5px; }
+        
+        .view-toggle-btn { 
+            background: #1f2937; 
+            border: 1px solid var(--border-glass); 
+            color: white; 
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px; 
+            cursor: pointer;
+        }
+        .view-toggle-btn.inactive-layout {
+            background: transparent;
+            color: #64748b;
+        }
+        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
 
-        /* --- Beautiful Course Card Grid Layout (Matched to Screenshot) --- */
+        /* Course Grid & List Multi-Layout Structure */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
             margin-top: 1.5rem;
+        }
+
+        /* Dynamic Alternative List Layout Toggle Configuration Rules */
+        .course-grid.list-layout-mode {
+            grid-template-columns: 1fr;
         }
 
         .course-card {
@@ -237,27 +259,36 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             position: relative;
+            cursor: pointer;
+        }
+
+        .course-grid.list-layout-mode .course-card {
+            flex-direction: row;
+            height: 160px;
         }
 
         .course-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         .card-image-wrapper {
             position: relative;
             width: 100%;
             height: 180px;
-            background: #e0e7ff; /* Fallback accent background color */
+            background: #e0e7ff;
             overflow: hidden;
         }
 
-        /* Abstract geometric representations mimicking graphic art vectors */
+        .course-grid.list-layout-mode .card-image-wrapper {
+            width: 240px;
+            height: 100%;
+        }
+
         .card-vector-bg {
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
             display: flex; align-items: center; justify-content: center;
             color: rgba(255,255,255,0.15); font-size: 5rem; font-weight: 900;
             position: relative;
@@ -268,18 +299,17 @@
             border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #fff; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-align: center; padding: 0 10px;
         }
 
-        /* Floating save icon badge matching top right item circle */
         .bookmark-badge {
             position: absolute; top: 12px; right: 12px;
             width: 34px; height: 34px; background: #ffffff;
             border-radius: 50%; display: flex; align-items: center;
             justify-content: center; color: var(--accent-blue);
             cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            font-size: 0.95rem; border: none;
+            font-size: 0.95rem; border: none; z-index: 10;
         }
-        .bookmark-badge:hover { background: #f8fafc; }
 
         .card-body-content {
             padding: 20px;
@@ -294,7 +324,6 @@
             color: var(--course-text-dark);
             margin-bottom: 12px;
             line-height: 1.4;
-            min-height: 45px;
         }
 
         .rating-row {
@@ -320,9 +349,6 @@
             color: var(--course-text-muted);
             font-size: 0.85rem;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .see-more-link {
@@ -330,109 +356,43 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 0.9rem;
+        }
+
+        /* Course Inside Workspace Viewer Layout */
+        .workspace-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 2rem;
+        }
+        .classroom-video {
+            background: #000;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            border: 1px solid var(--border-glass);
+        }
+        .syllabus-box {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .lesson-row {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            justify-content: space-between;
             cursor: pointer;
         }
-        .see-more-link:hover { text-decoration: underline; }
+        .lesson-row:hover { background: rgba(255,255,255,0.05); }
 
-        /* Info boxes */
         .info-box {
             background: rgba(37, 99, 235, 0.08);
             padding: 15px 20px;
             border-left: 4px solid var(--accent-blue);
             margin-bottom: 15px;
             border-radius: 4px;
-        }
-
-        /* Floating AI Assistant */
-        .ai-assistant {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 4px 20px rgba(37, 99, 255, 0.4);
-            cursor: pointer;
-            font-size: 26px;
-            z-index: 2000;
-        }
-        .ai-assistant:hover { transform: scale(1.1); }
-
-        /* Overlay Modals */
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(4, 7, 13, 0.85);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-        }
-
-        .auth-panel {
-            background: #111827;
-            border: 1px solid var(--border-glass);
-            padding: 2.5rem;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 420px;
-        }
-
-        /* Dynamic Form Tab Controls */
-        .auth-tabs {
-            display: flex;
-            border-bottom: 2px solid var(--border-glass);
-            margin-bottom: 1.5rem;
-        }
-
-        .auth-tab {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            padding: 0.75rem;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .auth-tab.active-tab {
-            color: var(--accent-blue);
-            border-bottom: 2px solid var(--accent-blue);
-            margin-bottom: -2px;
-        }
-
-        .auth-form-view { display: none; }
-        .auth-form-view.active-form { display: block; }
-
-        .input-box {
-            width: 100%; padding: 0.75rem 1rem;
-            background: #1f2937; border: 1px solid var(--border-glass);
-            border-radius: 8px; color: white; margin: 0.5rem 0 1.25rem;
-        }
-
-        /* Video Presentation Custom Layout */
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 8px;
-            background: #000;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-glass);
-        }
-
-        .video-wrapper video {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
         }
 
         footer {
@@ -443,13 +403,11 @@
 </head>
 <body>
 
-    <!-- Top Info Bar with live real-time Clock -->
     <div class="top-bar">
         <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
         <div id="live-clock">Loading System Time...</div>
     </div>
 
-    <!-- Navigation Header -->
     <header>
         <div class="brand" onclick="navigateView('home')">
             <div class="brand-icon"></div>
@@ -460,31 +418,17 @@
                 <li class="active-nav" id="li-dash" onclick="navigateView('home')">Dashboard</li>
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 <li id="li-info" onclick="navigateView('info')">Information Hub</li>
-                <li id="li-pay" onclick="openPayVideo()">💳 How to Pay</li>
                 <li>
                     <select class="lang-select" onchange="toggleLanguage(this.value)">
                         <option value="en">English</option>
                         <option value="am">አማርኛ</option>
-                        <option value="fr">Français</option>
-                        <option value="ar">العربية</option>
                     </select>
-                </li>
-                <li><button class="btn btn-primary" onclick="openAuth()" id="nav-reg-btn">Register</button></li>
-                <li>
-                    <div class="three-dot-menu">
-                        <button class="three-dot-btn" onclick="toggleDropdown(event)">⋮</button>
-                        <div class="dropdown-content" id="actionDropdown">
-                            <a href="mailto:support@edunet.et">📧 Technical Support</a>
-                            <a onclick="alert('System Diagnostic Status: 100% Operational Framework Token Active.')">⚙️ System Diagnostics</a>
-                            <a onclick="alert('Session Clear Protocol triggered safely.')">🔄 Clear Cache Session</a>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <!-- VIEW 1: HOME/DASHBOARD -->
+    <!-- VIEW 1: DASHBOARD/HOME -->
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -493,176 +437,68 @@
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE COURSE UPGRADED E-LEARNING CARD TILES -->
+    <!-- VIEW 2: EXPLORE COURSES (FULLY ACTIONABLE GRID/LIST & FILTERS) -->
     <main id="explore-view" class="app-view">
-        <!-- Layout Filter Controls Matching Top Section of Request Visuals -->
         <div class="filter-container">
             <div class="filter-left">
                 <span id="txt-grid">Grid</span>
-                <button class="view-toggle-btn">⣿</button>
-                <button class="view-toggle-btn" style="background:transparent; color:#64748b;">☰</button>
+                <button class="view-toggle-btn" id="btn-grid-view" onclick="changeLayout('grid')">⣿</button>
+                <button class="view-toggle-btn inactive-layout" id="btn-list-view" onclick="changeLayout('list')">☰</button>
             </div>
             <div>
-                <select class="filter-select">
-                    <option id="opt-filter">⏳ Filters</option>
+                <!-- Fully Functional Sort Filter Select Array Trigger -->
+                <select class="filter-select" id="sort-filter" onchange="runSortFilterEngine()">
+                    <option value="newest">⏳ Sort: Newest First</option>
+                    <option value="oldest">⏳ Sort: Oldest First</option>
+                    <option value="az">🔤 Title: A-Z</option>
+                    <option value="za">🔤 Title: Z-A</option>
                 </select>
             </div>
         </div>
 
-        <!-- Rebuilt Course Cards Grid Layer Layout -->
-        <div class="course-grid">
-            
-            <!-- Card Item 1 -->
-            <div class="course-card">
-                <div class="card-image-wrapper">
-                    <div class="card-vector-bg" style="background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);">
-                        💻
-                        <div class="vector-shapes">Introduction to Computers</div>
-                    </div>
-                    <button class="bookmark-badge" onclick="alert('Course bookmarked safely!')" title="Save Course">🔖</button>
-                </div>
-                <div class="card-body-content">
-                    <h3 class="course-card-title" id="c1-title">Introduction to Computers & OS Basics</h3>
-                    <div class="rating-row">
-                        <span class="stars-gold">★★★★★</span>
-                        <span class="rating-digits">(5.00 / 12)</span>
-                    </div>
-                    <div class="card-footer-divider">
-                        <span class="lesson-count-tag" id="m-count1">📚 4 Lessons</span>
-                        <a class="see-more-link" id="sm-1" onclick="alert('Opening module breakdown player sequence for Intro to Computers...')">See More</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Item 2 -->
-            <div class="course-card">
-                <div class="card-image-wrapper">
-                    <div class="card-vector-bg" style="background: linear-gradient(135deg, #10b981 0%, #064e3b 100%);">
-                        📈
-                        <div class="vector-shapes">Accounting & Finance</div>
-                    </div>
-                    <button class="bookmark-badge" onclick="alert('Course bookmarked safely!')" title="Save Course">🔖</button>
-                </div>
-                <div class="card-body-content">
-                    <h3 class="course-card-title" id="c2-title">Accounting & Corporate Finance Modules</h3>
-                    <div class="rating-row">
-                        <span class="stars-gold">★★★★☆</span>
-                        <span class="rating-digits">(4.20 / 8)</span>
-                    </div>
-                    <div class="card-footer-divider">
-                        <span class="lesson-count-tag" id="m-count2">📚 6 Lessons</span>
-                        <a class="see-more-link" id="sm-2" onclick="alert('Opening module breakdown player sequence for Accounting & Finance...')">See More</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Item 3 -->
-            <div class="course-card">
-                <div class="card-image-wrapper">
-                    <div class="card-vector-bg" style="background: linear-gradient(135deg, #ec4899 0%, #701a75 100%);">
-                        🌐
-                        <div class="vector-shapes">ICT Infrastructure</div>
-                    </div>
-                    <button class="bookmark-badge" onclick="alert('Course bookmarked safely!')" title="Save Course">🔖</button>
-                </div>
-                <div class="card-body-content">
-                    <h3 class="course-card-title" id="c3-title">ICT & Network Computing Infrastructure</h3>
-                    <div class="rating-row">
-                        <span class="stars-gold">★★★★★</span>
-                        <span class="rating-digits">(4.80 / 15)</span>
-                    </div>
-                    <div class="card-footer-divider">
-                        <span class="lesson-count-tag" id="m-count3">📚 8 Lessons</span>
-                        <a class="see-more-link" id="sm-3" onclick="alert('Opening module breakdown player sequence for ICT Network Infrastructure...')">See More</a>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Target Course Cards Output Grid -->
+        <div class="course-grid" id="course-container-box">
+            <!-- Rendered Dynamically via JS Engine below -->
         </div>
     </main>
 
-    <!-- VIEW 3: SYSTEM REGISTRATION INFO HUB -->
-    <main id="info-view" class="app-view">
-        <h2 id="info-head" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Academic System Information Hub</h2>
+    <!-- VIEW 3: LIVE RE-RENDER INTERACTIVE INNER COURSE PAGE LAYOUT VIEW -->
+    <main id="course-inner-view" class="app-view">
+        <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
+        <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
+        <p id="classroom-rating" style="color:var(--accent-gold); margin-bottom:1.5rem;">★★★★★</p>
         
-        <div class="info-box">
-            <strong id="box-sch">Schedule Structure Parameters:</strong> New advanced skill track modules release on a systemic rolling weekly scheduling architecture framework cycle.
-        </div>
-        <div class="info-box">
-            <strong id="box-cert">Industrial Certification Matrix:</strong> Successfully processing and completing every required domain module track review grants a verified completion digital document.
-        </div>
-
-        <div class="glass-card" style="margin-top: 2rem; background: var(--card-glass); padding: 2rem; border-radius: 16px; border:1px solid var(--border-glass);">
-            <h3 id="loc-title" style="margin-bottom: 0.5rem;">Central Campus Location</h3>
-            <p id="loc-desc" style="color: var(--text-dim); margin-bottom: 1rem;">Our primary administrative structure tech complex office is located at:</p>
-            <p style="font-weight: 700; color: var(--accent-gold);">🏢 405 Station Boulevard, Sector 4, Metro Central District, Addis Ababa</p>
+        <div class="workspace-container">
+            <div>
+                <video class="classroom-video" controls poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                </video>
+                <h3 style="margin-top:1.5rem; margin-bottom:0.5rem;">About this Course</h3>
+                <p style="color:var(--text-dim); line-height:1.6;">This course provides an expert-led structure designed to master key foundational principles, execution frameworks, and practical applications within the sector.</p>
+            </div>
+            <div class="syllabus-box">
+                <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
+                <div class="lesson-row"><span>📋 Module 01: Core Framework Overview</span><span style="color:var(--accent-green)">Watch</span></div>
+                <div class="lesson-row"><span>📋 Module 02: Structural Execution Deep-Dive</span><span>Locked</span></div>
+                <div class="lesson-row"><span>📋 Module 03: Practical Implementation Pipeline</span><span>Locked</span></div>
+                <div class="lesson-row"><span>📋 Module 04: Capstone Review Assessment</span><span>Locked</span></div>
+            </div>
         </div>
     </main>
 
-    <!-- FLOATING AI ASSISTANT WIDGET MODULE -->
-    <div class="ai-assistant" title="AI Support Sandbox Desk" onclick="alert('Hello student! How can the EduNet Core Intelligent Assistant Engine streamline your course configuration pathways today?')">🤖</div>
+    <!-- VIEW 4: INFORMATION HUB -->
+    <main id="info-view" class="app-view">
+        <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Academic System Information Hub</h2>
+        <div class="info-box"><strong>Schedule Structure Parameters:</strong> New advanced skill track modules release on a systemic rolling weekly scheduling cycle.</div>
+        <div class="info-box"><strong>Industrial Certification Matrix:</strong> Successfully processing and completing every required module track reviews grants a verified digital completion certificate.</div>
+    </main>
 
-    <!-- GATEWAY MODAL PANEL (LOGIN AND SIGN UP TABS) -->
-    <div class="overlay" id="authGate">
-        <div class="auth-panel">
-            <div class="auth-tabs">
-                <button class="auth-tab active-tab" onclick="switchFormTab('login', this)">Login</button>
-                <button class="auth-tab" onclick="switchFormTab('signup', this)">Sign Up</button>
-            </div>
-
-            <!-- TAB BLOCK A: USER LOGIN -->
-            <form id="loginForm" class="auth-form-view active-form" onsubmit="handleAuthSubmit(event, 'Login')">
-                <label style="font-size: 0.8rem; font-weight: 600;">Username or Email</label>
-                <input type="text" class="input-box" placeholder="Enter your username/email" required>
-                
-                <label style="font-size: 0.8rem; font-weight: 600;">Account Password</label>
-                <input type="password" class="input-box" placeholder="••••••••" required>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Access Portal Account</button>
-            </form>
-
-            <!-- TAB BLOCK B: GENERAL SIGN UP -->
-            <form id="signupForm" class="auth-form-view" onsubmit="handleAuthSubmit(event, 'Registration')">
-                <label style="font-size: 0.8rem; font-weight: 600;">Full Name</label>
-                <input type="text" class="input-box" placeholder="John Doe" required>
-
-                <label style="font-size: 0.8rem; font-weight: 600;">Email Address</label>
-                <input type="email" class="input-box" placeholder="student@domain.et" required>
-                
-                <label style="font-size: 0.8rem; font-weight: 600;">Create Password</label>
-                <input type="password" class="input-box" placeholder="••••••••" required>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Create Account</button>
-            </form>
-
-            <button type="button" class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: var(--text-dim);" onclick="closeAuth()">Cancel</button>
-        </div>
-    </div>
-
-    <!-- DYNAMIC HOW TO PAY MODAL VIDEO DISPLAY CONTAINER -->
-    <div class="overlay" id="videoGate">
-        <div class="auth-panel" style="max-width: 600px; width: 90%;">
-            <h2 id="video-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">How to Complete Course Payments</h2>
-            <p id="video-subtitle" style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;">Watch this step-by-step instruction pipeline video below.</p>
-            
-            <div class="video-wrapper">
-                <video id="tutorialVideo" controls preload="metadata">
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                    Your modern layout engine framework does not support raw video playback layers.
-                </video>
-            </div>
-
-            <button type="button" class="btn btn-primary" style="width: 100%;" onclick="closePayVideo()">Close Video Guide</button>
-        </div>
-    </div>
-
-    <!-- Footer Component -->
     <footer>
         <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
     </footer>
 
-    <!-- Script Control Engine -->
     <script>
+        // System Clock Initialization Engine
         function updateSystemClock() {
             const now = new Date();
             document.getElementById('live-clock').innerText = "System Time: " + now.toLocaleString();
@@ -670,171 +506,136 @@
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
 
-        function toggleDropdown(event) {
-            event.stopPropagation();
-            const dropdown = document.getElementById('actionDropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        }
+        // Database Course Objects Array (Includes Sorting IDs & Title strings)
+        const coursesDatabase = [
+            { id: 1, title: "Introduction to Computers & OS Basics", lessons: 4, rating: "5.00 / 12", stars: "★★★★★", bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", icon: "💻", code: "intro", order: 1 },
+            { id: 2, title: "Accounting & Corporate Finance Modules", lessons: 6, rating: "4.20 / 8", stars: "★★★★☆", bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", icon: "📈", code: "accounting", order: 2 },
+            { id: 3, title: "ICT & Network Computing Infrastructure", lessons: 8, rating: "4.80 / 15", stars: "★★★★★", bg: "linear-gradient(135deg, #ec4899 0%, #701a75 100%)", icon: "🌐", code: "ict", order: 3 }
+        ];
 
-        window.onclick = function() {
-            document.getElementById('actionDropdown').style.display = 'none';
-        }
+        let currentLayoutMode = "grid";
 
-        // Core Layout Toggling Engine (Renders UI View changes)
-        function renderView(viewName) {
-            document.querySelectorAll('.app-view').forEach(view => {
-                view.classList.remove('active-view');
+        // Layout Rendering Engine Grid Cards generator
+        function renderCourseCards(dataArray) {
+            const container = document.getElementById('course-container-box');
+            container.innerHTML = ""; // Clear existing elements safely
+
+            dataArray.forEach(course => {
+                const card = document.createElement('div');
+                card.className = "course-card";
+                card.setAttribute('onclick', `enterCourseDetails(${course.id})`);
+
+                card.innerHTML = `
+                    <div class="card-image-wrapper">
+                        <div class="card-vector-bg" style="background: ${course.bg};">
+                            ${course.icon}
+                            <div class="vector-shapes">${course.title.split('&')[0]}</div>
+                        </div>
+                        <button class="bookmark-badge" onclick="event.stopPropagation(); alert('Saved to bookmarks!');" title="Save Course">🔖</button>
+                    </div>
+                    <div class="card-body-content">
+                        <h3 class="course-card-title">${course.title}</h3>
+                        <div class="rating-row">
+                            <span class="stars-gold">${course.stars}</span>
+                            <span class="rating-digits">(${course.rating})</span>
+                        </div>
+                        <div class="card-footer-divider">
+                            <span class="lesson-count-tag">📚 ${course.lessons} Lessons</span>
+                            <span class="see-more-link">See More</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
             });
-            
-            const targetView = document.getElementById(`${viewName}-view`);
-            if (targetView) {
-                targetView.classList.add('active-view');
+        }
+
+        // Dropdown Value Sorting filter rules configuration
+        function runSortFilterEngine() {
+            const filterValue = document.getElementById('sort-filter').value;
+            let workingCopy = [...coursesDatabase];
+
+            if (filterValue === "newest") {
+                workingCopy.sort((a, b) => b.order - a.order);
+            } else if (filterValue === "oldest") {
+                workingCopy.sort((a, b) => a.order - b.order);
+            } else if (filterValue === "az") {
+                workingCopy.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (filterValue === "za") {
+                workingCopy.sort((a, b) => b.title.localeCompare(a.title));
             }
+
+            renderCourseCards(workingCopy);
+        }
+
+        // Layout Changer Engine (Grid vs List Layout Mode)
+        function changeLayout(mode) {
+            currentLayoutMode = mode;
+            const container = document.getElementById('course-container-box');
+            const gridBtn = document.getElementById('btn-grid-view');
+            const listBtn = document.getElementById('btn-list-view');
+
+            if (mode === 'list') {
+                container.classList.add('list-layout-mode');
+                listBtn.classList.remove('inactive-layout');
+                gridBtn.classList.add('inactive-layout');
+            } else {
+                container.classList.remove('list-layout-mode');
+                gridBtn.classList.remove('inactive-layout');
+                listBtn.classList.add('inactive-layout');
+            }
+        }
+
+        // Active Deep Navigation: Entering Course Details Functional Module 
+        function enterCourseDetails(courseId) {
+            const selectedCourse = coursesDatabase.find(c => c.id === courseId);
+            if (!selectedCourse) return;
+
+            document.getElementById('classroom-title').innerText = selectedCourse.title;
+            document.getElementById('classroom-rating').innerText = `${selectedCourse.stars} (${selectedCourse.rating})`;
+
+            // Toggle target view engine
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+            document.getElementById('course-inner-view').classList.add('active-view');
+            window.scrollTo(0, 0);
+            history.pushState({ view: 'course-inner', id: courseId }, "", "");
+        }
+
+        // Main View Routing Engine 
+        function renderView(viewName) {
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+            const targetView = document.getElementById(`${viewName}-view`);
+            if (targetView) targetView.classList.add('active-view');
             
-            document.querySelectorAll('#nav-menu li').forEach(li => {
-                li.classList.remove('active-nav');
-            });
-            
+            document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
             let menuId = 'li-dash';
             if (viewName === 'explore') menuId = 'li-explore';
             if (viewName === 'info') menuId = 'li-info';
             
             const activeMenuItem = document.getElementById(menuId);
-            if (activeMenuItem) {
-                activeMenuItem.classList.add('active-nav');
-            }
+            if (activeMenuItem) activeMenuItem.classList.add('active-nav');
             window.scrollTo(0,0);
         }
 
-        // Action Wrapper: Modifies history stack state when a user clicks a tab
         function navigateView(viewName) {
             renderView(viewName);
             history.pushState({ view: viewName }, "", "");
         }
 
-        // Browser Back/Forward Button Monitoring Event Listener
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.view) {
-                renderView(event.state.view);
+                if (event.state.view === 'course-inner') {
+                    enterCourseDetails(event.state.id);
+                } else {
+                    renderView(event.state.view);
+                }
             } else {
                 renderView('home'); 
             }
         });
 
-        // Setup baseline landing state inside history stack on load initialization
+        // Initialize App State
         history.replaceState({ view: 'home' }, "", "");
-
-        function switchFormTab(formType, tabElement) {
-            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active-tab'));
-            tabElement.classList.add('active-tab');
-
-            document.querySelectorAll('.auth-form-view').forEach(form => form.classList.remove('active-form'));
-            document.getElementById(`${formType}Form`).classList.add('active-form');
-        }
-
-        function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
-        function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
-
-        function openPayVideo() {
-            document.getElementById('videoGate').style.display = 'flex';
-        }
-        function closePayVideo() {
-            const videoElement = document.getElementById('tutorialVideo');
-            videoElement.pause(); 
-            document.getElementById('videoGate').style.display = 'none';
-        }
-
-        function handleAuthSubmit(e, typeLabel) {
-            e.preventDefault();
-            alert(`${typeLabel} Successful! Your profile is authorized.`);
-            closeAuth();
-        }
-
-        // Language Engine Switch Translation Mapping Arrays
-        const dictionary = {
-            en: {
-                dash: "Dashboard", exp: "Explore Courses", info: "Information Hub", pay: "💳 How to Pay", reg: "Register",
-                hTitle: "Enjoy learning from hundreds of online courses",
-                hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
-                grid: "Grid", filter: "⏳ Filters",
-                c1: "Introduction to Computers & OS Basics", m1: "📚 4 Lessons", sm1: "See More",
-                c2: "Accounting & Corporate Finance Modules", m2: "📚 6 Lessons", sm2: "See More",
-                c3: "ICT & Network Computing Infrastructure", m3: "📚 8 Lessons", sm3: "See More",
-                infh: "Academic System Information Hub", sch: "Schedule Structure Parameters:", crt: "Industrial Certification Matrix:",
-                lt: "Central Campus Location", ld: "Our primary administrative structure tech complex office is located at:",
-                vt: "How to Complete Course Payments", vsub: "Watch this step-by-step instruction pipeline video below."
-            },
-            am: {
-                dash: "ዳሽቦርድ", exp: "ኮርሶችን ያስሱ", info: "مረጃ ማዕከል", pay: "💳 አከፋፈል መመሪያ", reg: "ይመዝገቡ",
-                hTitle: "በمቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                hDesc: "በዲጂታል ክህلوቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክنوロジーዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
-                grid: "ግሪድ", filter: "⏳ ማጣሪያዎች",
-                c1: "የኮምፒውተር መግቢያ እና የመስሪያ ስርዓት መሰረታዊ ነገሮች", m1: "📚 4 ትምህርቶች", sm1: "ተጨማሪ ይመልከቱ",
-                c2: "የአካውንቲንግ እና ፋይናንስ ሞጁሎች ስብስብ", m2: "📚 6 ትምህርቶች", sm2: "ተጨማሪ ይመልከቱ",
-                c3: "የአይሲቲ እና የኮምፒውተር መሠረተ ልማት ስልጠና", m3: "📚 8 ትምህርቶች", sm3: "ተጨማሪ ይመልከቱ",
-                infh: "የአካዳሚክ ስርዓት መረጃ ማዕከል", sch: "የስልጠና ፕሮግرام መዋቅር፡", crt: "የስልጠና ማረጋገጫ ሰርተፍኬት፡",
-                lt: "የዋናው ግቢ አድራሻ", ld: "የእኛ ዋና የአስተዳደር እና የቴክኖロジー ቢሮ ውስብስብ ህንፃ የሚገኘው እዚህ ነው፡",
-                vt: "የኮርስ ክፍያዎችን እንዴት ማጠናቀቅ እንደሚቻል", vsub: "ከታች ያለውን የደረጃ በدهረጃ የማስተማሪያ ቪዲيو ይመልከቱ።"
-            },
-            fr: {
-                dash: "Tableau de bord", exp: "Explorer les cours", info: "Centre d'information", pay: "💳 Comment payer", reg: "S'inscrire",
-                hTitle: "Profitez de centaines de cours en ligne",
-                hDesc: "Fournir des cours de haute qualité en compétences numériques, littératie financière, développement commercial et technologies émergentes.",
-                grid: "Grille", filter: "⏳ Filtres",
-                c1: "Introduction à l'informatique et aux systèmes", m1: "📚 4 Leçons", sm1: "Voir Plus",
-                c2: "Modules de Comptabilité et Finance", m2: "📚 6 Leçons", sm2: "Voir Plus",
-                c3: "Infrastructure TIC et Informatique", m3: "📚 8 Leçons", sm3: "Voir Plus",
-                infh: "Centre d'information académique", sch: "Paramètres de calendrier:", crt: "Matrice de certification industrielle:",
-                lt: "Emplacement du campus central", ld: "Notre bureau administratif principal est situé à l'adresse suivante:",
-                vt: "Comment effectuer les paiements des cours", vsub: "Regardez la vidéo d'instructions étape par étape ci-dessous."
-            },
-            ar: {
-                dash: "لوحة التحكم", exp: "استكشاف الدورات", info: "مركز المعلومات", pay: "💳 كيفية الدفع", reg: "تسجيل",
-                hTitle: "استمتع بالتعلم من مئات الدورات التدريبية عبر الإنترنت",
-                hDesc: "تقديم دورات عالية الجودة في المهارات الرقمية، الثقافة المالية، تطوير الأعمال، والتكنولوجيات الناشئة.",
-                grid: "شبكة", filter: "⏳ الفلاتر",
-                c1: "مقدمة في أجهزة الكمبيوتر وأساسيات نظام التشغيل", m1: "📚 4 دروس", sm1: "شاهد المزيد",
-                c2: "وحدات المحاسبة والتمويل للشركات", m2: "📚 6 دروس", sm2: "شاهد المزيد",
-                c3: "البنية التحتية لتكنولوجيا المعلومات والاتصالات والشبكات", m3: "📚 8 دروس", sm3: "شاهد المزيد",
-                infh: "مركز معلومات النظام الأكاديمي", sch: "معايير هيكل الجدول الزمني:", crt: "مصفوفة الشهادات الصناعية:",
-                lt: "موقع الحرم الجامعي المركزي", ld: "يقع مكتبنا الإداري الرئيسي في المجمع التكنولوجي في:",
-                vt: "كيفية إتمام مدفوعات الدورة التدريبية", vsub: "شاهد فيديو التعليمات خطوة بخطوة أدناه."
-            }
-        };
-
-        function toggleLanguage(lang) {
-            const word = dictionary[lang];
-            document.getElementById('li-dash').innerText = word.dash;
-            document.getElementById('li-explore').innerText = word.exp;
-            document.getElementById('li-info').innerText = word.info;
-            document.getElementById('li-pay').innerText = word.pay;
-            document.getElementById('nav-reg-btn').innerText = word.reg;
-            document.getElementById('hero-title').innerText = word.hTitle;
-            document.getElementById('hero-desc').innerText = word.hDesc;
-            
-            // Grid filters translation
-            document.getElementById('txt-grid').innerText = word.grid;
-            document.getElementById('opt-filter').innerText = word.filter;
-
-            // Updated cards values translations 
-            document.getElementById('c1-title').innerText = word.c1;
-            document.getElementById('m-count1').innerText = word.m1;
-            document.getElementById('sm-1').innerText = word.sm1;
-
-            document.getElementById('c2-title').innerText = word.c2;
-            document.getElementById('m-count2').innerText = word.m2;
-            document.getElementById('sm-2').innerText = word.sm2;
-
-            document.getElementById('c3-title').innerText = word.c3;
-            document.getElementById('m-count3').innerText = word.m3;
-            document.getElementById('sm-3').innerText = word.sm3;
-
-            document.getElementById('info-head').innerText = word.infh;
-            document.getElementById('box-sch').nextSibling.textContent = " " + word.sch;
-            document.getElementById('box-cert').nextSibling.textContent = " " + word.crt;
-            document.getElementById('loc-title').innerText = word.lt;
-            document.getElementById('loc-desc').innerText = word.ld;
-        }
+        renderCourseCards(coursesDatabase); // Build primary course data set layout initial output array.
     </script>
 </body>
 </html>
