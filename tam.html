@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduNet Ethiopia | Premium Learning Infrastructure</title>
+    <title>EduNet Ethiopia | Premium Learning Platform</title>
     <style>
         :root {
-            --accent-blue: #0066ff;
-            --accent-green: #00cc66;
-            --accent-gold: #ffaa00;
+            --accent-blue: #2563eb;
+            --accent-green: #10b981;
+            --accent-lock: #ef4444;
             --bg-space: #0b0f19;
             --card-glass: rgba(22, 30, 49, 0.7);
             --text-pure: #ffffff;
@@ -20,8 +20,8 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            transition: all 0.3s ease;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         body {
@@ -30,10 +30,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
-        /* Premium Glassmorphic Navbar */
+        /* Top Navigation Bar */
         header {
             position: sticky;
             top: 0;
@@ -41,7 +40,7 @@
             backdrop-filter: blur(12px);
             background: rgba(11, 15, 25, 0.8);
             border-bottom: 1px solid var(--border-glass);
-            padding: 1.25rem 8%;
+            padding: 1.25rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -55,25 +54,23 @@
         }
 
         .brand-icon {
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(45deg, var(--accent-blue), var(--accent-green));
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #009a44, #fed100, #ef4444);
             border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+            box-shadow: 0 0 15px rgba(37, 99, 255, 0.3);
         }
 
         .brand-name {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 25px;
             align-items: center;
         }
 
@@ -87,11 +84,20 @@
 
         nav a:hover, nav li.active-nav a {
             color: var(--text-pure);
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .lang-select {
+            background: #1e293b;
+            color: white;
+            border: 1px solid var(--border-glass);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn {
-            padding: 0.6rem 1.5rem;
+            padding: 0.55rem 1.25rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
@@ -99,74 +105,59 @@
             border: none;
         }
 
-        .btn-glow {
-            background: linear-gradient(135deg, var(--accent-blue), #0052cc);
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--text-pure);
+        }
+
+        .btn-outline:hover { background: rgba(255,255,255,0.05); }
+
+        .btn-primary {
+            background: var(--accent-blue);
             color: white;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
         }
 
-        .btn-glow:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
+        .btn-primary:hover { background: #1d4ed8; }
+
+        /* Auth Warning Banner */
+        .auth-banner {
+            background: linear-gradient(90deg, #ef4444, #b91c1c);
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+            animation: fadeIn 0.3s ease;
         }
 
-        /* View Switching Containers */
+        /* View Switching Framework */
         .app-view {
             display: none;
-            padding: 4rem 8%;
-            animation: fadeIn 0.5s ease forwards;
+            padding: 3rem 5%;
+            animation: fadeIn 0.4s ease forwards;
         }
 
         .app-view.active-view { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cyberpunk / Premium Hero Section */
-        .hero-section {
+        /* Hero / Dashboard Grid */
+        .hero {
             text-align: center;
-            padding: 6rem 1rem 4rem;
-            position: relative;
+            padding: 4rem 1rem;
         }
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -10%; left: 50%; transform: translateX(-50%);
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(0,102,255,0.15) 0%, transparent 70%);
-            z-index: -1;
-        }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 800; }
+        .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
-        .hero-section h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-
-        .hero-section h1 span {
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-section p {
-            font-size: 1.15rem;
-            color: var(--text-dim);
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.6;
-        }
-
-        /* Futuristic Glass Cards */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
             margin-top: 2rem;
         }
 
@@ -174,122 +165,115 @@
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.75rem;
             backdrop-filter: blur(8px);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
-            opacity: 0; transition: opacity 0.3s;
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 102, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(-4px);
+            border-color: rgba(37, 99, 255, 0.4);
         }
 
-        .glass-card:hover::before { opacity: 1; }
+        .card-icon { font-size: 2.2rem; margin-bottom: 1rem; display: inline-block; }
+        .glass-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .glass-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+        .card-meta { font-size: 0.8rem; font-weight: bold; color: var(--accent-green); }
 
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .glass-card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
-        .glass-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
-
-        /* Modern Dashboard/Player Workspace */
+        /* Premium Integrated Video Classroom */
         .workspace-layout {
             display: grid;
             grid-template-columns: 1fr 380px;
-            gap: 40px;
-            margin-top: 1rem;
+            gap: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .workspace-layout { grid-template-columns: 1fr; }
         }
 
         .player-deck {
             background: #020617;
             border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.25rem;
         }
 
-        .video-canvas {
+        .video-container {
+            position: relative;
             width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            font-weight: 600;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .course-tags {
+            display: flex; gap: 0.5rem; margin: 1.25rem 0 0.5rem;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
         }
 
         .playlist-deck {
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .playlist-item {
             list-style: none;
-            padding: 1.25rem;
-            background: rgba(255,255,255,0.02);
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .playlist-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
+        .playlist-item:hover { background: rgba(255,255,255,0.04); }
         .playlist-item.active-item {
-            background: rgba(0, 102, 255, 0.1);
+            background: rgba(37, 99, 235, 0.1);
             border-color: var(--accent-blue);
         }
 
-        .badge {
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-        }
-        .badge-free { background: rgba(0, 204, 102, 0.15); color: var(--accent-green); }
-        .badge-lock { background: rgba(255, 68, 68, 0.15); color: #ff4444; }
+        .badge { font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.5rem; border-radius: 4px; }
+        .badge-free { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .badge-lock { background: rgba(239, 68, 68, 0.15); color: var(--accent-lock); }
 
-        /* Interactive Language Selector Row */
+        /* Multilingual Toolkit Download Rows */
         .lang-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
-            padding: 1.5rem 2rem;
-            border-radius: 14px;
-            margin-bottom: 15px;
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            margin-bottom: 12px;
         }
 
-        /* Glassmorphic Account Overlays */
+        /* Overlay Modals */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(4, 7, 13, 0.8);
+            background: rgba(4, 7, 13, 0.85);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -300,34 +284,27 @@
         .auth-panel {
             background: #111827;
             border: 1px solid var(--border-glass);
-            padding: 3rem;
-            border-radius: 24px;
+            padding: 2.5rem;
+            border-radius: 20px;
             width: 100%;
-            max-width: 420px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            max-width: 400px;
         }
 
-        .input-input {
+        .input-box {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.75rem 1rem;
             background: #1f2937;
             border: 1px solid var(--border-glass);
-            border-radius: 10px;
+            border-radius: 8px;
             color: white;
-            margin-top: 0.5rem;
-            margin-bottom: 1.5rem;
+            margin: 0.5rem 0 1.25rem;
         }
-
-        .input-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px rgba(0,102,255,0.2);
-        }
+        .input-box:focus { outline: none; border-color: var(--accent-blue); }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation Shell -->
+    <!-- Main Navigation Header -->
     <header>
         <div class="brand" onclick="switchView('home')">
             <div class="brand-icon"></div>
@@ -335,141 +312,197 @@
         </div>
         <nav>
             <ul id="nav-menu">
-                <li class="active-nav"><a onclick="switchView('home', this)">Dashboard</a></li>
-                <li><a onclick="switchView('explore', this)">Explore Modules</a></li>
-                <li><a onclick="switchView('assets', this)">Local Packs</a></li>
-                <li><button class="btn btn-glow" onclick="toggleAuth(true)">Initialize Account</button></li>
+                <li class="active-nav"><a onclick="switchView('home', this)" id="nav-dash">Dashboard</a></li>
+                <li><a onclick="switchView('explore', this)" id="nav-explore">Explore Courses</a></li>
+                <li><a onclick="switchView('toolkits', this)" id="nav-toolkits">Toolkits</a></li>
+                <li>
+                    <select class="lang-select" onchange="toggleLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="am">አማርኛ</option>
+                    </select>
+                </li>
+                <li><button class="btn btn-outline" onclick="openAuth()" id="nav-register">Register Now</button></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Locked Warning Alert Banner -->
+    <div class="auth-banner" id="secureBanner">
+        🔒 Access Restriction: You must register or log in to unlock this specific module stream.
+    </div>
+
     <!-- VIEW 1: PREMIUM HOME -->
     <main id="home-view" class="app-view active-view">
-        <div class="hero-section">
-            <h1>Next-Gen Knowledge <span>Infrastructure</span></h1>
-            <p>Empowering the next generation with scalable, cloud-accelerated pathways in Advanced Engineering, Digital Economies, and Emerging Technologies.</p>
-            <button class="btn btn-glow" onclick="switchView('explore')">Launch Learning Engine</button>
+        <div class="hero">
+            <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
+            <p id="hero-desc">Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.</p>
+            <button class="btn btn-primary" onclick="switchView('explore')">Start Learning</button>
         </div>
     </main>
 
-    <!-- VIEW 2: EXPLORE ARCHITECTURES -->
+    <!-- VIEW 2: COURSE ARCHITECTURE EXPLORER -->
     <main id="explore-view" class="app-view">
-        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Available Knowledge Clusters</h2>
-        <p style="color: var(--text-dim); margin-bottom: 3rem;">Click a pathway framework to enter the streaming sandbox control deck.</p>
+        <h2 id="exp-heading">Available Training Modules</h2>
+        <p style="color: var(--text-dim); margin-bottom: 2rem;" id="exp-subheading">Select a domain track to launch the stream workspace player.</p>
 
         <div class="grid-container">
-            <div class="glass-card" onclick="loadClassroom('Core Hardware Architectures')">
-                <span class="card-icon">🧠</span>
-                <h3>Core Hardware Architectures</h3>
-                <p>An in-depth exploration of logic gating setups, execution registers, and processing layers.</p>
+            <div class="glass-card" onclick="launchClassroom('Introduction to Computers')">
+                <span class="card-icon">💻</span>
+                <h3 id="c1-title">Introduction to Computers</h3>
+                <p id="c1-desc">Master physical computer structures including internal system operations, operating layers, CPUs, and system hardware.</p>
+                <div class="card-meta">⭐ 4.00/1 Reviews (Beginner)</div>
             </div>
-            <div class="glass-card" onclick="loadClassroom('FinTech & Digital Nodes')">
-                <span class="card-icon">💳</span>
-                <h3>FinTech & Digital Nodes</h3>
-                <p>Master ledger distribution protocols, transaction cryptographic nodes, and remote banking clusters.</p>
+            <div class="glass-card" onclick="launchClassroom('Digital Financial Literacy')">
+                <span class="card-icon">🪙</span>
+                <h3 id="c2-title">Digital & Financial Literacy</h3>
+                <p id="c2-desc">Understand remote payment architectures, secure transactional apps, e-money configurations, and banking processing loops.</p>
+                <div class="card-meta">⭐ 4.33/3 Reviews (Core Skills)</div>
             </div>
-            <div class="glass-card" onclick="loadClassroom('Applied Machine Logic')">
-                <span class="card-icon">🌌</span>
-                <h3>Applied Machine Logic</h3>
-                <p>An entry gateway covering deep statistical networks, automated analysis arrays, and automated control frameworks.</p>
+            <div class="glass-card" onclick="launchClassroom('Online Safety & Cybersecurity')">
+                <span class="card-icon">🛡️</span>
+                <h3 id="c3-title">Online Safety & Security</h3>
+                <p id="c3-desc">Protect systemic user profiles, implement secure data connections, learn safe web verification protocols and active thread mitigation.</p>
+                <div class="card-meta">⭐ 4.50/4 Reviews (Intermediate)</div>
             </div>
         </div>
     </main>
 
-    <!-- VIEW 3: CLASSROOM INTERACTION SUITE -->
+    <!-- VIEW 3: INTEGRATED CLASSROOM SUITE (COMBINED WITH REAL PLAYER LOGIC) -->
     <main id="classroom-view" class="app-view">
-        <h2 id="room-title" style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--accent-blue);">Workspace Sandbox</h2>
+        <h2 id="active-course-title" style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--accent-blue);">Course Stream</h2>
         
         <div class="workspace-layout">
             <div class="player-deck">
-                <div class="video-canvas" id="videoMonitor">
-                    🎬 Select an active stream asset node from the playlist layout deck to track video telemetry data.
+                <div class="video-container">
+                    <!-- Embedded real sample video that updates smoothly -->
+                    <iframe id="mainEmbedPlayer" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
                 </div>
-                <h3 id="lesson-title" style="margin-top: 2rem; font-size: 1.4rem;">Select a Stream Track</h3>
-                <p id="lesson-desc" style="color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin-top: 0.75rem;">Click an open preview item from the sidebar menu module to update runtime outputs and check language feedback scripts instantly.</p>
+                <div class="course-tags">
+                    <span class="tag" id="tag-level">Beginner</span>
+                    <span class="tag" id="tag-cat">Basic Internet Skills</span>
+                </div>
+                <h3 id="video-title" style="margin-top: 1rem; font-size: 1.3rem;">Lesson 1: Introduction to Computer Hardware Components</h3>
+                <p id="video-desc" style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-top: 0.5rem;">
+                    In this introduction, we discuss CPU, memories, input devices, and output devices. በአጠቃላይ ሃርድዌር የሆኑ እና አጠቃላይ ሰርኪዩት ሲስተሙ ሃርድዌር የምንላቸውን በሙሉ እንመለከታለን።
+                </p>
             </div>
 
+            <!-- Sidebar Playlist -->
             <aside class="playlist-deck">
-                <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Resource Nodes</h4>
+                <h4 style="font-weight: 700; margin-bottom: 0.5rem;" id="list-header">Playlist Modules</h4>
                 
-                <div class="playlist-item active-item" onclick="changeTrack('01. Gating & Register Protocols', 'Exploring hardware logic execution maps, mathematical bus grids, internal instruction pipelines, and core memory register blocks.', false, this)">
+                <div class="playlist-item active-item" onclick="loadVideoAsset('Lesson 1: Introduction to Computer Hardware Components', 'In this introduction, we discuss CPU, memories, input devices, and output devices. በአጠቃላይ ሃርድዌር የሆኑ እና አጠቃላይ ሰርኪዩት ሲስተሙ ሃርድዌር የምንላቸውን በሙሉ እንመለከታለን።', 'https://www.youtube.com/embed/dQw4w9WgXcQ', false, this)">
                     <div>
-                        <strong>01. Logic Gating & Registers</strong>
-                        <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Runtime: 27:24 mins</div>
+                        <strong>1. Intro & Hardware Basics</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">⏱️ 27:24 mins • Preview</div>
                     </div>
-                    <span class="badge badge-free">OPEN NODE</span>
+                    <span class="badge badge-free">FREE</span>
                 </div>
 
-                <div class="playlist-item" onclick="changeTrack('', '', true, this)">
+                <div class="playlist-item" onclick="loadVideoAsset('', '', '', true, this)">
                     <div>
-                        <strong>02. Memory Management Subsystems</strong>
-                        <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Runtime: 16:34 mins</div>
+                        <strong>2. The Computer Core System</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">⏱️ 16:34 mins • Locked</div>
                     </div>
-                    <span class="badge badge-lock">RESTRICTED</span>
+                    <span class="badge badge-lock">LOCKED</span>
                 </div>
 
-                <div class="playlist-item" onclick="changeTrack('', '', true, this)">
+                <div class="playlist-item" onclick="loadVideoAsset('', '', '', true, this)">
                     <div>
-                        <strong>03. Network Node Configurations</strong>
-                        <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Runtime: 13:27 mins</div>
+                        <strong>3. Overview of Operating Systems</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">⏱️ 13:27 mins • Locked</div>
                     </div>
-                    <span class="badge badge-lock">RESTRICTED</span>
+                    <span class="badge badge-lock">LOCKED</span>
                 </div>
             </aside>
         </div>
     </main>
 
-    <!-- VIEW 4: LOCAL LANGUAGE PACKS -->
-    <main id="assets-view" class="app-view">
-        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Localized Assets & Audio Streams</h2>
-        <p style="color: var(--text-dim); margin-bottom: 3rem;">Deploy offline toolkits compiled directly across regional language dialects.</p>
+    <!-- VIEW 4: LOCALIZED TOOLKITS & RESOURCE CENTER -->
+    <main id="toolkits-view" class="app-view">
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;" id="tk-heading">Downloadable Multi-Language Resource Toolkits</h2>
+        <p style="color: var(--text-dim); margin-bottom: 2.5rem;" id="tk-subheading">Access and save localized study manuals across different regional languages.</p>
 
         <div class="lang-row">
             <div>
-                <strong style="font-size: 1.1rem;">አማርኛ (Amharic System Package)</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">የሃርድዌር እና ዲጂታል ፋይናንስ ስልጠና ማኑዋል (Fully Compiled PDF)</p>
+                <strong>አማርኛ (Amharic Language Toolkit)</strong>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">የዲጂታል እና ፋይናንስ ክህሎት ስልጠና ማኑዋል (PDF Toolkit)</p>
             </div>
-            <button class="btn btn-glow" onclick="alert('Downloading high-fidelity Amharic package array...')">Get Asset Pack</button>
+            <button class="btn btn-primary" onclick="alert('Downloading Amharic Resource Pack bundle...')">Download PDF</button>
         </div>
 
         <div class="lang-row">
             <div>
-                <strong style="font-size: 1.1rem;">Afaan Oromo Core Pack</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">Digital Technology & Infrastructure Toolkit Container</p>
+                <strong>Afaan Oromo Language Pack</strong>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">Digital and Financial Literacy Training Toolkit available in PDF.</p>
             </div>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: var(--text-dim); cursor: not-allowed;">Rolling out soon</button>
+            <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Available Soon</button>
         </div>
 
         <div class="lang-row">
             <div>
-                <strong style="font-size: 1.1rem;">ትግርኛ (Tigrigna Resource Pack)</strong>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">ዲጂታላዊ መረብን ምሕደራን ስልጠና ዶክመንት</p>
+                <strong>ትግርኛ (Tigrigna System Pack)</strong>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">ዲጂታልን ፋይናንስን ክእለት ስልጠና ዶክመንት</p>
             </div>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: var(--text-dim); cursor: not-allowed;">Rolling out soon</button>
+            <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Available Soon</button>
+        </div>
+
+        <div class="lang-row">
+            <div>
+                <strong>Sidama Language Module</strong>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.25rem;">Digital and Financial Literacy Sidamign Training Toolkit.</p>
+            </div>
+            <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">Available Soon</button>
         </div>
     </main>
 
-    <!-- AUTH HOVER INTERFACE MODAL -->
+    <!-- AUTH HOVER OVERLAY SYSTEM MODAL -->
     <div class="overlay" id="authGate">
         <div class="auth-panel">
-            <h2 style="font-size: 1.7rem; margin-bottom: 0.5rem;">Initialize Profile</h2>
-            <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 2rem;">Register an account to unlock restricted systems assets instantly.</p>
-            <form onsubmit="unlockPlatform(event)">
-                <label style="font-size: 0.85rem; font-weight:600;">Secure Identifier Email</label>
-                <input type="email" class="input-input" placeholder="user@edunet.et" required>
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="modal-title">Create Account</h2>
+            <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;" id="modal-sub">Sign up to unlock all protected platform video nodes instantly.</p>
+            <form onsubmit="processUserAuth(event)">
+                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-email">Username or Email Address</label>
+                <input type="text" class="input-box" placeholder="name@domain.et" required>
                 
-                <label style="font-size: 0.85rem; font-weight:600;">Access Key Token</label>
-                <input type="password" class="input-input" placeholder="••••••••" required>
+                <label style="font-size: 0.8rem; font-weight: 600;" id="lbl-pass">Password</label>
+                <input type="password" class="input-box" placeholder="••••••••" required>
 
-                <button type="submit" class="btn btn-glow" style="width: 100%; padding: 0.8rem;">Authorize Session</button>
-                <button type="button" class="btn" style="width: 100%; margin-top: 0.75rem; background: transparent; color: var(--text-dim);" onclick="toggleAuth(false)">Cancel Request</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" id="btn-submit">Register & Access</button>
+                <button type="button" class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: var(--text-dim);" onclick="closeAuth()" id="btn-cancel">Cancel</button>
             </form>
         </div>
     </div>
 
-    <!-- Application Processing Engine -->
+    <!-- Interface & Translation Engine Script -->
     <script>
-        let sessionActive = false;
+        let isRegistered = false;
+
+        // Multilingual Translation Matrix Map Array
+        const lexicon = {
+            en: {
+                dash: "Dashboard", explore: "Explore Courses", toolkits: "Toolkits", reg: "Register Now",
+                hTitle: "Enjoy learning from hundreds of online courses",
+                hDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
+                expHead: "All Available Training Modules", expSub: "Select a domain track to launch the stream workspace player.",
+                c1: "Introduction to Computers", c1d: "Master physical computer structures including internal system operations, operating layers, CPUs, and system hardware.",
+                c2: "Digital & Financial Literacy", c2d: "Understand remote payment architectures, secure transactional apps, e-money configurations, and banking processing loops.",
+                c3: "Online Safety & Security", c3d: "Protect systemic user profiles, implement secure data connections, learn safe web verification protocols and active thread mitigation.",
+                tkHead: "Downloadable Multi-Language Resource Toolkits", tkSub: "Access and save localized study manuals across different regional languages.",
+                playlist: "Playlist Modules", mTitle: "Create Account", mSub: "Sign up to unlock all protected platform video nodes instantly."
+            },
+            am: {
+                dash: "ዳሽቦርድ", explore: "ኮርሶችን ያስሱ", toolkits: "የስልጠና መጽሐፍት", reg: "አሁን ይመዝገቡ",
+                hTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
+                hDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እንዲሁም በታዳጊ ቴክኖሎጂዎች ጥራት ያላቸውን ስልጠናዎች መስጠት።",
+                expHead: "ያሉ ሁሉም የስልጠና ሞጁሎች", expSub: "የቪዲዮ ማጫወቻውን ለመክፈት የሚፈልጉትን የትምህርት መስክ ይምረጡ።",
+                c1: "የኮምፒውተር መግቢያ", c1d: "የስርዓተ ክወና አወቃቀሮችን፣ ሲፒዩዎችን፣ የኮምፒውተር አካላትን እና ጠቅላላ የሃርድዌር ሲስተሞችን ጠልቀው ይረዱ።",
+                c2: "ዲጂታል የፋይናንስ ክህሎት", c2d: "የርቀት ክፍያ ስርዓቶችን፣ የሞባይል ባንኪንግ መተግበሪያዎችን እና የዲጂታል ገንዘብ ዝውውርን ይረዱ።",
+                c3: "የመስመር ላይ ደህንነት ጥበቃ", c3d: "የግል መረጃዎችን ደህንነት ለመጠበቅ፣ አስተማማኝ የኢንተርኔት ግንኙነቶችን ለመጠቀም እና ስጋቶችን ለመከላከል የሚያግዝ ስልጠና።",
+                tkHead: "በተለያዩ ቋንቋዎች የተዘጋጁ የትምህርት ማኑዋሎች", tkSub: "በተለያዩ የሀገሪቱ ክልላዊ ቋንቋዎች የተዘጋጁ የስልጠና ማኑዋሎችን እዚህ ያውርዱ።",
+                playlist: "የቪዲዮ ዝርዝሮች", mTitle: "አዲስ አካውንት ይፍጠሩ", mSub: "ሁሉንም የተቆለፉ ትምህርቶች ወዲያውኑ ለመክፈት ይመዝገቡ።"
+            }
+        };
 
         function switchView(viewName, menuElement) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
@@ -479,47 +512,83 @@
                 document.querySelectorAll('#nav-menu li').forEach(li => li.classList.remove('active-nav'));
                 menuElement.parentElement.classList.add('active-nav');
             }
+            document.getElementById('secureBanner').style.display = 'none';
             window.scrollTo(0,0);
         }
 
-        function loadClassroom(clusterName) {
-            document.getElementById('room-title').innerText = `Sandbox: ${clusterName}`;
+        function launchClassroom(courseName) {
+            document.getElementById('active-course-title').innerText = `Classroom Engine: ${courseName}`;
             switchView('classroom');
         }
 
-        function changeTrack(title, details, isRestricted, element) {
-            if (isRestricted && !sessionActive) {
-                alert("🔒 Access Denied:\nThis digital resource requires profile authorization tokens. Opening initialization framework.");
-                toggleAuth(true);
+        function loadVideoAsset(title, description, videoUrl, isLocked, listElement) {
+            const banner = document.getElementById('secureBanner');
+            
+            if (isLocked && !isRegistered) {
+                banner.style.display = 'block';
+                alert("🔒 Restrict System Target:\nThis training module is locked. Register or sign up now to access this video module resource.");
+                openAuth();
                 return;
             }
 
+            banner.style.display = 'none';
             document.querySelectorAll('.playlist-item').forEach(item => item.classList.remove('active-item'));
-            element.classList.add('active-item');
+            listElement.classList.add('active-item');
 
-            document.getElementById('videoMonitor').innerHTML = `<div style='text-align:center; padding:2rem; color:var(--accent-green);'>⚡ Access Stream Connected Successfully!<br><span style='color:white; font-size:1.2rem; display:block; margin-top:0.5rem;'>Now Playing: ${title}</span></div>`;
-            document.getElementById('lesson-title').innerText = title;
-            document.getElementById('lesson-desc').innerText = details;
+            document.getElementById('mainEmbedPlayer').src = videoUrl;
+            document.getElementById('video-title').innerText = title;
+            document.getElementById('video-desc').innerText = description;
         }
 
-        function toggleAuth(show) {
-            document.getElementById('authGate').style.display = show ? 'flex' : 'none';
-        }
+        function openAuth() { document.getElementById('authGate').style.display = 'flex'; }
+        function closeAuth() { document.getElementById('authGate').style.display = 'none'; }
 
-        function unlockPlatform(e) {
-            e.preventDefault();
-            sessionActive = true;
-            alert("Authorization Confirmed! Security session tokens successfully distributed. All system paths unlocked.");
-            toggleAuth(false);
+        function processUserAuth(event) {
+            event.preventDefault();
+            isRegistered = true;
+            alert("Authentication Success! Your student account profile has been assigned. All course modules unlocked.");
+            closeAuth();
 
+            // Graphically unlock items instantly inside UI database tree
             document.querySelectorAll('.badge-lock').forEach(badge => {
                 badge.className = "badge badge-free";
-                badge.innerText = "GRANTED ACC";
+                badge.innerText = "UNLOCKED";
             });
 
+            // Re-bind click handlers to run live video arrays
             const tracks = document.getElementsByClassName('playlist-item');
-            tracks[1].setAttribute('onclick', "changeTrack('02. Memory Management Subsystems', 'Deep dive tracking of dynamic allocation maps, virtual memory tables, and pointer address cache protocols.', false, this)");
-            tracks[2].setAttribute('onclick', "changeTrack('03. Network Node Configurations', 'Detailed study of communication interface cards, physical transmission links, and package routing layers.', false, this)");
+            tracks[1].setAttribute('onclick', "loadVideoAsset('Lesson 2: The Computer Core System Hardware Architecture', 'Deep analysis mapping central internal operational system arrays, clock speeds, caches, data pipelines and microprocessing architectures.', 'https://www.youtube.com/embed/P7id7g9_Vto', false, this)");
+            tracks[2].setAttribute('onclick', "loadVideoAsset('Lesson 3: Overview of Modern Operating Systems Frameworks', 'Core architecture exploration regarding software kernel execution management loops, files permissions and access drivers setups.', 'https://www.youtube.com/embed/26QPDBe-NB8', false, this)");
+        }
+
+        function toggleLanguage(lang) {
+            const dict = lexicon[lang];
+            
+            // Apply text translations globally
+            document.getElementById('nav-dash').innerText = dict.dash;
+            document.getElementById('nav-explore').innerText = dict.explore;
+            document.getElementById('nav-toolkits').innerText = dict.toolkits;
+            document.getElementById('nav-register').innerText = dict.reg;
+            
+            document.getElementById('hero-title').innerText = dict.hTitle;
+            document.getElementById('hero-desc').innerText = dict.hDesc;
+            
+            document.getElementById('exp-heading').innerText = dict.expHead;
+            document.getElementById('exp-subheading').innerText = dict.expSub;
+            
+            document.getElementById('c1-title').innerText = dict.c1;
+            document.getElementById('c1-desc').innerText = dict.c1d;
+            document.getElementById('c2-title').innerText = dict.c2;
+            document.getElementById('c2-desc').innerText = dict.c2d;
+            document.getElementById('c3-title').innerText = dict.c3;
+            document.getElementById('c3-desc').innerText = dict.c3d;
+            
+            document.getElementById('tk-heading').innerText = dict.tkHead;
+            document.getElementById('tk-subheading').innerText = dict.tkSub;
+            document.getElementById('list-header').innerText = dict.playlist;
+
+            document.getElementById('modal-title').innerText = dict.mTitle;
+            document.getElementById('modal-sub').innerText = dict.mSub;
         }
     </script>
 </body>
