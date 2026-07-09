@@ -508,7 +508,7 @@
 <body>
 
     <div class="top-bar">
-        <div>📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
+        <div id="txt-headquarters">📍 Campus Headquarters: Addis Ababa, Ethiopia</div>
         <div id="live-clock">Loading System Time...</div>
     </div>
 
@@ -524,10 +524,10 @@
                 <li id="li-explore" onclick="navigateView('explore')">Explore Courses</li>
                 
                 <li class="dropdown" id="payment-dropdown-nav">
-                    <button class="dropdown-trigger" onclick="togglePaymentDropdown(event)">Payment ▾</button>
+                    <button class="dropdown-trigger" id="btn-payment-trigger" onclick="togglePaymentDropdown(event)">Payment ▾</button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="openPaymentModal(); return false;">💳 Pay Now</a>
-                        <a href="#" onclick="openHowToPayVideoModal(); return false;">📺 How to Pay Video</a>
+                        <a href="#" id="link-pay-now" onclick="openPaymentModal(); return false;">💳 Pay Now</a>
+                        <a href="#" id="link-how-to-pay" onclick="openHowToPayVideoModal(); return false;">📺 How to Pay Video</a>
                     </div>
                 </li>
 
@@ -559,10 +559,10 @@
             </div>
             <div>
                 <select class="filter-select" id="sort-filter" onchange="runSortFilterEngine()">
-                    <option value="newest">⏳ Sort: Newest First</option>
-                    <option value="oldest">⏳ Sort: Oldest First</option>
-                    <option value="az">🔤 Title: A-Z</option>
-                    <option value="za">🔤 Title: Z-A</option>
+                    <option value="newest" id="opt-newest">⏳ Sort: Newest First</option>
+                    <option value="oldest" id="opt-oldest">⏳ Sort: Oldest First</option>
+                    <option value="az" id="opt-az">🔤 Title: A-Z</option>
+                    <option value="za" id="opt-za">🔤 Title: Z-A</option>
                 </select>
             </div>
         </div>
@@ -571,11 +571,11 @@
     </main>
 
     <main id="course-inner-view" class="app-view">
-        <button class="btn" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
+        <button class="btn" id="btn-back-explore" style="background:#1f2937; color:#fff; margin-bottom:1.5rem;" onclick="navigateView('explore')">⬅ Back to Explore</button>
         <h1 id="classroom-title" style="font-size:2rem; margin-bottom:0.5rem;">Course Title</h1>
         
         <div class="interactive-rating-box" id="rating-component-wrapper">
-            <span>Rate Course:</span>
+            <span id="txt-rate-course">Rate Course:</span>
             <span class="star-rating-button" data-value="1" onclick="submitUserLiveRating(1, event)">★</span>
             <span class="star-rating-button" data-value="2" onclick="submitUserLiveRating(2, event)">★</span>
             <span class="star-rating-button" data-value="3" onclick="submitUserLiveRating(3, event)">★</span>
@@ -589,12 +589,12 @@
                 <video id="workspace-main-player" class="classroom-video" controls>
                     <source id="video-media-source" src="" type="video/mp4">
                 </video>
-                <h3 style="margin-top:1.5rem; margin-bottom:0.5rem;">About this Course</h3>
-                <p style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
+                <h3 id="txt-about-course" style="margin-top:1.5rem; margin-bottom:0.5rem;">About this Course</h3>
+                <p id="txt-about-desc" style="color:var(--text-dim); line-height:1.6; margin-bottom: 20px;">Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.</p>
             </div>
 
             <div class="syllabus-box">
-                <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
+                <h3 id="txt-syllabus-header" style="margin-bottom:1rem; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">Course Syllabus</h3>
                 <div id="dynamic-syllabus-list-wrapper"></div>
             </div>
         </div>
@@ -603,7 +603,7 @@
     <div class="modal-overlay" id="how-to-pay-video-modal-overlay">
         <div class="modal-window" style="max-width: 600px;">
             <span class="close-modal-x" onclick="closeHowToPayVideoModal()">✕</span>
-            <h3 style="color: var(--accent-gold); margin-bottom: 15px;">📺 How to Pay via Telebirr / CBE Birr Guide</h3>
+            <h3 id="modal-pay-video-title" style="color: var(--accent-gold); margin-bottom: 15px;">📺 How to Pay via Telebirr / CBE Birr Guide</h3>
             <video id="how-to-pay-modal-player" class="classroom-video" controls>
                 <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
             </video>
@@ -617,15 +617,15 @@
             <form id="register-form" onsubmit="executeUserRegistration(event)">
                 <div class="form-group">
                     <label id="lbl-name">Full Name</label>
-                    <input type="text" required placeholder="Abebe Bikila">
+                    <input type="text" id="input-name" required placeholder="Abebe Bikila">
                 </div>
                 <div class="form-group">
                     <label id="lbl-email">Email Address</label>
-                    <input type="email" required placeholder="abebe@domain.et">
+                    <input type="email" id="input-email" required placeholder="abebe@domain.et">
                 </div>
                 <div class="form-group">
                     <label id="lbl-pass">Password</label>
-                    <input type="password" required placeholder="••••••••">
+                    <input type="password" id="input-pass" required placeholder="••••••••">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-reg">Submit Registration</button>
             </form>
@@ -635,10 +635,10 @@
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
-            <h3 style="color: var(--accent-gold);">💳 Premium Asset Activation</h3>
-            <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;">This advanced workflow structure module requires premium licensing clearance.</p>
+            <h3 id="modal-pay-title" style="color: var(--accent-gold);">💳 Premium Asset Activation</h3>
+            <p id="modal-pay-desc" style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;">This advanced workflow structure module requires premium licensing clearance.</p>
             <div class="form-group">
-                <label>Select Local Micro-Payment Core Service</label>
+                <label id="lbl-pay-vendor">Select Local Micro-Payment Core Service</label>
                 <select id="payment-vendor-select">
                     <option value="telebirr">Telebirr (Ethio Telecom)</option>
                     <option value="cbe">CBE Birr Wallet</option>
@@ -646,27 +646,29 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Mobile Number (+251)</label>
+                <label id="lbl-pay-phone">Mobile Number (+251)</label>
                 <input type="tel" placeholder="912345678" required>
             </div>
             <div class="form-group">
-                <label style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
+                <label id="lbl-pay-file" style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
                 <input type="file" id="payment-proof-file" accept="image/*" style="padding: 5px 0;">
             </div>
-            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Submit & Authorize Activation</button>
+            <button id="btn-pay-submit" class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Submit & Authorize Activation</button>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
+        <p id="txt-footer">&copy; 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.</p>
     </footer>
 
     <script>
         let currentlySelectedCourseId = null;
+        let currentSystemLanguage = 'en';
 
         function updateSystemClock() {
             const now = new Date();
-            document.getElementById('live-clock').innerText = "System Time: " + now.toLocaleString();
+            const prefix = currentSystemLanguage === 'am' ? "የስርዓት ሰዓት: " : "System Time: ";
+            document.getElementById('live-clock').innerText = prefix + now.toLocaleString();
         }
         setInterval(updateSystemClock, 1000);
         updateSystemClock();
@@ -681,140 +683,161 @@
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
+        // Dynamic Course Database Translations Included
         const coursesDatabase = [
             { 
                 id: 1, 
-                title: "Introduction to Computers & OS Basics", 
+                title_en: "Introduction to Computers & OS Basics", 
+                title_am: "የኮምፒውተር መግቢያ እና የመስሪያ ስርዓት (OS) መሠረታዊ ነገሮች",
                 lessons: 3, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)", 
                 icon: "💻", 
                 syllabus: [
-                    { name: "🎬 Module 01: Architecture Concept Foundations (FREE)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-                    { name: "📋 Module 02: Kernel Threading Operations Environment", isFree: false, url: "" },
-                    { name: "📋 Module 03: Local File Management System Configuration", isFree: false, url: "" }
+                    { name_en: "🎬 Module 01: Architecture Concept Foundations (FREE)", name_am: "🎬 ምዕራፍ 01: የኮምፒውተር አወቃቀር መሠረቶች (በነጻ)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+                    { name_en: "📋 Module 02: Kernel Threading Operations Environment", name_am: "📋 ምዕራፍ 02: የከርነል ክሮች አሰራር አካባቢ", isFree: false, url: "" },
+                    { name_en: "📋 Module 03: Local File Management System Configuration", name_am: "📋 ምዕራፍ 03: የፋይል አስተዳደር ስርዓት ውቅር", isFree: false, url: "" }
                 ]
             },
             { 
                 id: 2, 
-                title: "Accounting & Corporate Finance Modules", 
+                title_en: "Accounting & Corporate Finance Modules", 
+                title_am: "የሂሳብ አያያዝ እና የድርጅት ፋይናንስ ሞጁሎች",
                 lessons: 2, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)", 
                 icon: "📈", 
                 syllabus: [
-                    { name: "🎬 Module 01: Double-Entry Ledger System Mechanics (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
-                    { name: "📋 Module 02: Balance Sheet Formulation Strategy Structures", isFree: false, url: "" }
+                    { name_en: "🎬 Module 01: Double-Entry Ledger System Mechanics (FREE)", name_am: "🎬 ምዕራፍ 01: ባለ ሁለትዮሽ የሂሳብ መመዝገቢያ ዘዴ (በነጻ)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name_en: "📋 Module 02: Balance Sheet Formulation Strategy Structures", name_am: "📋 ምዕራፍ 02: የሂሳብ ሚዛን መግለጫ አወቃቀር ስትራቴጂ", isFree: false, url: "" }
                 ]
             },
             { 
                 id: 3, 
-                title: "Digital Marketing & Social Media Growth", 
+                title_en: "Digital Marketing & Social Media Growth", 
+                title_am: "ዲጂታል ማርኬቲንግ እና የማህበራዊ ሚዲያ እድገት",
                 lessons: 3, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #ec4899 0%, #9d174d 100%)", 
                 icon: "📱", 
                 syllabus: [
-                    { name: "🎬 Module 01: Understanding Algorithms & Audiences (FREE)", isFree: true, url: "https://www.w3schools.com/html/movie.mp4" },
-                    { name: "📋 Module 02: Creating Paid Ad Campaigns", isFree: false, url: "" },
-                    { name: "📋 Module 03: Analytics, ROI, and Brand Strategy", isFree: false, url: "" }
+                    { name_en: "🎬 Module 01: Understanding Algorithms & Audiences (FREE)", name_am: "🎬 ምዕራፍ 01: አልጎሪዝም እና ደንበኞችን መረዳት (በነጻ)", isFree: true, url: "https://www.w3schools.com/html/movie.mp4" },
+                    { name_en: "📋 Module 02: Creating Paid Ad Campaigns", name_am: "📋 ምዕራፍ 02: የሚከፈልባቸው የማስታወቂያ ዘመቻዎችን መፍጠር", isFree: false, url: "" },
+                    { name_en: "📋 Module 03: Analytics, ROI, and Brand Strategy", name_am: "📋 ምዕራፍ 03: ትንታኔዎች፣ የትርፍ ምጣኔ እና የብራንድ ስትራቴጂ", isFree: false, url: "" }
                 ]
             },
             { 
                 id: 4, 
-                title: "Web Development Bootcamp (HTML, CSS & JS)", 
+                title_en: "Web Development Bootcamp (HTML, CSS & JS)", 
+                title_am: "የዌብሳይት ልማት ማሰልጠኛ (HTML, CSS እና JS)",
                 lessons: 3, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #f59e0b 0%, #7c2d12 100%)", 
                 icon: "🌐", 
                 syllabus: [
-                    { name: "🎬 Module 01: Web Document Structure Basics (FREE)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-                    { name: "📋 Module 02: CSS Flexbox Layout Frameworks", isFree: false, url: "" },
-                    { name: "📋 Module 03: JavaScript DOM Manipulation Actions", isFree: false, url: "" }
+                    { name_en: "🎬 Module 01: Web Document Structure Basics (FREE)", name_am: "🎬 ምዕራፍ 01: የዌብ ሰነድ አወቃቀር መሠረቶች (በነጻ)", isFree: true, url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+                    { name_en: "📋 Module 02: CSS Flexbox Layout Frameworks", name_am: "📋 ምዕራፍ 02: የሲ-ኤስ-ኤስ ፍሌክስቦክስ አቀማመጦች", isFree: false, url: "" },
+                    { name_en: "📋 Module 03: JavaScript DOM Manipulation Actions", name_am: "📋 ምዕራፍ 03: ጃቫስክሪፕት DOM ማስተዳደሪያ ድርጊቶች", isFree: false, url: "" }
                 ]
             },
             { 
                 id: 5, 
-                title: "Graphic Design Masterclass using Canva & Figma", 
+                title_en: "Graphic Design Masterclass using Canva & Figma", 
+                title_am: "የግራፊክስ ዲዛይን ማስተርክላስ በካንቫ እና ፊግማ",
                 lessons: 2, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #a855f7 0%, #4c1d95 100%)", 
                 icon: "🎨", 
                 syllabus: [
-                    { name: "🎬 Module 01: Typography & Visual Hierarchy Laws (FREE)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
-                    { name: "📋 Module 02: Layout Prototyping Systems", isFree: false, url: "" }
+                    { name_en: "🎬 Module 01: Typography & Visual Hierarchy Laws (FREE)", name_am: "🎬 ምዕራፍ 01: የፊደላት አጠቃቀም እና የእይታ ህጎች (በነጻ)", isFree: true, url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    { name_en: "📋 Module 02: Layout Prototyping Systems", name_am: "📋 ምዕራፍ 02: የአቀማመጥ ንድፍ አሰራር ስርዓቶች", isFree: false, url: "" }
                 ]
             }
         ];
 
-       const languageDictionary = {
+        // Comprehensive UI Translation Map
+        const languageDictionary = {
             en: {
+                txtHeadquarters: "📍 Campus Headquarters: Addis Ababa, Ethiopia",
+                liDash: "Dashboard",
+                liExplore: "Explore Courses",
+                btnPaymentTrigger: "Payment ▾",
+                linkPayNow: "💳 Pay Now",
+                linkHowToPay: "📺 How to Pay Video",
+                btnAuthTrigger: "Register / Login",
                 heroTitle: "Enjoy learning from hundreds of online courses",
                 heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
-                dashNav: "Dashboard",
-                exploreNav: "Explore Courses",
-                paymentNav: "Payment ▾",
-                payNow: "💳 Pay Now",
-                payVideo: "📺 How to Pay Video",
-                authBtn: "Register / Login",
                 heroCta: "Get Started Now",
-                layoutTxt: "Layout",
-                sortNewest: "⏳ Sort: Newest First",
-                sortOldest: "⏳ Sort: Oldest First",
-                sortAZ: "🔤 Title: A-Z",
-                sortZA: "🔤 Title: Z-A",
-                backExplore: "⬅ Back to Explore",
-                rateCourse: "Rate Course:",
-                aboutCourse: "About this Course",
-                courseDesc: "Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.",
-                syllabusTitle: "Course Syllabus",
-                tabSignup: "Sign Up",
-                tabLogin: "Log In",
+                txtGrid: "Layout",
+                optNewest: "⏳ Sort: Newest First",
+                optOldest: "⏳ Sort: Oldest First",
+                optAz: "🔤 Title: A-Z",
+                optZa: "🔤 Title: Z-A",
+                btnBackExplore: "⬅ Back to Explore",
+                txtRateCourse: "Rate Course:",
+                txtAboutCourse: "About this Course",
+                txtAboutDesc: "Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.",
+                txtSyllabusHeader: "Course Syllabus",
+                modalPayVideoTitle: "📺 How to Pay via Telebirr / CBE Birr Guide",
+                modalHeading: "Create Free Account",
                 lblName: "Full Name",
                 lblEmail: "Email Address",
                 lblPass: "Password",
-                btnSubmitSignup: "Submit Registration",
-                btnSubmitLogin: "Log In to Account",
-                payTitle: "💳 Premium Asset Activation",
-                payDesc: "This advanced workflow structure module requires premium licensing clearance.",
-                payVendor: "Select Local Micro-Payment Core Service",
-                payPhone: "Mobile Number (+251)",
-                payProof: "📎 Attach Payment Screenshot (Proof)",
-                paySubmit: "Submit & Authorize Activation"
+                btnSubmitReg: "Submit Registration",
+                modalPayTitle: "💳 Premium Asset Activation",
+                modalPayDesc: "This advanced workflow structure module requires premium licensing clearance.",
+                lblPayVendor: "Select Local Micro-Payment Core Service",
+                lblPayPhone: "Mobile Number (+251)",
+                lblPayFile: "📎 Attach Payment Screenshot (Proof)",
+                btnPaySubmit: "Submit & Authorize Activation",
+                txtFooter: "© 2026 EduNet Ethiopia Learning Architecture Platforms. All intellectual assets secured.",
+                watchFree: "Watch Free",
+                lockPay: "Lock (Pay)",
+                notRated: "🚫 Not Rated Yet",
+                myRating: "✨ My Rating: ",
+                lessonsTag: " Lessons",
+                seeMore: "See More"
             },
             am: {
+                txtHeadquarters: "📍 ዋና ካምፓስ ዋና መስሪያ ቤት: አዲስ አበባ, ኢትዮጵያ",
+                liDash: "ዳሽቦርድ",
+                liExplore: "ኮርሶችን ያስሱ",
+                btnPaymentTrigger: "ክፍያ ▾",
+                linkPayNow: "💳 አሁን ይክፈሉ",
+                linkHowToPay: "📺 እንዴት እንደሚከፈል ቪዲዮ",
+                btnAuthTrigger: "ይመዝገቡ / ይግቡ",
                 heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
-                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት",
-                dashNav: "ዳሽቦርድ",
-                exploreNav: "ኮርሶችን ያስሱ",
-                paymentNav: "ክፍያ ▾",
-                payNow: "💳 አሁን ይክፈሉ",
-                payVideo: "📺 እንዴት መክፈል እንደሚቻል ቪዲዮ",
-                authBtn: "ይመዝገቡ / ይግቡ",
+                heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት።",
                 heroCta: "አሁን ይጀምሩ",
-                layoutTxt: "አቀማመጥ",
-                sortNewest: "⏳ አዲስ መጀመሪያ",
-                sortOldest: "⏳ የቆየ መጀመሪያ",
-                sortAZ: "🔤 ርዕስ: ከሀ-ፖ",
-                sortZA: "🔤 ርዕስ: ከፖ-ሀ",
-                backExplore: "⬅ ወደ ማሰሻ ይመለሱ",
-                rateCourse: "ኮርሱን ደረጃ ይስጡ:",
-                aboutCourse: "ስለዚህ ኮርስ",
-                courseDesc: "በዚህ የተሟላ ሞጁል መዋቅር ውስጥ ለእውነተኛ ዓለም ኢንተርፕራይዝ መተግበሪያዎች የተነደፉ ዓለም አቀፍ ሀብቶችን ወዲያውኑ ያግኙ።",
-                syllabusTitle: "የኮርስ ይዘት",
-                tabSignup: "ይመዝገቡ",
-                tabLogin: "ይግቡ",
+                txtGrid: "አቀማመጥ",
+                optNewest: "⏳ ደርድር: አዲስ መጀመሪያ",
+                optOldest: "⏳ ደርድር: የቆየ መጀመሪያ",
+                optAz: "🔤 ርዕስ: ከአ - ፐ",
+                optZa: "🔤 ርዕስ: ከፐ - አ",
+                btnBackExplore: "⬅ ወደ ማሰሻው ይመለሱ",
+                txtRateCourse: "ኮርሱን ደረጃ ይስጡ:",
+                txtAboutCourse: "ስለ ኮርሱ መግለጫ",
+                txtAboutDesc: "በዚህ የተሟላ የሞጁል መዋቅር ውስጥ ለእውነተኛው ዓለም የድርጅት መተግበሪያዎች በተዘጋጁ ዓለም አቀፍ ሀብቶች ላይ ፈጣን የተግባር የስራ ፍሰት መዳረሻ ያግኙ።",
+                txtSyllabusHeader: "የኮርሱ ዝርዝር ማውጫ (Syllabus)",
+                modalPayVideoTitle: "📺 በቴሌብር / በሲቢኢ ብር እንዴት መክፈል እንደሚቻል መመሪያ",
+                modalHeading: "ነፃ አካውንት ይፍጠሩ",
                 lblName: "ሙሉ ስም",
-                lblEmail: "ኢሜይል አድራሻ",
+                lblEmail: "የኢሜል አድራሻ",
                 lblPass: "የይለፍ ቃል",
-                btnSubmitSignup: "ምዝገባውን ያስገቡ",
-                btnSubmitLogin: "ወደ መለያ ይግቡ",
-                payTitle: "💳 ፕሪሚየም አገልግሎት ማግበር",
-                payDesc: "ይህ የላቀ የሞጁል መዋቅር የፕሪሚየም ፈቃድ ማረጋገጫ ይፈልጋል።",
-                payVendor: "የአካባቢ ማይክሮ-ክፍያ አገልግሎት ይምረጡ",
-                payPhone: "የሞባይል ቁጥር (+251)",
-                payProof: "📎 የክፍያ ቅጽበታዊ ገጽ እይታ ያያይዙ (ማረጋገጫ)",
-                paySubmit: "ማግበሪያውን ያስገቡ እና ያረጋግጡ"
+                btnSubmitReg: "ምዝገባውን ያስገቡ",
+                modalPayTitle: "💳 ፕሪሚየም አገልግሎት ማግበሪያ",
+                modalPayDesc: "ይህ የላቀ የስራ ፍሰት መዋቅር ሞጁል የፕሪሚየም ፍቃድ ማረጋገጫ ያስፈልገዋል።",
+                lblPayVendor: "የአገር ውስጥ የማይክሮ ክፍያ አገልግሎት ይምረጡ",
+                lblPayPhone: "የሞባይል ስልክ ቁጥር (+251)",
+                lblPayFile: "📎 የክፍያ ደረሰኝ ፎቶ ያያይዙ (Proof)",
+                btnPaySubmit: "አስገባ እና አግብር",
+                txtFooter: "© 2026 ኤዱኔት ኢትዮጵያ የመማሪያ መድረክ። መብቱ በህግ የተጠበቀ ነው።",
+                watchFree: "በነጻ ይመልከቱ",
+                lockPay: "ዝግ ነው (ይክፈሉ)",
+                notRated: "🚫 ደረጃ አልተሰጠውም",
+                myRating: "✨ የእኔ ደረጃ: ",
+                lessonsTag: " ትምህርቶች",
+                seeMore: "ዝርዝር ይመልከቱ"
             }
         };
 
@@ -822,26 +845,33 @@
             const container = document.getElementById('course-container-box');
             container.innerHTML = ""; 
 
+            const dict = languageDictionary[currentSystemLanguage];
+
             dataArray.forEach(course => {
+                const title = currentSystemLanguage === 'am' ? course.title_am : course.title_en;
                 const card = document.createElement('div');
                 card.className = "course-card";
                 card.setAttribute('onclick', `enterCourseDetails(${course.id})`);
+
+                const ratingText = course.userRating > 0 
+                    ? dict.myRating + course.userRating + '/5' 
+                    : dict.notRated;
 
                 card.innerHTML = `
                     <div class="card-image-wrapper">
                         <div class="card-vector-bg" style="background: ${course.bg};">
                             ${course.icon}
-                            <div class="vector-shapes">${course.title.split('&')[0]}</div>
+                            <div class="vector-shapes">${title.split(' ')[0]}</div>
                         </div>
                     </div>
                     <div class="card-body-content">
-                        <h3 class="course-card-title">${course.title}</h3>
+                        <h3 class="course-card-title">${title}</h3>
                         <div class="rating-row">
-                            <span class="rating-digits">${course.userRating > 0 ? '✨ My Rating: ' + course.userRating + '/5' : '🚫 Not Rated Yet'}</span>
+                            <span class="rating-digits">${ratingText}</span>
                         </div>
                         <div class="card-footer-divider">
-                            <span class="lesson-count-tag">📚 ${course.lessons} Lessons</span>
-                            <span class="see-more-link">See More</span>
+                            <span class="lesson-count-tag">📚 ${course.lessons}${dict.lessonsTag}</span>
+                            <span class="see-more-link">${dict.seeMore}</span>
                         </div>
                     </div>
                 `;
@@ -879,23 +909,28 @@
                 history.pushState({ view: 'course-inner', courseId: courseId }, '', `#course-${courseId}`);
             }
 
+            const dict = languageDictionary[currentSystemLanguage];
+            const title = currentSystemLanguage === 'am' ? selectedCourse.title_am : selectedCourse.title_en;
+
             document.getElementById('classroom-video-col').style.display = 'none';
             document.getElementById('workspace-grid-box').classList.remove('video-active');
-            document.getElementById('classroom-title').innerText = selectedCourse.title;
+            document.getElementById('classroom-title').innerText = title;
             
             highlightRatingStars(selectedCourse.userRating);
             const syllabusWrapper = document.getElementById('dynamic-syllabus-list-wrapper');
             syllabusWrapper.innerHTML = "";
 
-            selectedCourse.syllabus.forEach((module, idx) => {
+            selectedCourse.syllabus.forEach((module) => {
                 const row = document.createElement('div');
                 row.className = 'lesson-row';
                 
+                const moduleName = currentSystemLanguage === 'am' ? module.name_am : module.name_en;
+                
                 const actionBadge = module.isFree 
-                    ? `<div class="badge-align"><span style="color:var(--accent-green); font-size:1.1rem;">🔓</span><span style="color:var(--accent-green); font-weight:bold;">Watch Free</span></div>`
-                    : `<div class="badge-align"><span style="color:var(--accent-lock); font-size:1.1rem;">🔒</span><span style="color:var(--accent-lock);">Lock (Pay)</span></div>`;
+                    ? `<div class="badge-align"><span style="color:var(--accent-green); font-size:1.1rem;">🔓</span><span style="color:var(--accent-green); font-weight:bold;">${dict.watchFree}</span></div>`
+                    : `<div class="badge-align"><span style="color:var(--accent-lock); font-size:1.1rem;">🔒</span><span style="color:var(--accent-lock);">${dict.lockPay}</span></div>`;
 
-                row.innerHTML = `<span style="max-width:70%; text-align:left;">${module.name}</span> ${actionBadge}`;
+                row.innerHTML = `<span style="max-width:70%; text-align:left;">${moduleName}</span> ${actionBadge}`;
                 
                 row.onclick = () => {
                     if (module.isFree) {
@@ -987,15 +1022,34 @@
             closePaymentModal();
         }
 
+        // Language Engine Engine
         function runLanguageEngine(langCode) {
+            currentSystemLanguage = langCode;
             const resources = languageDictionary[langCode] || languageDictionary['en'];
-            document.getElementById('hero-title').innerText = resources.heroTitle;
-            document.getElementById('hero-desc').innerText = resources.heroDesc;
+            
+            // Loop and translate all elements mapped to the dictionary ids
+            Object.keys(resources).forEach(key => {
+                const elementId = key.replace(/([A-Z])/g, "-$1").toLowerCase(); 
+                const el = document.getElementById(elementId);
+                if (el) {
+                    if (el.tagName === 'OPTION') {
+                        el.text = resources[key];
+                    } else {
+                        el.innerText = resources[key];
+                    }
+                }
+            });
+
+            // Re-render courses and dynamic interiors
+            renderCourseCards(coursesDatabase);
+            if (currentlySelectedCourseId) {
+                enterCourseDetails(currentlySelectedCourseId, true);
+            }
+            updateSystemClock();
         }
 
         function navigateView(viewName, isFromPopState = false) {
             if (!isFromPopState) {
-                // Fixed routing logic using hashes to prevent 404 on refresh
                 history.pushState({ view: viewName }, '', viewName === 'home' ? '#home' : `#${viewName}`);
             }
 
@@ -1011,7 +1065,6 @@
             if(viewName === 'explore') document.getElementById('li-explore').classList.add('active-nav');
         }
 
-        // Monitors URL hash changes directly on refresh or loading
         function handleInitialRouting() {
             const currentHash = window.location.hash;
             if (currentHash.startsWith('#course-')) {
