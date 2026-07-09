@@ -268,6 +268,7 @@
             position: relative;
         }
 
+        /* Moving Vector Graphic Sticker inside Card */
         .vector-shapes {
             position: absolute;
             bottom: 10px; right: 10px; left: 10px; top: 10px;
@@ -347,6 +348,7 @@
             text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
         }
 
+        /* Sticker Sticker Pop Effect */
         .sticker-burst-element {
             position: fixed;
             pointer-events: none;
@@ -455,48 +457,10 @@
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
         .hero p { color: var(--text-dim); max-width: 650px; margin: 0 auto 2rem; line-height: 1.6; }
 
-        /* Auth Modal Tabs Layout */
-        .modal-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-glass);
-            padding-bottom: 10px;
-        }
-        .modal-tab-btn {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            padding: 4px 12px;
-            position: relative;
-        }
-        .modal-tab-btn.active-tab {
-            color: var(--text-pure);
-        }
-        .modal-tab-btn.active-tab::after {
-            content: '';
-            position: absolute;
-            bottom: -11px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-blue);
-            border-radius: 2px;
-        }
-
         /* Keyframe Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes floatAnimation {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         @keyframes pulseSticker {
@@ -528,6 +492,7 @@
             position: relative;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
+        .modal-window h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
         .form-group input, .form-group select {
@@ -568,7 +533,7 @@
                     </div>
                 </li>
 
-                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openAuthModal('signup')">Register / Login</button></li>
+                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openRegistrationModal()">Register / Login</button></li>
                 <li>
                     <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
@@ -647,20 +612,14 @@
         </div>
     </div>
 
-    <!-- Enhanced Register / Login Auth Modal Layout -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
-            <span class="close-modal-x" onclick="closeAuthModal()">✕</span>
-            
-            <div class="modal-tabs">
-                <button class="modal-tab-btn active-tab" id="tab-signup" onclick="switchAuthMode('signup')">Sign Up</button>
-                <button class="modal-tab-btn" id="tab-login" onclick="switchAuthMode('login')">Log In</button>
-            </div>
-
-            <form id="auth-form" onsubmit="executeAuthSubmit(event)">
-                <div class="form-group" id="form-group-name">
+            <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
+            <h3 id="modal-heading">Create Free Account</h3>
+            <form id="register-form" onsubmit="executeUserRegistration(event)">
+                <div class="form-group">
                     <label id="lbl-name">Full Name</label>
-                    <input type="text" id="input-name" placeholder="Abebe Bikila">
+                    <input type="text" required placeholder="Abebe Bikila">
                 </div>
                 <div class="form-group">
                     <label id="lbl-email">Email Address</label>
@@ -670,7 +629,7 @@
                     <label id="lbl-pass">Password</label>
                     <input type="password" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-auth">Submit Registration</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-reg">Submit Registration</button>
             </form>
         </div>
     </div>
@@ -678,10 +637,10 @@
     <div class="modal-overlay" id="payment-modal-overlay">
         <div class="modal-window">
             <span class="close-modal-x" onclick="closePaymentModal()">✕</span>
-            <h3 style="color: var(--accent-gold);" id="pay-modal-title">💳 Premium Asset Activation</h3>
-            <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;" id="pay-modal-desc">This advanced workflow structure module requires premium licensing clearance.</p>
+            <h3 style="color: var(--accent-gold);">💳 Premium Asset Activation</h3>
+            <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom: 15px;">This advanced workflow structure module requires premium licensing clearance.</p>
             <div class="form-group">
-                <label id="pay-vendor-lbl">Select Local Micro-Payment Core Service</label>
+                <label>Select Local Micro-Payment Core Service</label>
                 <select id="payment-vendor-select">
                     <option value="telebirr">Telebirr (Ethio Telecom)</option>
                     <option value="cbe">CBE Birr Wallet</option>
@@ -689,14 +648,14 @@
                 </select>
             </div>
             <div class="form-group">
-                <label id="pay-phone-lbl">Mobile Number (+251)</label>
+                <label>Mobile Number (+251)</label>
                 <input type="tel" placeholder="912345678" required>
             </div>
             <div class="form-group">
-                <label style="color: var(--accent-gold);" id="pay-proof-lbl">📎 Attach Payment Screenshot (Proof)</label>
+                <label style="color: var(--accent-gold);">📎 Attach Payment Screenshot (Proof)</label>
                 <input type="file" id="payment-proof-file" accept="image/*" style="padding: 5px 0;">
             </div>
-            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()" id="pay-submit-btn">Submit & Authorize Activation</button>
+            <button class="btn btn-primary" style="width:100%; background:var(--accent-green);" onclick="processPremiumPaymentSimulation()">Submit & Authorize Activation</button>
         </div>
     </div>
 
@@ -706,8 +665,6 @@
 
     <script>
         let currentlySelectedCourseId = null;
-        let currentAuthMode = 'signup'; 
-        let currentLanguage = 'en';
 
         function updateSystemClock() {
             const now = new Date();
@@ -726,6 +683,7 @@
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
+        // Expanded Course Database
         const coursesDatabase = [
             { 
                 id: 1, 
@@ -794,7 +752,6 @@
 
         const languageDictionary = {
             en: {
-                liveSticker: "✨ EduNet 2026 Live Platform",
                 heroTitle: "Enjoy learning from hundreds of online courses",
                 heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
                 dashNav: "Dashboard",
@@ -829,7 +786,6 @@
                 paySubmit: "Submit & Authorize Activation"
             },
             am: {
-                liveSticker: "✨ ኢዱኔት 2026 የቀጥታ መድረክ",
                 heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
                 heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት",
                 dashNav: "ዳሽቦርድ",
@@ -1016,44 +972,8 @@
             }
         }
 
-        /* Authentication Modal Management (Sign Up / Log In) */
-        function openAuthModal(mode = 'signup') {
-            document.getElementById('auth-modal-overlay').style.display = 'flex';
-            switchAuthMode(mode);
-        }
-        
-        function closeAuthModal() { 
-            document.getElementById('auth-modal-overlay').style.display = 'none'; 
-        }
-
-        function switchAuthMode(mode) {
-            currentAuthMode = mode;
-            const tabSignup = document.getElementById('tab-signup');
-            const tabLogin = document.getElementById('tab-login');
-            const nameFieldGroup = document.getElementById('form-group-name');
-            const nameInput = document.getElementById('input-name');
-            const submitBtn = document.getElementById('btn-submit-auth');
-            const resources = languageDictionary[currentLanguage] || languageDictionary['en'];
-
-            if (mode === 'login') {
-                tabLogin.classList.add('active-tab');
-                tabSignup.classList.remove('active-tab');
-                nameFieldGroup.style.display = 'none';
-                nameInput.removeAttribute('required');
-                submitBtn.innerText = resources.btnSubmitLogin;
-            } else {
-                tabSignup.classList.add('active-tab');
-                tabLogin.classList.remove('active-tab');
-                nameFieldGroup.style.display = 'block';
-                nameInput.setAttribute('required', 'true');
-                submitBtn.innerText = resources.btnSubmitSignup;
-            }
-        }
-
-        function executeAuthSubmit(e) {
-            e.preventDefault();
-            closeAuthModal();
-        }
+        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
+        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
         
         function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
         function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
@@ -1061,67 +981,19 @@
         function openHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex'; }
         function closeHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'none'; }
 
+        function executeUserRegistration(e) {
+            e.preventDefault();
+            closeRegistrationModal();
+        }
+
         function processPremiumPaymentSimulation() {
             closePaymentModal();
         }
 
         function runLanguageEngine(langCode) {
-            currentLanguage = langCode;
             const resources = languageDictionary[langCode] || languageDictionary['en'];
-            
-            document.getElementById('platform-banner').innerText = resources.liveSticker;
-
             document.getElementById('hero-title').innerText = resources.heroTitle;
             document.getElementById('hero-desc').innerText = resources.heroDesc;
-            document.getElementById('hero-cta').innerText = resources.heroCta;
-
-            document.getElementById('li-dash').innerText = resources.dashNav;
-            document.getElementById('li-explore').innerText = resources.exploreNav;
-            document.querySelector('#payment-dropdown-nav .dropdown-trigger').innerText = resources.paymentNav;
-            
-            const paymentLinks = document.querySelectorAll('#payment-dropdown-nav .dropdown-menu a');
-            if (paymentLinks.length >= 2) {
-                paymentLinks[0].innerText = resources.payNow;
-                paymentLinks[1].innerText = resources.payVideo;
-            }
-            document.getElementById('btn-auth-trigger').innerText = resources.authBtn;
-
-            document.getElementById('txt-grid').innerText = resources.layoutTxt;
-            const sortFilter = document.getElementById('sort-filter');
-            sortFilter.options[0].text = resources.sortNewest;
-            sortFilter.options[1].text = resources.sortOldest;
-            sortFilter.options[2].text = resources.sortAZ;
-            sortFilter.options[3].text = resources.sortZA;
-
-            const backBtn = document.querySelector('#course-inner-view .btn');
-            if (backBtn) backBtn.innerText = resources.backExplore;
-            
-            const ratingBoxLabel = document.querySelector('#rating-component-wrapper span');
-            if (ratingBoxLabel) ratingBoxLabel.innerText = resources.rateCourse;
-            
-            const aboutHeader = document.querySelector('#classroom-video-col h3');
-            if (aboutHeader) aboutHeader.innerText = resources.aboutCourse;
-            
-            const aboutDesc = document.querySelector('#classroom-video-col p');
-            if (aboutDesc) aboutDesc.innerText = resources.courseDesc;
-            
-            const syllabusHeader = document.querySelector('.syllabus-box h3');
-            if (syllabusHeader) syllabusHeader.innerText = resources.syllabusTitle;
-
-            document.getElementById('tab-signup').innerText = resources.tabSignup;
-            document.getElementById('tab-login').innerText = resources.tabLogin;
-            document.getElementById('lbl-name').innerText = resources.lblName;
-            document.getElementById('lbl-email').innerText = resources.lblEmail;
-            document.getElementById('lbl-pass').innerText = resources.lblPass;
-            
-            document.getElementById('btn-submit-auth').innerText = (currentAuthMode === 'login') ? resources.btnSubmitLogin : resources.btnSubmitSignup;
-
-            document.getElementById('pay-modal-title').innerText = resources.payTitle;
-            document.getElementById('pay-modal-desc').innerText = resources.payDesc;
-            document.getElementById('pay-vendor-lbl').innerText = resources.payVendor;
-            document.getElementById('pay-phone-lbl').innerText = resources.payPhone;
-            document.getElementById('pay-proof-lbl').innerText = resources.payProof;
-            document.getElementById('pay-submit-btn').innerText = resources.paySubmit;
         }
 
         function navigateView(viewName, isFromPopState = false) {
@@ -1148,7 +1020,6 @@
                 navigateView('home', true);
             }
         });
-
         history.replaceState({ view: 'home' }, '', '/');
         renderCourseCards(coursesDatabase);
     </script>
