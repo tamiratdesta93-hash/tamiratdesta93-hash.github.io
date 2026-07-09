@@ -212,7 +212,7 @@
             background: transparent;
             color: #64748b;
         }
-        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; outline: none; }
+        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
 
         /* Grid Framework Layouts */
         .course-grid {
@@ -472,6 +472,7 @@
             100% { transform: translate(var(--mx), var(--my)) scale(1.4) rotate(var(--mr)); opacity: 0; }
         }
 
+        /* Modal Layout */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -491,6 +492,27 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
         .modal-window h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
+        
+        /* Auth Form Toggle Styles */
+        .auth-toggle-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-glass);
+            margin-bottom: 1.5rem;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dim);
+            border-bottom: 2px solid transparent;
+        }
+        .auth-tab.active-tab {
+            color: var(--text-pure);
+            border-bottom-color: var(--accent-blue);
+        }
+        
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
         .form-group input, .form-group select {
@@ -531,7 +553,7 @@
                     </div>
                 </li>
 
-                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openRegistrationModal()">Register / Login</button></li>
+                <li><button class="btn btn-secondary" id="btn-auth-trigger" onclick="openAuthModal('signup')">Sign In / Sign Up</button></li>
                 <li>
                     <select class="lang-select" id="system-lang-picker" onchange="runLanguageEngine(this.value)">
                         <option value="en">English</option>
@@ -610,14 +632,20 @@
         </div>
     </div>
 
+    <!-- Dual Auth System (Sign In & Sign Up Integrated Modal) -->
     <div class="modal-overlay" id="auth-modal-overlay">
         <div class="modal-window">
-            <span class="close-modal-x" onclick="closeRegistrationModal()">✕</span>
-            <h3 id="modal-heading">Create Free Account</h3>
-            <form id="register-form" onsubmit="executeUserRegistration(event)">
-                <div class="form-group">
+            <span class="close-modal-x" onclick="closeAuthModal()">✕</span>
+            
+            <div class="auth-toggle-tabs">
+                <div class="auth-tab active-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</div>
+                <div class="auth-tab" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</div>
+            </div>
+
+            <form id="auth-form" onsubmit="executeUserAuthentication(event)">
+                <div class="form-group" id="group-name-field">
                     <label id="lbl-name">Full Name</label>
-                    <input type="text" id="input-name" required placeholder="Abebe Bikila">
+                    <input type="text" id="input-name" placeholder="Abebe Bikila">
                 </div>
                 <div class="form-group">
                     <label id="lbl-email">Email Address</label>
@@ -627,7 +655,7 @@
                     <label id="lbl-pass">Password</label>
                     <input type="password" id="input-pass" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-reg">Submit Registration</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="btn-submit-auth">Create Account</button>
             </form>
         </div>
     </div>
@@ -664,6 +692,7 @@
     <script>
         let currentlySelectedCourseId = null;
         let currentSystemLanguage = 'en';
+        let currentAuthMode = 'signup'; // Can be 'signup' or 'signin'
 
         function updateSystemClock() {
             const now = new Date();
@@ -714,7 +743,7 @@
             { 
                 id: 3, 
                 title_en: "Digital Marketing & Social Media Growth", 
-                title_am: "디지털 마ርኬቲንግ እና የማህበራዊ ሚዲያ እድገት",
+                title_am: "ዲጂታል ማርኬቲንግ እና የማህበራዊ ሚዲያ እድገት",
                 lessons: 3, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #ec4899 0%, #9d174d 100%)", 
@@ -762,7 +791,7 @@
                 btnPaymentTrigger: "Payment ▾",
                 linkPayNow: "💳 Pay Now",
                 linkHowToPay: "📺 How to Pay Video",
-                btnAuthTrigger: "Register / Login",
+                btnAuthTrigger: "Sign In / Sign Up",
                 heroTitle: "Enjoy learning from hundreds of online courses",
                 heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
                 heroCta: "Get Started Now",
@@ -777,11 +806,9 @@
                 txtAboutDesc: "Gain immediate hands-on functional workflow access to global resources engineered for real-world enterprise applications inside this complete module structure.",
                 txtSyllabusHeader: "Course Syllabus",
                 modalPayVideoTitle: "📺 How to Pay via Telebirr / CBE Birr Guide",
-                modalHeading: "Create Free Account",
                 lblName: "Full Name",
                 lblEmail: "Email Address",
                 lblPass: "Password",
-                btnSubmitReg: "Submit Registration",
                 modalPayTitle: "💳 Premium Asset Activation",
                 modalPayDesc: "This advanced workflow structure module requires premium licensing clearance.",
                 lblPayVendor: "Select Local Micro-Payment Core Service",
@@ -794,7 +821,11 @@
                 notRated: "🚫 Not Rated Yet",
                 myRating: "✨ My Rating: ",
                 lessonsTag: " Lessons",
-                seeMore: "See More"
+                seeMore: "See More",
+                tabSignup: "Sign Up",
+                tabSignin: "Sign In",
+                btnSubmitSignup: "Create Account",
+                btnSubmitSignin: "Log In"
             },
             am: {
                 txtHeadquarters: "📍 ዋና ካምፓስ ዋና መስሪያ ቤት: አዲስ አበባ, ኢትዮጵያ",
@@ -803,7 +834,7 @@
                 btnPaymentTrigger: "ክፍያ ▾",
                 linkPayNow: "💳 አሁን ይክፈሉ",
                 linkHowToPay: "📺 እንዴት እንደሚከፈል ቪዲዮ",
-                btnAuthTrigger: "ይመዝገቡ / ይግቡ",
+                btnAuthTrigger: "ይግቡ / ይመዝገቡ",
                 heroTitle: "በመቶዎች ከሚቆጠሩ የመስመር ላይ ኮርሶች መማር ይደሰቱ",
                 heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት።",
                 heroCta: "አሁን ይጀምሩ",
@@ -818,11 +849,9 @@
                 txtAboutDesc: "በዚህ የተሟላ የሞጁል መዋቅር ውስጥ ለእውነተኛው ዓለም የድርጅት መተግበሪያዎች በተዘጋጁ ዓለም አቀፍ ሀብቶች ላይ ፈጣን የተግባር የስራ ፍሰት መዳረሻ ያግኙ።",
                 txtSyllabusHeader: "የኮርሱ ዝርዝር ማውጫ (Syllabus)",
                 modalPayVideoTitle: "📺 በቴሌብር / በሲቢኢ ብር እንዴት መክፈል እንደሚቻል መመሪያ",
-                modalHeading: "ነፃ አካውንት ይፍጠሩ",
                 lblName: "ሙሉ ስም",
                 lblEmail: "የኢሜል አድራሻ",
                 lblPass: "የይለፍ ቃል",
-                btnSubmitReg: "ምዝገባውን ያስገቡ",
                 modalPayTitle: "💳 ፕሪሚየም አገልግሎት ማግበሪያ",
                 modalPayDesc: "ይህ የላቀ የስራ ፍሰት መዋቅር ሞጁል የፕሪሚየም ፍቃድ ማረጋገጫ ያስፈልገዋል።",
                 lblPayVendor: "የአገር ውስጥ የማይክሮ ክፍያ አገልግሎት ይምረጡ",
@@ -835,7 +864,11 @@
                 notRated: "🚫 ደረጃ አልተሰጠውም",
                 myRating: "✨ የእኔ ደረጃ: ",
                 lessonsTag: " ትምህርቶች",
-                seeMore: "ዝርዝር ይመልከቱ"
+                seeMore: "ዝርዝር ይመልከቱ",
+                tabSignup: "አካውንት ክፈት",
+                tabSignin: "ግባ",
+                btnSubmitSignup: "ምዝገባውን ያስገቡ",
+                btnSubmitSignin: "ግባ"
             }
         };
 
@@ -877,6 +910,23 @@
             });
         }
 
+        // Active dynamic sorting processor routine
+        function runSortFilterEngine() {
+            const sortValue = document.getElementById('sort-filter').value;
+            let sortedCourses = [...coursesDatabase];
+
+            if (sortValue === 'newest') {
+                sortedCourses.sort((a, b) => b.orderIndex - a.orderIndex);
+            } else if (sortValue === 'oldest') {
+                sortedCourses.sort((a, b) => a.orderIndex - b.orderIndex);
+            } else if (sortValue === 'az') {
+                sortedCourses.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sortValue === 'za') {
+                sortedCourses.sort((a, b) => b.title.localeCompare(a.title));
+            }
+
+            renderCourseCards(sortedCourses);
+        }
         function runSortFilterEngine() {
             const sortBy = document.getElementById('sort-filter').value;
             let sortedCourses = [...coursesDatabase];
@@ -897,23 +947,6 @@
                     const titleB = currentSystemLanguage === 'am' ? b.title_am : b.title_en;
                     return titleB.localeCompare(titleA);
                 });
-            }
-
-            renderCourseCards(sortedCourses);
-        } 
-        // Active dynamic sorting processor routine
-        function runSortFilterEngine() {
-            const sortValue = document.getElementById('sort-filter').value;
-            let sortedCourses = [...coursesDatabase];
-
-            if (sortValue === 'newest') {
-                sortedCourses.sort((a, b) => b.orderIndex - a.orderIndex);
-            } else if (sortValue === 'oldest') {
-                sortedCourses.sort((a, b) => a.orderIndex - b.orderIndex);
-            } else if (sortValue === 'az') {
-                sortedCourses.sort((a, b) => a.title.localeCompare(b.title));
-            } else if (sortValue === 'za') {
-                sortedCourses.sort((a, b) => b.title.localeCompare(a.title));
             }
 
             renderCourseCards(sortedCourses);
@@ -1040,19 +1073,49 @@
             }
         }
 
-        function openRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'flex'; }
-        function closeRegistrationModal() { document.getElementById('auth-modal-overlay').style.display = 'none'; }
+        /* Combined Auth Modal Functions */
+        function openAuthModal(mode = 'signup') {
+            document.getElementById('auth-modal-overlay').style.display = 'flex';
+            switchAuthTab(mode);
+        }
+        function closeAuthModal() { 
+            document.getElementById('auth-modal-overlay').style.display = 'none'; 
+        }
+        
+        function switchAuthTab(mode) {
+            currentAuthMode = mode;
+            const tabSignup = document.getElementById('tab-signup');
+            const tabSignin = document.getElementById('tab-signin');
+            const nameField = document.getElementById('group-name-field');
+            const submitBtn = document.getElementById('btn-submit-auth');
+            const dict = languageDictionary[currentSystemLanguage];
+
+            if (mode === 'signin') {
+                tabSignin.classList.add('active-tab');
+                tabSignup.classList.remove('active-tab');
+                nameField.style.display = 'none';
+                document.getElementById('input-name').required = false;
+                submitBtn.innerText = dict.btnSubmitSignin || "Log In";
+            } else {
+                tabSignup.classList.add('active-tab');
+                tabSignin.classList.remove('active-tab');
+                nameField.style.display = 'block';
+                document.getElementById('input-name').required = true;
+                submitBtn.innerText = dict.btnSubmitSignup || "Create Account";
+            }
+        }
+
+        function executeUserAuthentication(e) {
+            e.preventDefault();
+            // Auth logical simulation success placeholder
+            closeAuthModal();
+        }
         
         function openPaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'flex'; }
         function closePaymentModal() { document.getElementById('payment-modal-overlay').style.display = 'none'; }
         
         function openHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'flex'; }
         function closeHowToPayVideoModal() { document.getElementById('how-to-pay-video-modal-overlay').style.display = 'none'; }
-
-        function executeUserRegistration(e) {
-            e.preventDefault();
-            closeRegistrationModal();
-        }
 
         function processPremiumPaymentSimulation() {
             closePaymentModal();
@@ -1078,6 +1141,7 @@
             if (currentlySelectedCourseId) {
                 enterCourseDetails(currentlySelectedCourseId, true);
             }
+            switchAuthTab(currentAuthMode); // re-translate button values inside modal view dynamically
             updateSystemClock();
         }
 
