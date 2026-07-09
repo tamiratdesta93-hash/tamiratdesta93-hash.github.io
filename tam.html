@@ -880,24 +880,26 @@
         }
 
         function runSortFilterEngine() {
-            renderCourseCards(coursesDatabase);
-        }
+            const sortBy = document.getElementById('sort-filter').value;
+            let sortedCourses = [...coursesDatabase];
 
-        function changeLayout(mode) {
-            const container = document.getElementById('course-container-box');
-            const btnGrid = document.getElementById('btn-grid-view');
-            const btnList = document.getElementById('btn-list-view');
-            
-            if (mode === 'list') {
-                container.classList.add('list-layout-mode');
-                btnList.classList.remove('inactive-layout');
-                btnGrid.classList.add('inactive-layout');
-            } else {
-                container.classList.remove('list-layout-mode');
-                btnGrid.classList.remove('inactive-layout');
-                btnList.classList.add('inactive-layout');
+            if (sortBy === 'newest') {
+                sortedCourses.sort((a, b) => b.id - a.id);
+            } else if (sortBy === 'oldest') {
+                sortedCourses.sort((a, b) => a.id - b.id);
+            } else if (sortBy === 'az') {
+                sortedCourses.sort((a, b) => {
+                    const titleA = currentSystemLanguage === 'am' ? a.title_am : a.title_en;
+                    const titleB = currentSystemLanguage === 'am' ? b.title_am : b.title_en;
+                    return titleA.localeCompare(titleB);
+                });
+            } else if (sortBy === 'za') {
+                sortedCourses.sort((a, b) => {
+                    const titleA = currentSystemLanguage === 'am' ? a.title_am : a.title_en;
+                    const titleB = currentSystemLanguage === 'am' ? b.title_am : b.title_en;
+                    return titleB.localeCompare(titleA);
+                });
             }
-        }
 
         function enterCourseDetails(courseId, isFromPopState = false) {
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
