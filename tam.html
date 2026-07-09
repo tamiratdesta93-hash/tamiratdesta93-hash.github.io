@@ -448,66 +448,6 @@
             text-align: center;
         }
 
-        /* AI Sticky bottom bar */
-        .ai-sticky-bottom-widget {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 5000;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .ai-toggle-bubble {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        .ai-floating-card-body {
-            display: none;
-            width: 350px;
-            background: #111827;
-            border: 1px solid var(--border-glass);
-            border-radius: 14px;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.4);
-            padding: 16px;
-            margin-bottom: 15px;
-            flex-direction: column;
-            gap: 12px;
-            animation: fadeIn 0.25s ease forwards;
-        }
-        .ai-chat-history {
-            height: 200px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.2);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        .ai-input-wrap {
-            display: flex;
-            gap: 8px;
-        }
-        .ai-input-wrap input {
-            flex-grow: 1;
-            background: #0b0f19;
-            border: 1px solid var(--border-glass);
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
-
         .btn {
             padding: 0.55rem 1.25rem;
             border-radius: 8px;
@@ -659,20 +599,6 @@
         </nav>
     </header>
 
-    <div class="ai-sticky-bottom-widget">
-        <div class="ai-floating-card-body" id="ai-widget-panel">
-            <h4 style="color: var(--accent-green); border-bottom: 1px solid var(--border-glass); padding-bottom: 6px; font-weight:700;">🤖 EduNet AI Assistant</h4>
-            <div class="ai-chat-history" id="ai-chat-output-logs">
-                <p style="color: var(--text-dim);"><em id="ai-sys-welcome">System: Hello! How can I assist you today?</em></p>
-            </div>
-            <div class="ai-input-wrap">
-                <input type="text" id="ai-user-prompt-input" placeholder="Ask AI anything..." onkeydown="if(event.key === 'Enter') submitAiAssistantQuery()">
-                <button class="btn btn-primary" style="padding: 0 10px;" onclick="submitAiAssistantQuery()">Ask</button>
-            </div>
-        </div>
-        <div class="ai-toggle-bubble" onclick="toggleAiWidgetPanel()">🤖</div>
-    </div>
-
     <main id="home-view" class="app-view active-view">
         <div class="hero">
             <h1 id="hero-title">Enjoy learning from hundreds of online courses</h1>
@@ -800,7 +726,7 @@
 
     <script>
         let currentlySelectedCourseId = null;
-        let currentAuthMode = 'signup'; // Keeps track of whether modal is on 'signup' or 'login'
+        let currentAuthMode = 'signup'; 
         let currentLanguage = 'en';
 
         function updateSystemClock() {
@@ -915,10 +841,6 @@
                 lblPass: "Password",
                 btnSubmitSignup: "Submit Registration",
                 btnSubmitLogin: "Log In to Account",
-                aiTitle: "🤖 EduNet AI Assistant",
-                aiWelcome: "System: Hello! How can I assist you today?",
-                aiPlaceholder: "Ask AI anything...",
-                aiAskBtn: "Ask",
                 payTitle: "💳 Premium Asset Activation",
                 payDesc: "This advanced workflow structure module requires premium licensing clearance.",
                 payVendor: "Select Local Micro-Payment Core Service",
@@ -954,10 +876,6 @@
                 lblPass: "የይለፍ ቃል",
                 btnSubmitSignup: "ምዝገባውን ያስገቡ",
                 btnSubmitLogin: "ወደ መለያ ይግቡ",
-                aiTitle: "🤖 የኢዱኔት AI ረዳት",
-                aiWelcome: "ስርዓት፡ ሰላም! ዛሬ እንዴት ልረዳዎት እችላለሁ?",
-                aiPlaceholder: "AI ን ማንኛውንም ነገር ይጠይቁ...",
-                aiAskBtn: "ጠይቅ",
                 payTitle: "💳 ፕሪሚየም አገልግሎት ማግበር",
                 payDesc: "ይህ የላቀ የሞጁል መዋቅር የፕሪሚየም ፈቃድ ማረጋገጫ ይፈልጋል።",
                 payVendor: "የአካባቢ ማይክሮ-ክፍያ አገልግሎት ይምረጡ",
@@ -1118,19 +1036,6 @@
             }
         }
 
-        function toggleAiWidgetPanel() {
-            const panel = document.getElementById('ai-widget-panel');
-            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function submitAiAssistantQuery() {
-            const inputField = document.getElementById('ai-user-prompt-input');
-            const promptText = inputField.value.trim();
-            if(!promptText) return;
-            document.getElementById('ai-chat-output-logs').innerHTML += `<p><strong>You:</strong> ${promptText}</p>`;
-            inputField.value = "";
-        }
-
         /* Authentication Modal Management (Sign Up / Log In) */
         function openAuthModal(mode = 'signup') {
             document.getElementById('auth-modal-overlay').style.display = 'flex';
@@ -1167,7 +1072,6 @@
 
         function executeAuthSubmit(e) {
             e.preventDefault();
-            // Authentication backend simulator logic would go here
             closeAuthModal();
         }
         
@@ -1185,15 +1089,12 @@
             currentLanguage = langCode;
             const resources = languageDictionary[langCode] || languageDictionary['en'];
             
-            // Top structural floating banner
             document.getElementById('platform-banner').innerText = resources.liveSticker;
 
-            // Hero panel translation updates
             document.getElementById('hero-title').innerText = resources.heroTitle;
             document.getElementById('hero-desc').innerText = resources.heroDesc;
             document.getElementById('hero-cta').innerText = resources.heroCta;
 
-            // Nav link header options mapping updates
             document.getElementById('li-dash').innerText = resources.dashNav;
             document.getElementById('li-explore').innerText = resources.exploreNav;
             document.querySelector('#payment-dropdown-nav .dropdown-trigger').innerText = resources.paymentNav;
@@ -1205,7 +1106,6 @@
             }
             document.getElementById('btn-auth-trigger').innerText = resources.authBtn;
 
-            // Sorting select bar elements updates
             document.getElementById('txt-grid').innerText = resources.layoutTxt;
             const sortFilter = document.getElementById('sort-filter');
             sortFilter.options[0].text = resources.sortNewest;
@@ -1213,7 +1113,6 @@
             sortFilter.options[2].text = resources.sortAZ;
             sortFilter.options[3].text = resources.sortZA;
 
-            // Workspace view details items updates
             const backBtn = document.querySelector('#course-inner-view .btn');
             if (backBtn) backBtn.innerText = resources.backExplore;
             
@@ -1229,36 +1128,20 @@
             const syllabusHeader = document.querySelector('.syllabus-box h3');
             if (syllabusHeader) syllabusHeader.innerText = resources.syllabusTitle;
 
-            // Registration / Login Form Translation Elements
             document.getElementById('tab-signup').innerText = resources.tabSignup;
             document.getElementById('tab-login').innerText = resources.tabLogin;
             document.getElementById('lbl-name').innerText = resources.lblName;
             document.getElementById('lbl-email').innerText = resources.lblEmail;
             document.getElementById('lbl-pass').innerText = resources.lblPass;
             
-            // Re-trigger auth submit button text to update it accurately based on active state language
             document.getElementById('btn-submit-auth').innerText = (currentAuthMode === 'login') ? resources.btnSubmitLogin : resources.btnSubmitSignup;
 
-            // Payment modal strings elements updates
             document.getElementById('pay-modal-title').innerText = resources.payTitle;
             document.getElementById('pay-modal-desc').innerText = resources.payDesc;
             document.getElementById('pay-vendor-lbl').innerText = resources.payVendor;
             document.getElementById('pay-phone-lbl').innerText = resources.payPhone;
             document.getElementById('pay-proof-lbl').innerText = resources.payProof;
             document.getElementById('pay-submit-btn').innerText = resources.paySubmit;
-
-            // Embedded AI core components widget updates
-            const aiCardHeader = document.querySelector('#ai-widget-panel h4');
-            if (aiCardHeader) aiCardHeader.innerText = resources.aiTitle;
-            
-            const aiWelcomeMsg = document.getElementById('ai-sys-welcome');
-            if (aiWelcomeMsg) aiWelcomeMsg.innerText = resources.aiWelcome;
-
-            const aiInput = document.getElementById('ai-user-prompt-input');
-            if (aiInput) aiInput.placeholder = resources.aiPlaceholder;
-            
-            const aiAskBtn = document.querySelector('.ai-input-wrap .btn');
-            if (aiAskBtn) aiAskBtn.innerText = resources.aiAskBtn;
         }
 
         function navigateView(viewName, isFromPopState = false) {
