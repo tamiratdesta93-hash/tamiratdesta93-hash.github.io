@@ -559,10 +559,10 @@
             </div>
             <div>
                 <select class="filter-select" id="sort-filter" onchange="runSortFilterEngine()">
-                    <option value="newest" id="opt-newest">⏳ Sort: Newest First</option>
-                    <option value="oldest" id="opt-oldest">⏳ Sort: Oldest First</option>
-                    <option value="az" id="opt-az">🔤 Title: A-Z</option>
-                    <option value="za" id="opt-za">🔤 Title: Z-A</option>
+                    <option value="newest" id="opt-newest">Sort: Newest First</option>
+                    <option value="oldest" id="opt-oldest">Sort: Oldest First</option>
+                    <option value="az" id="opt-az">Title: A-Z</option>
+                    <option value="za" id="opt-za">Title: Z-A</option>
                 </select>
             </div>
         </div>
@@ -683,7 +683,6 @@
             document.getElementById('payment-dropdown-nav').classList.remove('active');
         });
 
-        // Dynamic Course Database Translations Included
         const coursesDatabase = [
             { 
                 id: 1, 
@@ -715,7 +714,7 @@
             { 
                 id: 3, 
                 title_en: "Digital Marketing & Social Media Growth", 
-                title_am: "ዲጂታል ማርኬቲንግ እና የማህበራዊ ሚዲያ እድገት",
+                title_am: "디지털 마ርኬቲንግ እና የማህበራዊ ሚዲያ እድገት",
                 lessons: 3, 
                 userRating: 0,
                 bg: "linear-gradient(135deg, #ec4899 0%, #9d174d 100%)", 
@@ -755,7 +754,6 @@
             }
         ];
 
-        // Comprehensive UI Translation Map
         const languageDictionary = {
             en: {
                 txtHeadquarters: "📍 Campus Headquarters: Addis Ababa, Ethiopia",
@@ -769,10 +767,10 @@
                 heroDesc: "Providing high-quality courses in Digital Skills, Financial Literacy, Business and Career Development, and Emerging Technologies.",
                 heroCta: "Get Started Now",
                 txtGrid: "Layout",
-                optNewest: "⏳ Sort: Newest First",
-                optOldest: "⏳ Sort: Oldest First",
-                optAz: "🔤 Title: A-Z",
-                optZa: "🔤 Title: Z-A",
+                optNewest: "Sort: Newest First",
+                optOldest: "Sort: Oldest First",
+                optAz: "Title: A-Z",
+                optZa: "Title: Z-A",
                 btnBackExplore: "⬅ Back to Explore",
                 txtRateCourse: "Rate Course:",
                 txtAboutCourse: "About this Course",
@@ -810,10 +808,10 @@
                 heroDesc: "በዲጂታል ክህሎቶች፣ በፋይናንስ እውቀት፣ በንግድ እና በሙያ ልማት እና በማደግ ላይ ባሉ ቴክኖሎጂዎች ከፍተኛ ጥራት ያላቸውን ኮርሶች መስጠት።",
                 heroCta: "አሁን ይጀምሩ",
                 txtGrid: "አቀማመጥ",
-                optNewest: "⏳ ደርድር: አዲስ መጀመሪያ",
-                optOldest: "⏳ ደርድር: የቆየ መጀመሪያ",
-                optAz: "🔤 ርዕስ: ከአ - ፐ",
-                optZa: "🔤 ርዕስ: ከፐ - አ",
+                optNewest: "ደርድር: አዲስ መጀመሪያ",
+                optOldest: "ደርድር: የቆየ መጀመሪያ",
+                optAz: "ርዕስ: ከአ - ፐ",
+                optZa: "ርዕስ: ከፐ - አ",
                 btnBackExplore: "⬅ ወደ ማሰሻው ይመለሱ",
                 txtRateCourse: "ኮርሱን ደረጃ ይስጡ:",
                 txtAboutCourse: "ስለ ኮርሱ መግለጫ",
@@ -901,6 +899,25 @@
                 });
             }
 
+            renderCourseCards(sortedCourses);
+        }
+
+        function changeLayout(mode) {
+            const container = document.getElementById('course-container-box');
+            const btnGrid = document.getElementById('btn-grid-view');
+            const btnList = document.getElementById('btn-list-view');
+            
+            if (mode === 'list') {
+                container.classList.add('list-layout-mode');
+                btnList.classList.remove('inactive-layout');
+                btnGrid.classList.add('inactive-layout');
+            } else {
+                container.classList.remove('list-layout-mode');
+                btnGrid.classList.remove('inactive-layout');
+                btnList.classList.add('inactive-layout');
+            }
+        }
+
         function enterCourseDetails(courseId, isFromPopState = false) {
             const selectedCourse = coursesDatabase.find(c => c.id === courseId);
             if (!selectedCourse) return;
@@ -959,7 +976,7 @@
             if (selectedCourse) {
                 selectedCourse.userRating = ratingValue;
                 highlightRatingStars(ratingValue);
-                renderCourseCards(coursesDatabase); 
+                runSortFilterEngine(); 
 
                 const totalStickersCount = 12;
                 const stickersArray = ['⭐', '✨', '🎓', '🔥', '🚀'];
@@ -1024,12 +1041,10 @@
             closePaymentModal();
         }
 
-        // Language Engine Engine
         function runLanguageEngine(langCode) {
             currentSystemLanguage = langCode;
             const resources = languageDictionary[langCode] || languageDictionary['en'];
             
-            // Loop and translate all elements mapped to the dictionary ids
             Object.keys(resources).forEach(key => {
                 const elementId = key.replace(/([A-Z])/g, "-$1").toLowerCase(); 
                 const el = document.getElementById(elementId);
@@ -1042,8 +1057,7 @@
                 }
             });
 
-            // Re-render courses and dynamic interiors
-            renderCourseCards(coursesDatabase);
+            runSortFilterEngine();
             if (currentlySelectedCourseId) {
                 enterCourseDetails(currentlySelectedCourseId, true);
             }
@@ -1092,7 +1106,7 @@
         });
 
         window.addEventListener('DOMContentLoaded', handleInitialRouting);
-        renderCourseCards(coursesDatabase);
+        runSortFilterEngine();
     </script>
 </body>
 </html>
