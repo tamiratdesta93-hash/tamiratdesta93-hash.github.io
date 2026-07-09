@@ -212,7 +212,7 @@
             background: transparent;
             color: #64748b;
         }
-        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .filter-select { background: #1f2937; color: white; border: 1px solid var(--border-glass); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; outline: none; }
 
         /* Grid Framework Layouts */
         .course-grid {
@@ -897,6 +897,23 @@
                     const titleB = currentSystemLanguage === 'am' ? b.title_am : b.title_en;
                     return titleB.localeCompare(titleA);
                 });
+            }
+
+            renderCourseCards(sortedCourses);
+        } 
+        // Active dynamic sorting processor routine
+        function runSortFilterEngine() {
+            const sortValue = document.getElementById('sort-filter').value;
+            let sortedCourses = [...coursesDatabase];
+
+            if (sortValue === 'newest') {
+                sortedCourses.sort((a, b) => b.orderIndex - a.orderIndex);
+            } else if (sortValue === 'oldest') {
+                sortedCourses.sort((a, b) => a.orderIndex - b.orderIndex);
+            } else if (sortValue === 'az') {
+                sortedCourses.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sortValue === 'za') {
+                sortedCourses.sort((a, b) => b.title.localeCompare(a.title));
             }
 
             renderCourseCards(sortedCourses);
