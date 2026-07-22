@@ -1,0 +1,13 @@
+{
+  "background_color": "#226691",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "EduNet Ethiopia",
+  "short_name":"EduNet",
+  "orientation": "any",
+  "scope": "/",
+  "start_url": "/tamiratdesta93-hash.github/",
+  "theme_color": "#226691",
+  "id": "EduNet Ethiopia",
+  "description": "Access a wide range of  online courses and expand your skills with EduNet Ethiopia."
+}
